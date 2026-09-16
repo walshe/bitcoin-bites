@@ -2,9 +2,9 @@
 
 Each Bitcoin fact lives in its own Markdown file in this directory: `content/facts/<id>.md`.
 
-A build-time content compiler (see `tools/content-compiler` once implemented — task group 2)
-parses every file here, validates it against the rules below, and produces a single runtime
-index bundled into the app. There is no runtime network fetch of fact content in v1.
+A build-time content compiler (`content-compiler` Gradle module) parses every `*.md` file
+here (this README is excluded by name) against the rules below, and produces a single
+runtime index bundled into the app. There is no runtime network fetch of fact content in v1.
 
 ## Filename / ID convention
 

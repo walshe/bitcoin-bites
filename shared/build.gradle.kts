@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -11,6 +12,19 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":taxonomy"))
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.sqldelight.coroutines.ext)
+        }
+        androidMain.dependencies {
+            implementation(libs.sqldelight.android.driver)
+        }
+    }
+}
+
+sqldelight {
+    databases {
+        create("BitcoinFactsDatabase") {
+            packageName.set("dev.emmett.bitcoinfacts.shared.db")
         }
     }
 }

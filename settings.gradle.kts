@@ -21,3 +21,4 @@ rootProject.name = "bitcoin-facts-app"
 include(":shared")
 include(":androidApp")
 include(":taxonomy")
+include(":content-compiler")

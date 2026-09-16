@@ -2,17 +2,17 @@
 
 - [x] 1.1 Initialize git repo and base Gradle project structure (root build, version catalog) with empty `shared/` (KMP) and `androidApp/` modules — no `iosApp/` module in this change.
 - [x] 1.2 Get a trivial "hello shared module" build working end to end (shared module compiles, Android app links against it and prints a value from shared code) before adding real logic, to isolate multiplatform build/config issues from content/logic work.
-- [ ] 1.3 Add SQLDelight Gradle plugin/config to the shared module (schema/driver setup only, no tables yet).
+- [x] 1.3 Add SQLDelight Gradle plugin/config to the shared module (schema/driver setup only, no tables yet).
 
 ## 2. Fact content pipeline (`fact-content-pipeline`)
 
 - [x] 2.1 Define the canonical category taxonomy as a single constant/enum (e.g. mining, custody, proof-of-work, keys, multisig, monetary-policy, history, fiat-comparison, scaling, privacy, nodes-network, wallets) and decide where it lives so both the compiler and the shared Kotlin core reference the same source. Implemented as `Category` enum in a standalone `taxonomy` Kotlin Multiplatform module (jvm + android targets, commonMain-only); `shared`'s commonMain depends on it, and the content compiler (task 2.3) will depend on its jvm target the same way.
 - [x] 2.2 Define the fact frontmatter schema (`id`, `title`, `categories`, `sources`, `notify_eligible`, optional `difficulty`, optional `related`) and document it (e.g. a README in `content/facts/`).
-- [ ] 2.3 Implement the build-time content compiler: parses all `content/facts/*.md`, validates required fields present, validates categories against the canonical taxonomy, detects duplicate IDs, detects dangling `related` references.
-- [ ] 2.4 Implement related-fact symmetric mirroring in the compiler (declaring the link on one fact adds the reverse on the other).
-- [ ] 2.5 Implement compiled runtime index output (format per design.md's open question: JSON or generated SQLite) and wire it to be bundled into the Android app resources at build time.
-- [ ] 2.6 Wire the compiler as a Gradle task that runs before the app build and fails the build on any validation error, with a clear error message naming the file and problem.
-- [ ] 2.7 Write a handful of intentionally-invalid sample fact files (bad category, duplicate ID, dangling related ID, missing sources) as a regression check that the compiler rejects them.
+- [x] 2.3 Implement the build-time content compiler: parses all `content/facts/*.md`, validates required fields present, validates categories against the canonical taxonomy, detects duplicate IDs, detects dangling `related` references. Implemented as the `content-compiler` Gradle module (JVM, SnakeYAML for frontmatter parsing, kotlinx.serialization for output) — see `ContentCompiler.kt`.
+- [x] 2.4 Implement related-fact symmetric mirroring in the compiler (declaring the link on one fact adds the reverse on the other). Verified by `ContentCompilerTest`'s "related links are mirrored symmetrically" test.
+- [x] 2.5 Implement compiled runtime index output (format per design.md's open question: JSON or generated SQLite) and wire it to be bundled into the Android app resources at build time. Resolved: plain JSON via kotlinx.serialization, written to `build/generated/assets/facts/facts.json` and registered as an extra Android assets source dir.
+- [x] 2.6 Wire the compiler as a Gradle task that runs before the app build and fails the build on any validation error, with a clear error message naming the file and problem. `compileFacts` (JavaExec) added as a dependency of every `merge*Assets` task; verified a deliberately invalid fact fails `:androidApp:assembleDebug` with both problems named.
+- [x] 2.7 Write a handful of intentionally-invalid sample fact files (bad category, duplicate ID, dangling related ID, missing sources) as a regression check that the compiler rejects them. Fixtures in `content/test-fixtures/invalid/`, exercised by `ContentCompilerTest` (all 6 tests passing).
 
 ## 3. Shared core: models and content loading
 

@@ -34,6 +34,39 @@ android {
     buildFeatures {
         compose = true
     }
+
+    sourceSets {
+        getByName("main") {
+            assets.srcDir(layout.buildDirectory.dir("generated/assets/facts"))
+        }
+    }
+}
+
+val compileFacts = tasks.register<JavaExec>("compileFacts") {
+    group = "build"
+    description = "Compiles content/facts/*.md into the bundled facts.json runtime index (task 2.3-2.6)"
+    dependsOn(":content-compiler:classes")
+    classpath = project(":content-compiler")
+        .extensions.getByType<JavaPluginExtension>()
+        .sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("dev.emmett.bitcoinfacts.compiler.MainKt")
+
+    val inputDir = rootProject.file("content/facts")
+    val outputFile = layout.buildDirectory.file("generated/assets/facts/facts.json")
+
+    inputs.dir(inputDir)
+    outputs.file(outputFile)
+
+    doFirst {
+        args = listOf(
+            "--input", inputDir.absolutePath,
+            "--output", outputFile.get().asFile.absolutePath,
+        )
+    }
+}
+
+tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }.configureEach {
+    dependsOn(compileFacts)
 }
 
 dependencies {
