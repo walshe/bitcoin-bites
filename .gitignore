@@ -1,0 +1,28 @@
+# Local environment (machine-specific SDK path)
+local.properties
+
+# Claude Code runtime state
+.claude/scheduled_tasks.lock
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Kotlin/IDE
+.kotlin/
+.idea/
+*.iml
+.DS_Store
+
+# Android
+*.apk
+*.ap_
+*.dex
+captures/
+.cxx/
+
+# Xcode / iOS (for the future iosApp module)
+*.xcworkspace
+xcuserdata/
+DerivedData/

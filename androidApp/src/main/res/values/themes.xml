@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Placeholder theme; real Bitcoin-appropriate palette/typography is task 6.2 -->
+    <style name="Theme.BitcoinFacts" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

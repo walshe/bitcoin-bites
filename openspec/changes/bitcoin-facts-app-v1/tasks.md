@@ -1,13 +1,13 @@
 ## 1. Project scaffolding
 
-- [ ] 1.1 Initialize git repo and base Gradle project structure (root build, version catalog) with empty `shared/` (KMP) and `androidApp/` modules — no `iosApp/` module in this change.
-- [ ] 1.2 Get a trivial "hello shared module" build working end to end (shared module compiles, Android app links against it and prints a value from shared code) before adding real logic, to isolate multiplatform build/config issues from content/logic work.
+- [x] 1.1 Initialize git repo and base Gradle project structure (root build, version catalog) with empty `shared/` (KMP) and `androidApp/` modules — no `iosApp/` module in this change.
+- [x] 1.2 Get a trivial "hello shared module" build working end to end (shared module compiles, Android app links against it and prints a value from shared code) before adding real logic, to isolate multiplatform build/config issues from content/logic work.
 - [ ] 1.3 Add SQLDelight Gradle plugin/config to the shared module (schema/driver setup only, no tables yet).
 
 ## 2. Fact content pipeline (`fact-content-pipeline`)
 
-- [ ] 2.1 Define the canonical category taxonomy as a single constant/enum (e.g. mining, custody, proof-of-work, keys, multisig, monetary-policy, history, fiat-comparison, scaling, privacy, nodes-network, wallets) and decide where it lives so both the compiler and the shared Kotlin core reference the same source.
-- [ ] 2.2 Define the fact frontmatter schema (`id`, `title`, `categories`, `sources`, `notify_eligible`, optional `difficulty`, optional `related`) and document it (e.g. a README in `content/facts/`).
+- [x] 2.1 Define the canonical category taxonomy as a single constant/enum (e.g. mining, custody, proof-of-work, keys, multisig, monetary-policy, history, fiat-comparison, scaling, privacy, nodes-network, wallets) and decide where it lives so both the compiler and the shared Kotlin core reference the same source. Implemented as `Category` enum in a standalone `taxonomy` Kotlin Multiplatform module (jvm + android targets, commonMain-only); `shared`'s commonMain depends on it, and the content compiler (task 2.3) will depend on its jvm target the same way.
+- [x] 2.2 Define the fact frontmatter schema (`id`, `title`, `categories`, `sources`, `notify_eligible`, optional `difficulty`, optional `related`) and document it (e.g. a README in `content/facts/`).
 - [ ] 2.3 Implement the build-time content compiler: parses all `content/facts/*.md`, validates required fields present, validates categories against the canonical taxonomy, detects duplicate IDs, detects dangling `related` references.
 - [ ] 2.4 Implement related-fact symmetric mirroring in the compiler (declaring the link on one fact adds the reverse on the other).
 - [ ] 2.5 Implement compiled runtime index output (format per design.md's open question: JSON or generated SQLite) and wire it to be bundled into the Android app resources at build time.
