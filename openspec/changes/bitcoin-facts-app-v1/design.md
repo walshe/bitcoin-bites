@@ -1,0 +1,98 @@
+## Context
+
+Greenfield project, no existing code. Two people-level constraints shape every decision below more than technical ones do: (1) the author is learning Kotlin/KMP and wants real hands-on practice, not a framework that writes the logic for them; (2) the app's value is credibility with a technically literate, correction-happy audience (Bitcoiners), so content correctness and coherent design matter more than growth mechanics.
+
+## Goals / Non-Goals
+
+**Goals:**
+- A fully offline-capable app: all fact content ships inside the binary, zero server dependency.
+- A shared Kotlin core that contains all the interesting logic (content loading, filtering, related-fact resolution, notification selection, favorites/history), so Android and (later) iOS share behavior instead of reimplementing it twice.
+- A closed, validated category taxonomy so filtering stays coherent as content grows past a handful of facts.
+- Content authored in a human-readable, git-diffable format so facts can be reviewed like code (important given the accuracy bar).
+- Ship Android first, end to end, before touching iOS — validate the shared core and content pipeline in pure Kotlin before adding Swift interop friction.
+
+**Non-Goals (this change):**
+- iOS app — deferred to a follow-up change once the shared core is proven on Android.
+- Any server, remote content sync, or post-install content updates — v1 facts are frozen at build time.
+- User accounts, cloud sync, social/leaderboard features.
+- Paid content tiers — the only monetization is a non-gating tip IAP.
+- Notification personalization (category filters, curated learning paths) — v1 notification selection is pure random-no-repeat.
+
+## Decisions
+
+### 1. Content source of truth: Markdown + YAML frontmatter, one file per fact
+Facts live at `content/facts/<id>.md`. Frontmatter carries structured fields (`id`, `title`, `categories`, `difficulty`, `related`, `sources`, `notify_eligible`); the Markdown body carries the fact text and analogy.
+
+**Alternatives considered:**
+- *Embedded SQLite as source of truth* — rejected for v1: not git-diffable, hard to code-review fact-by-fact, awkward to hand-edit. A generated SQLite (or JSON) as a *build output* is still fine, and may be exactly what the runtime uses — the decision here is only about the authoring/source-of-truth layer.
+
+### 2. Build-time content compiler validates and compiles all facts
+A build step (run as part of Gradle, or a pre-build script invoked by Gradle) parses every `content/facts/*.md` file and produces a single runtime index (JSON, or a generated SQLite file) that ships inside the app. This step:
+- Validates every `categories` entry against a single canonical taxonomy constant (fixed list, ~10-15 entries). An unlisted category **fails the build** — this is the mechanism that prevents tag sprawl (e.g. `keys` vs `key-management` vs `private-keys` all meaning the same thing).
+- Auto-mirrors `related` links: if fact A declares `related: [B]`, the compiler adds A to B's related list too, so authors declare a link once.
+- Fails the build on: duplicate fact IDs, a `related` ID that doesn't exist, malformed frontmatter.
+
+**Alternatives considered:**
+- *No validation, trust authors* — rejected: with a single author this might hold up, but the entire point of the canonical-taxonomy decision is to make sprawl a build failure, not a code-review nit.
+- *Runtime validation instead of build-time* — rejected: catching a bad category at build time is strictly better than shipping it and discovering it via a broken filter UI.
+
+### 3. Shared Kotlin Multiplatform core
+A `shared` KMP module holds: `Fact`/`Category` models, the compiled-index loader, filter/search logic, the related-facts resolver, the daily-notification selection decision (pure logic — "which fact ID is today's pick," not the actual OS notification call), and a SQLDelight-backed store for favorites + seen-fact history.
+
+Platform-specific code is limited to `expect`/`actual` for: (a) firing the actual local notification (Android: WorkManager/AlarmManager; iOS, later: UNUserNotificationCenter), and (b) the SQLDelight platform driver.
+
+**Alternatives considered:**
+- *Fully separate native codebases (no KMP)* — rejected: doubles the maintenance surface for filter/notification logic and risks behavioral drift between platforms, though it would mean more total Kotlin *and* Swift practice.
+- *Cross-platform UI framework (Flutter/RN)* — rejected: cuts against the explicit Kotlin-learning goal, and native UI (Compose/SwiftUI) is wanted for the "nice Bitcoin look and feel" polish goal.
+
+### 4. Daily notification selection: random, no-repeat until exhausted
+The shared core tracks which fact IDs have been shown (reusing the favorites/history store), picks uniformly at random from the not-yet-shown pool eligible for notifications (`notify_eligible: true`), and reshuffles (clears the shown-set) once the pool is exhausted. This logic is pure and testable in the shared module; only the OS-level "fire a notification at time X" is platform code.
+
+**Alternatives considered:**
+- *User-curated by category* — deferred: adds a settings screen and interacts with filtering UI; not needed for v1's single-persona (default) experience.
+- *Curated learning-path sequence* — deferred: requires designing an actual curriculum ordering, which is a content-design task bigger than this change's scope.
+
+### 5. No server; content frozen at build time
+All facts are compiled into the app binary. There is no fetch-on-launch, no CDN, no static-JSON-refresh mechanism in this version.
+
+**Alternatives considered:**
+- *Bundled + static JSON refresh from a static host (e.g. GitHub Pages)* — explicitly deferred, not rejected. If post-launch fact corrections turn out to be slow/painful via app-store review, this is the natural next step, and the content pipeline (validated, ID-keyed facts) is already shaped to support it later without rework.
+
+### 6. Monetization: free app + one-time non-gating tip IAP
+A single consumable-or-non-consumable IAP (e.g. "Buy me a coffee ⚡") unlocks a cosmetic reward (alternate app icon, or a theme). No fact content or feature is ever paywalled.
+
+**Alternatives considered:**
+- *Paid upfront (e.g. $0.99)* — rejected: niche trivia apps lose almost all organic discovery behind a paywall, and this project isn't optimizing for revenue.
+- *Fully free, no monetization at all* — considered viable, but a tip jar costs little (one small IAP integration) and offers a "give back" path for the exact audience (Bitcoiners) most likely to appreciate the ethos of "the content itself is never for sale."
+
+### 7. Build/ship order: shared core + Android first, iOS as a later change
+This change's task list ends at a working Android app. iOS work (Xcode/Gradle integration, `.xcframework` consumption, SwiftUI screens, Flow-to-Swift interop wrappers) is intentionally excluded so KMP/interop debugging doesn't get tangled with shared-logic debugging.
+
+### 8. Share a fact via the platform's native share sheet
+Fact detail exposes a "share" action that hands the fact's title + a short excerpt (plus, ideally, a link back to the app's store listing) to the OS share sheet (Android `Intent.ACTION_SEND`). No custom share UI, no image generation, no deep-link/analytics tracking in v1 — just the plain OS mechanism.
+
+**Alternatives considered:**
+- *Generate a shareable image/card* — rejected for v1: real design and rendering work for a feature that's meant to be nearly free; plain text sharing captures most of the "send this to a friend" value at a fraction of the cost. Could revisit later if shared facts turn out to be a meaningful acquisition channel.
+
+### 9. Daily-open streak counter derived from existing seen-history
+The streak (consecutive days the user has opened the app / received a notification fact) is computed on read from the same seen-fact-history timestamps already persisted for notification no-repeat tracking (see Decision 4 and the `favorites-and-history` capability) — no new table, no new write path. It's a derived value, not stored state.
+
+**Alternatives considered:**
+- *Store a dedicated streak counter field, incremented/reset on each app open* — rejected: adds a second source of truth that can drift from the underlying history (e.g. if history is ever cleared or migrated); computing it on read from timestamps that already exist is simpler and can't get out of sync.
+
+### 10. Content-writing guideline: name the pre-Bitcoin gap
+Not a code feature — a discipline applied during fact authoring (Task group 10, "Initial content authoring"): every fact should explicitly name what was impossible, or required a trusted third party, before Bitcoin, and how Bitcoin closes that gap. This is what turns a neutral fact ("supply is capped at 21 million") into the intended "aha, nothing like this existed before" reaction, and costs nothing architecturally — it only shapes how facts get written and reviewed.
+
+## Risks / Trade-offs
+
+- **[Risk] Canonical taxonomy is too rigid or picked wrong early, requiring a painful re-tag of many facts later.** → Mitigation: keep the taxonomy list itself in one small, easy-to-edit constant; the build-time validator makes a taxonomy *change* (not just a fact change) a fast, safe, all-or-nothing operation (rename a category, rebuild, see every failure).
+- **[Risk] KMP/Android setup friction (first-time Gradle multi-module + SQLDelight config) slows the learning-focused momentum.** → Mitigation: front-load a minimal "hello shared module" spike before writing real fact-loading logic, so multiplatform build plumbing is solved independently of content-pipeline logic.
+- **[Risk] Content accuracy errors ship because there's no formal review process yet.** → Mitigation: require a `sources` entry on every fact at the schema level (even if enforcement is just a build-time non-empty-array check), so at minimum every claim is citation-backed and reviewable later even without a formal review workflow.
+- **[Risk] Deferring iOS means the KMP shared-module API might need rework once real Swift interop constraints appear (e.g. Flow wrapping, sealed class exposure).** → Mitigation: accepted trade-off — the alternative (building both platforms simultaneously) was judged riskier for the learning goal; the shared module's public API surface is small enough that a later interop-driven revision is cheap.
+- **[Risk] "Nice Bitcoin look and feel" is undefined — could cause scope creep or decision paralysis during Android UI implementation.** → Mitigation: out of scope for this design doc; treat as a task-level decision made during Android UI implementation (pick a palette/typography quickly, iterate visually rather than over-planning here).
+
+## Open Questions
+
+- Should the build-time content compiler be a Kotlin/Gradle task (consistent language, more idiomatic KMP) or a lightweight script in another language (e.g. Python/Node) invoked from Gradle? Leaning Kotlin for consistency and more Kotlin practice, but not yet decided.
+- Exact canonical category list is not finalized (a draft of ~10-15 was discussed: mining, custody, proof-of-work, keys, multisig, monetary-policy, history, fiat-comparison, scaling, privacy, nodes-network, wallets) — should be finalized as part of the `fact-content-pipeline` spec/tasks, not this design doc.
+- Runtime bundled format: plain JSON parsed at app startup vs. a build-generated SQLite file consumed via SQLDelight from the start. Both are compatible with the shared-core architecture; the choice affects startup cost and query ergonomics but not the overall design.
