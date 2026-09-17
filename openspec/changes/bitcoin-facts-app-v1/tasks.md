@@ -69,11 +69,12 @@
 
 ## 10. Initial content authoring
 
-**Deferred** (user decision): the user is building out the fact library themselves. The 2 example facts (`fact-001`, `fact-002`) authored during earlier task groups remain as working examples of the format and the "name the pre-Bitcoin gap" writing rule.
+**Superseded** (user decision, design.md decision 15): rather than the user authoring alone, the actual workflow is collaborative - the user pastes a chapter from a real book, Claude extracts/rewords/categorizes/cites. The taxonomy was reset to empty first (design.md decision 14) and the 2 placeholder example facts (`fact-001`, `fact-002`) retired, since they only ever existed to test the app itself.
 
-- [ ] 10.1 Draft an initial batch of facts (aim for enough breadth to exercise every canonical category at least once) each with a citation-backed `sources` entry.
-- [ ] 10.2 Apply the "name the pre-Bitcoin gap" writing rule (design.md Decision 10) to each fact — state what was impossible or required a trusted third party before Bitcoin, and how it's solved now.
-- [ ] 10.3 Self-review (or informal outside review) the initial batch for technical accuracy before considering v1 content-complete.
+- [x] 10.1 Draft an initial batch of facts (aim for enough breadth to exercise every canonical category at least once) each with a citation-backed `sources` entry. First batch: 15 facts across 13 new categories, all sourced from chapter 1 of "Inventing Bitcoin" by Yan Pritzker.
+- [x] 10.2 Apply the "name the pre-Bitcoin gap" writing rule (design.md Decision 10) to each fact — state what was impossible or required a trusted third party before Bitcoin, and how it's solved now. Applied to all 15 facts in this batch.
+- [ ] 10.3 Self-review (or informal outside review) the initial batch for technical accuracy before considering v1 content-complete. Pending the user's own review of this first chapter-1-derived batch.
+- [ ] 10.4 Continue chapter-by-chapter as the user pastes more source material, growing the taxonomy only when a real fact needs a new category (design.md decision 14).
 
 ## 11. End-to-end verification
 

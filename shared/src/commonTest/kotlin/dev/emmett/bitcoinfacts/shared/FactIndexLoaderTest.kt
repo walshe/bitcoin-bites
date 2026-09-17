@@ -23,7 +23,7 @@ private val SAMPLE_JSON = """
     {
       "id": "fact-002",
       "title": "Your keys, your coins",
-      "categories": ["keys", "custody"],
+      "categories": ["privacy", "custody"],
       "sources": [{"title": "Mastering Bitcoin", "url": "https://example.com"}],
       "notifyEligible": true,
       "difficulty": null,

@@ -10,6 +10,9 @@ import kotlin.test.assertTrue
 
 class ContentCompilerTest {
 
+    // Real content/facts is the user's own evolving library (see design.md
+    // decision 14: starts empty, grows organically) - these tests must not
+    // assume anything about its current size or specific fact IDs.
     private val realFactsDir = File(System.getProperty("contentFactsDir"))
     private val invalidFixturesDir = File(System.getProperty("invalidFixturesDir"))
 
@@ -21,20 +24,29 @@ class ContentCompilerTest {
     }
 
     @Test
-    fun `real facts compile successfully`() {
+    fun `real facts directory compiles without error, whatever it currently contains`() {
         val result = ContentCompiler.compile(realFactsDir)
         assertIs<CompileResult.Success>(result)
-        assertTrue(result.facts.isNotEmpty())
     }
 
     @Test
     fun `related links are mirrored symmetrically`() {
-        val result = ContentCompiler.compile(realFactsDir)
-        assertIs<CompileResult.Success>(result)
-        val fact001 = result.facts.first { it.id == "fact-001" }
-        val fact002 = result.facts.first { it.id == "fact-002" }
-        assertContains(fact001.related, "fact-002")
-        assertContains(fact002.related, "fact-001")
+        // Pure unit test on synthetic FactOutput objects - no file parsing, no
+        // category validation, no dependency on what's currently in the real
+        // library. See ContentCompiler.mirrorRelated's doc comment for why.
+        val a = FactOutput(
+            id = "a", title = "A", categories = emptyList(), sources = emptyList(),
+            notifyEligible = false, difficulty = null, related = listOf("b"), body = "",
+        )
+        val b = FactOutput(
+            id = "b", title = "B", categories = emptyList(), sources = emptyList(),
+            notifyEligible = false, difficulty = null, related = emptyList(), body = "",
+        )
+
+        val mirrored = ContentCompiler.mirrorRelated(listOf(a, b))
+
+        assertContains(mirrored.first { it.id == "a" }.related, "b")
+        assertContains(mirrored.first { it.id == "b" }.related, "a")
     }
 
     @Test

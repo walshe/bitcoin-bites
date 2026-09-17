@@ -1,0 +1,28 @@
+---
+id: what-is-fiat
+title: "What \"fiat\" money actually means"
+categories: [fiat, history]
+sources:
+  - title: "Inventing Bitcoin, Yan Pritzker, ch. 1"
+    url: "https://inventingbitcoin.com"
+notify_eligible: true
+difficulty: beginner
+related: [venezuela-hyperinflation]
+---
+
+"Fiat" is Latin for "let it be done" — it refers to money that's legal
+tender only because a government decrees it so, not because it's backed by
+anything physical. For most of history, people freely chose their own
+money from things that were hard to produce and easy to verify: salt,
+seashells, silver, gold.
+
+That changed gradually, then all at once: paper money used to represent a
+real claim on gold, until 1971, when the US ended the dollar's
+convertibility to gold entirely. After that, governments and central banks
+could expand the money supply — print more of it — at will, a process
+called debasement. Pure fiat currency, the money most of us use every day,
+is actually a fairly recent invention: only about a century old.
+
+**Analogy:** Like a landlord who can print extra rent receipts whenever
+they feel like it — your receipt still says the same number, but it quietly
+buys less every time they print more.

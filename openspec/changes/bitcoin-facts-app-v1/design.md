@@ -112,6 +112,20 @@ Rather than build a dedicated "choose a journey" screen with its own category-se
 - *Hardcoded per-category "journeys" (e.g. a fixed menu entry per taxonomy category)* — rejected: doesn't scale as categories are added/renamed, and duplicates the taxonomy list in a second place.
 - *Stop at the end of a journey with a "you've seen them all" card* — rejected in favor of reshuffle-and-loop: matches the casual, endless-browsing framing of "a journey" better than a hard stop, and needs no extra empty/end-state screen.
 
+### 14. Taxonomy starts empty and grows organically from real content
+Decision 1 committed to a *closed* taxonomy (build fails on an unlisted category) but originally seeded it with a guessed draft list of ~14 categories before any real content existed. In practice, once real content authoring started, the taxonomy was reset to genuinely empty and rebuilt one category at a time, adding an entry only when an actual fact needed it - starting with chapter 1 of the user's own book source rather than a speculative list. The two placeholder example facts used through tasks 1-12 (`fact-001`/`fact-002`, testing the app itself) were retired at this point since they existed only to exercise the pipeline, not as real content.
+
+**Alternatives considered:**
+- *Keep the original guessed draft list and just reuse it* — rejected: a taxonomy invented before any real fact existed is exactly the kind of guess decision 1 already worried about ("too rigid or picked wrong early"); better to let real source material decide what categories are actually needed.
+- *Keep the two placeholder facts as permanent library entries* — rejected: they were authored to test UI/pipeline behavior, not to reflect real book content, and keeping them would mean the "real" library starts with non-book-sourced facts mixed in.
+
+### 15. Fact content is sourced from real books, extracted and reworded collaboratively
+Rather than the user authoring every fact alone (task group 10's original plan) or Claude inventing facts unprompted, the actual workflow that emerged: the user pastes a chapter from a real Bitcoin book they trust, Claude identifies the strongest individual facts within it, rewords each into plain language with a fresh analogy (per decision 10's "name the pre-Bitcoin gap" rule), assigns categories (adding new ones to the taxonomy as needed per decision 14), and cites the source book (plus, where a fact draws on a direct quote, the original primary source too - e.g. Satoshi's own writing).
+
+**Alternatives considered:**
+- *User writes every fact text themselves* — this was task group 10's original plan, superseded once the user chose to work chapter-by-chapter from real books with Claude doing the extraction/rewording/citation work instead.
+- *Generate facts without a specific source text* — rejected: given the project's credibility goal, grounding every fact in a specific, named, real book (with a citation) is a stronger accuracy/trust story than facts synthesized from general knowledge with no traceable source.
+
 ## Risks / Trade-offs
 
 - **[Risk] Canonical taxonomy is too rigid or picked wrong early, requiring a painful re-tag of many facts later.** → Mitigation: keep the taxonomy list itself in one small, easy-to-edit constant; the build-time validator makes a taxonomy *change* (not just a fact change) a fast, safe, all-or-nothing operation (rename a category, rebuild, see every failure).

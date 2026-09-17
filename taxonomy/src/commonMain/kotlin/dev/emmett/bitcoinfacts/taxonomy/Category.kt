@@ -5,22 +5,26 @@ package dev.emmett.bitcoinfacts.taxonomy
  * referenced by both the content compiler (validates every fact's `categories`
  * frontmatter against [id]) and the app's shared core (the `Category` filter UI).
  * See content/facts/README.md for the human-readable version of this table.
+ *
+ * Grown organically from real content (design.md decision 14) rather than
+ * guessed upfront - this first batch comes entirely from chapter 1 of
+ * "Inventing Bitcoin" by Yan Pritzker. Add a new entry only when a real fact
+ * actually needs it.
  */
 enum class Category(val id: String) {
     HISTORY("history"),
     MONEY("money"),
     FIAT("fiat"),
     MONETARY_POLICY("monetary-policy"),
-    PROOF_OF_WORK("proof-of-work"),
-    MINING("mining"),
-    NODES_NETWORK("nodes-network"),
-    KEYS("keys"),
-    WALLETS("wallets"),
-    CUSTODY("custody"),
-    MULTISIG("multisig"),
+    SCARCITY("scarcity"),
+    DECENTRALIZATION("decentralization"),
+    NETWORK("network"),
+    DOUBLE_SPENDING("double-spending"),
+    OPEN_SOURCE("open-source"),
     PRIVACY("privacy"),
-    SCALING("scaling"),
-    SCARCITY("scarcity");
+    CUSTODY("custody"),
+    CENSORSHIP_RESISTANCE("censorship-resistance"),
+    CRYPTOGRAPHY("cryptography");
 
     companion object {
         private val byId = entries.associateBy { it.id }

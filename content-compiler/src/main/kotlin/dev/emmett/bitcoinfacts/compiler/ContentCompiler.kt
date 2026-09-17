@@ -131,17 +131,24 @@ object ContentCompiler {
 
         if (errors.isNotEmpty()) return CompileResult.Failure(errors)
 
-        val mirroredRelated = parsedFacts.associate { it.id to it.related.toMutableSet() }
-        for (fact in parsedFacts) {
+        return CompileResult.Success(mirrorRelated(parsedFacts))
+    }
+
+    /**
+     * Pure mirroring step, extracted so it's unit-testable on plain [FactOutput]
+     * objects without going through file parsing or category validation (see
+     * ContentCompilerTest - this used to be tested only via real content/facts
+     * files, which broke the test every time the real library's fact IDs changed).
+     */
+    internal fun mirrorRelated(facts: List<FactOutput>): List<FactOutput> {
+        val mirroredRelated = facts.associate { it.id to it.related.toMutableSet() }
+        for (fact in facts) {
             for (relatedId in fact.related) {
                 mirroredRelated.getValue(relatedId).add(fact.id)
             }
         }
-
-        val mirrored = parsedFacts
+        return facts
             .map { fact -> fact.copy(related = mirroredRelated.getValue(fact.id).toList().sorted()) }
             .sortedBy { it.id }
-
-        return CompileResult.Success(mirrored)
     }
 }

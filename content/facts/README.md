@@ -52,33 +52,35 @@ so the "nothing like this has existed before" reaction is explicit, not implicit
 ## Canonical category taxonomy
 
 This list is **closed** — the content compiler fails the build if any fact uses a
-category outside this list. This is deliberate (see design.md decision 1 / risk
+category outside this list. This is deliberate (design.md decision 1 / risk
 "taxonomy sprawl"): a small, fixed vocabulary keeps in-app filtering coherent as
 the fact count grows. A fact may declare multiple categories.
 
-To add or rename a category: edit the single source of truth (the `Category` enum
-in the `taxonomy` Kotlin module — task 2.1's implementation, shared by both the
-content compiler and the app's shared core), then re-run the build; every fact
-using a stale category name will fail loudly and point you at the file to fix.
+Unlike a typical closed taxonomy, this one didn't start from a guessed list —
+it started **empty** and grows one category at a time, only when a real fact
+actually needs a new one (design.md decision 14). There's no "add categories in
+advance" step; if you're writing a fact and none of the existing categories fit,
+add exactly one new entry to the `Category` enum in the `taxonomy` Kotlin module
+(the single source of truth, shared by the compiler and the app's category
+filter UI), update the table below to match, then re-run the build.
 
-| Category            | Covers                                                        |
-|----------------------|---------------------------------------------------------------|
-| `history`            | Genesis block, whitepaper, Pizza Day, cypherpunk mailing list, other milestones |
-| `money`               | What money is/does, pre-Bitcoin monetary history, gold, barter |
-| `fiat`                | Central banks, inflation, currency debasement, comparisons to Bitcoin |
-| `monetary-policy`     | 21M cap, halving schedule, issuance/emission                  |
-| `proof-of-work`       | Mining as work, hash functions, difficulty adjustment          |
-| `mining`              | Miners, pools, block rewards, energy, hardware                 |
-| `nodes-network`       | Full nodes, P2P network, consensus, decentralization mechanics |
-| `keys`                | Private/public keys, seed phrases, signatures                 |
-| `wallets`             | Wallet types, hot/cold storage, hardware wallets                |
-| `custody`             | Self-custody vs. third-party custody, "not your keys" risks     |
-| `multisig`            | Multi-signature setups and use cases                            |
-| `privacy`             | Pseudonymity, chain analysis, privacy techniques/limits          |
-| `scaling`             | Block size, layer 2, Lightning Network                          |
-| `scarcity`            | Fixed supply, stock-to-flow style scarcity concepts               |
+| Category               | Covers                                                                    |
+|-------------------------|----------------------------------------------------------------------------|
+| `history`               | Satoshi, the whitepaper, cypherpunk precursors, real-world monetary events |
+| `money`                 | What money is/does, pre-Bitcoin monetary concepts                          |
+| `fiat`                  | Central banks, legal tender, currency debasement                           |
+| `monetary-policy`       | The 21M cap, issuance schedule, satoshis                                   |
+| `scarcity`              | Digital vs. physical scarcity, predictable supply                          |
+| `decentralization`      | No single company/server, P2P vs. centrally-controlled systems             |
+| `network`               | The P2P network itself, nodes, distributed coordination                    |
+| `double-spending`       | Why digital money is hard to make un-copyable, and how Bitcoin solves it   |
+| `open-source`           | Verifiable, publicly readable/modifiable code                              |
+| `privacy`               | Identity, data breaches, pseudonymity                                      |
+| `custody`               | Self-custody vs. third-party custody, freezing/seizure risk                |
+| `censorship-resistance` | Money/state separation, resistance to seizure or control                   |
+| `cryptography`          | Proof vs. trust, verifiable claims                                         |
 
-(Draft list from design.md's open questions — confirm/adjust during task 2.1's
-implementation, then keep this table and the `Category` enum in sync by hand;
-the compiler validating against the enum is what actually enforces the taxonomy,
-not this table.)
+This first batch came entirely from chapter 1 of "Inventing Bitcoin" by Yan
+Pritzker — the very first real content added to this app. Expect this table to
+keep growing as more chapters/books get processed into facts; keeping it small
+and demand-driven (rather than pre-guessed) is the whole point.
