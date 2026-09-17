@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import dev.emmett.bitcoinfacts.android.R
 
 /**
- * Task 12.1: new nav-graph start destination, offering "Browse All" (the
+ * Task 12.1: new nav-graph start destination, offering "All Bites" (the
  * existing list screen) and "Random Journey" (an unfiltered swipeable
  * journey) as distinct entry points.
  */
@@ -72,7 +72,7 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.height(24.dp))
             Button(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
-                Text("Browse All")
+                Text("All Bites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onRandomJourney, modifier = Modifier.fillMaxWidth()) {

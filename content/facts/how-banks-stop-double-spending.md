@@ -18,9 +18,9 @@ and rejects the second attempt. This works because the bank is the
 backups, and internal checks to keep that one record correct.
 
 That's easy to police with a single trusted referee in charge. The
-much harder question — the one the rest of this book is really
-about — is how you stop the same trick with no referee at all: no
-single party keeping the one true ledger.
+much harder question — and the one Bitcoin actually had to solve —
+is how you stop the same trick with no referee at all: no single
+party keeping the one true ledger.
 
 **Analogy:** Like a single scorekeeper at a game — cheating is easy to
 catch when there's only one scoreboard and one person allowed to

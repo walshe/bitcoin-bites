@@ -108,7 +108,7 @@ fun FactDetailScreen(
 
             if (related.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(24.dp))
-                Text("Related facts", style = MaterialTheme.typography.titleMedium)
+                Text("Related bites", style = MaterialTheme.typography.titleMedium)
                 related.forEach { relatedFact ->
                     RelatedFactCard(relatedFact, onClick = { onRelatedFactClick(relatedFact.id) })
                 }
