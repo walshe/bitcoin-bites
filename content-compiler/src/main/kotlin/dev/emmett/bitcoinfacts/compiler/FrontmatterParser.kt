@@ -28,11 +28,23 @@ object FrontmatterParser {
         }
 
         val yamlText = lines.subList(1, closingIndex).joinToString("\n")
-        val body = lines.subList(closingIndex + 1, lines.size).joinToString("\n").trim()
+        val rawBody = lines.subList(closingIndex + 1, lines.size).joinToString("\n").trim()
 
         @Suppress("UNCHECKED_CAST")
         val frontmatter = (yaml.load<Map<String, Any?>>(yamlText) ?: emptyMap()) as Map<String, Any?>
 
-        return ParsedFile(frontmatter, body)
+        return ParsedFile(frontmatter, normalizeBody(rawBody))
     }
+
+    /**
+     * Fact bodies are authored with a hard line-wrap every ~70 characters for
+     * readable git diffs, but the app should reflow that to fill the actual
+     * screen width - only a genuine blank line (paragraph break) should render
+     * as a real line break. Without this, the raw wrap points show up as odd
+     * short lines mid-sentence in the UI.
+     */
+    private fun normalizeBody(raw: String): String =
+        raw.split(Regex("\n\\s*\n+"))
+            .map { paragraph -> paragraph.replace(Regex("\\s*\n\\s*"), " ").trim() }
+            .joinToString("\n\n")
 }
