@@ -26,9 +26,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -201,12 +201,16 @@ fun JourneyScreen(
     }
 }
 
-/** Small pill nudging left-right, hinting the screen above it can be swiped. */
+/**
+ * Small pill nudging left, hinting the screen above it can be swiped. Points
+ * and moves left deliberately - that's the actual finger motion needed to
+ * advance to the next fact, not the direction "forward" might suggest.
+ */
 @Composable
 private fun SwipeHint() {
     val offset by rememberInfiniteTransition(label = "swipeHint").animateFloat(
         initialValue = 0f,
-        targetValue = 8f,
+        targetValue = -8f,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 650, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse,
@@ -223,17 +227,17 @@ private fun SwipeHint() {
             .padding(horizontal = 12.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        Icon(
+            imageVector = Icons.Filled.KeyboardArrowLeft,
+            contentDescription = null,
+            modifier = Modifier.size(14.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(modifier = Modifier.width(2.dp))
         Text(
             text = "Swipe",
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Spacer(modifier = Modifier.width(4.dp))
-        Icon(
-            imageVector = Icons.Filled.ArrowForward,
-            contentDescription = null,
-            modifier = Modifier.size(14.dp),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
