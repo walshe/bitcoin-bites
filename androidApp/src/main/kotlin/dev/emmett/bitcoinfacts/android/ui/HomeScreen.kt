@@ -75,15 +75,15 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.height(24.dp))
             Button(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
-                Text("All Bites")
+                Text("All ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onGuidedJourney, modifier = Modifier.fillMaxWidth()) {
-                Text("Guided Bites")
+                Text("Guided ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onRandomJourney, modifier = Modifier.fillMaxWidth()) {
-                Text("Random Bites")
+                Text("Random ₿ites")
             }
         }
     }

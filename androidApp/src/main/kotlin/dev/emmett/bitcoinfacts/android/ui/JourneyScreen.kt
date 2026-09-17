@@ -88,7 +88,7 @@ fun JourneyScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (guided) "Guided Bites" else "Journey") },
+                title = { Text(if (guided) "Guided ₿ites" else "Journey") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
