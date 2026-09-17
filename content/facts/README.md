@@ -93,6 +93,7 @@ filter UI), update the table below to match, then re-run the build.
 | `cryptography`          | Proof vs. trust, verifiable claims                                         |
 | `hashing`               | Hash functions, SHA-256, one-way functions, fixed-size digests             |
 | `proof-of-work`         | The mining lottery, nonces, difficulty targets, energy tied to security   |
+| `keys`                  | Public/private key pairs, addresses, digital signatures, seed phrases     |
 
 This first batch came entirely from chapter 1 of "Inventing Bitcoin" by Yan
 Pritzker — the very first real content added to this app. Expect this table to
