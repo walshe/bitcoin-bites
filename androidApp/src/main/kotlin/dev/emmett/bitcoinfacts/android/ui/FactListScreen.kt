@@ -10,10 +10,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -45,13 +47,20 @@ fun FactListScreen(
     streak: Int,
     onFactClick: (String) -> Unit,
     onOpenFavorites: () -> Unit,
+    onBack: () -> Unit,
+    onStartJourney: () -> Unit,
 ) {
     val facts = container.factRepository.filterByCategories(selectedCategories)
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Bitcoin Facts") },
+                title = { Text("Bitcoin Bites") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                },
                 actions = {
                     if (streak > 0) {
                         Text(
@@ -64,6 +73,11 @@ fun FactListScreen(
                     }
                 },
             )
+        },
+        floatingActionButton = {
+            ExtendedFloatingActionButton(onClick = onStartJourney) {
+                Text("Start Journey")
+            }
         },
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {

@@ -25,12 +25,16 @@ import dev.emmett.bitcoinfacts.android.notifications.EXTRA_FACT_ID
 import dev.emmett.bitcoinfacts.android.ui.FactDetailScreen
 import dev.emmett.bitcoinfacts.android.ui.FactListScreen
 import dev.emmett.bitcoinfacts.android.ui.FavoritesScreen
+import dev.emmett.bitcoinfacts.android.ui.HomeScreen
+import dev.emmett.bitcoinfacts.android.ui.JourneyScreen
 import dev.emmett.bitcoinfacts.android.ui.theme.BitcoinFactsTheme
 import dev.emmett.bitcoinfacts.taxonomy.Category
 
+private const val ROUTE_HOME = "home"
 private const val ROUTE_LIST = "list"
 private const val ROUTE_FAVORITES = "favorites"
 private const val ROUTE_DETAIL = "detail/{factId}"
+private const val ROUTE_JOURNEY = "journey"
 
 class MainActivity : ComponentActivity() {
 
@@ -82,6 +86,11 @@ class MainActivity : ComponentActivity() {
 private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?) {
     val navController = rememberNavController()
     var selectedCategories by remember { mutableStateOf(setOf<Category>()) }
+    // Separate from selectedCategories: "Random Journey" is always unfiltered by
+    // definition, while "Start Journey" (from the list screen) captures whatever
+    // the list's filter happened to be at that moment - neither should leak into
+    // the other via a single shared variable.
+    var journeyCategories by remember { mutableStateOf(setOf<Category>()) }
     var favoriteIds by remember { mutableStateOf(container.favoritesStore.allFavoriteIds().toSet()) }
     val streak = remember { container.appOpenLogStore.currentStreak() }
 
@@ -97,7 +106,18 @@ private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?
         }
     }
 
-    NavHost(navController = navController, startDestination = ROUTE_LIST) {
+    NavHost(navController = navController, startDestination = ROUTE_HOME) {
+        composable(ROUTE_HOME) {
+            HomeScreen(
+                streak = streak,
+                onBrowseAll = { navController.navigate(ROUTE_LIST) },
+                onRandomJourney = {
+                    journeyCategories = emptySet()
+                    navController.navigate(ROUTE_JOURNEY)
+                },
+                onOpenFavorites = { navController.navigate(ROUTE_FAVORITES) },
+            )
+        }
         composable(ROUTE_LIST) {
             FactListScreen(
                 container = container,
@@ -114,6 +134,20 @@ private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?
                 streak = streak,
                 onFactClick = { factId -> navController.navigate("detail/$factId") },
                 onOpenFavorites = { navController.navigate(ROUTE_FAVORITES) },
+                onBack = { navController.popBackStack() },
+                onStartJourney = {
+                    journeyCategories = selectedCategories
+                    navController.navigate(ROUTE_JOURNEY)
+                },
+            )
+        }
+        composable(ROUTE_JOURNEY) {
+            JourneyScreen(
+                container = container,
+                categories = journeyCategories,
+                favoriteIds = favoriteIds,
+                onToggleFavorite = ::toggleFavorite,
+                onBack = { navController.popBackStack() },
             )
         }
         composable(

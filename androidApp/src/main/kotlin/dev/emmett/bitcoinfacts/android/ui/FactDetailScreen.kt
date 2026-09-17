@@ -75,21 +75,7 @@ fun FactDetailScreen(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
-            Text(fact.body.parseBoldMarkdown())
-
-            Spacer(modifier = Modifier.height(24.dp))
-            Text("Sources", style = MaterialTheme.typography.titleMedium)
-            fact.sources.forEach { source ->
-                Text(
-                    text = source.title,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .clickable {
-                            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(source.url)))
-                        },
-                )
-            }
+            FactBodyAndSources(fact)
 
             if (related.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(24.dp))

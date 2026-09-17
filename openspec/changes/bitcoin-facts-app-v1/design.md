@@ -104,6 +104,14 @@ No multi-language support exists in v1, and none is planned near-term — but to
 - *Design real multi-locale content/compiler support now* — rejected: no actual translation plan exists yet; this would be speculative scope on a project explicitly trying to stay lean.
 - *Do nothing, not even document a convention* — rejected: the filename convention is the one thing that's expensive to change retroactively once dozens of facts exist (renaming files, updating `related` references); documenting it now is free.
 
+### 13. Journey mode reuses the list screen's category filter instead of a separate picker
+Rather than build a dedicated "choose a journey" screen with its own category-selection UI, the "Start Journey" action on the list screen simply reads whatever categories are already checked in the existing `FilterChip` row (empty selection = all facts) and launches the swipeable Journey screen scoped to that same set. "Random Journey" from the new home/menu screen is just the same flow with an empty category selection, reached directly. Both entry points shuffle the matching fact pool once per Journey session and swipe through it via `HorizontalPager`; reaching the end reshuffles and loops rather than stopping.
+
+**Alternatives considered:**
+- *A separate "Journey Setup" screen with its own category chips* — rejected: would duplicate the exact selection UI/logic the list screen already has, and need to be kept in sync with it as the taxonomy evolves. Reusing the same hoisted `selectedCategories` state (already shared across the nav graph in `MainActivity`) costs nothing extra.
+- *Hardcoded per-category "journeys" (e.g. a fixed menu entry per taxonomy category)* — rejected: doesn't scale as categories are added/renamed, and duplicates the taxonomy list in a second place.
+- *Stop at the end of a journey with a "you've seen them all" card* — rejected in favor of reshuffle-and-loop: matches the casual, endless-browsing framing of "a journey" better than a hard stop, and needs no extra empty/end-state screen.
+
 ## Risks / Trade-offs
 
 - **[Risk] Canonical taxonomy is too rigid or picked wrong early, requiring a painful re-tag of many facts later.** → Mitigation: keep the taxonomy list itself in one small, easy-to-edit constant; the build-time validator makes a taxonomy *change* (not just a fact change) a fast, safe, all-or-nothing operation (rename a category, rebuild, see every failure).

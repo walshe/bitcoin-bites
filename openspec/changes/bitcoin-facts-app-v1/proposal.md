@@ -12,6 +12,7 @@ There's no simple, offline, no-nonsense app that teaches curious newcomers Bitco
 - New daily-open streak counter, derived entirely from the seen-fact history already persisted for notification no-repeat tracking — no new persistence layer, just a computed value.
 - New content-writing guideline (documented in design.md, applied during content authoring, not a code feature): every fact should name the specific pre-Bitcoin gap it closes, to make the "nothing like this has existed before" reaction explicit rather than implicit.
 - New optional one-time "tip/support" in-app purchase that unlocks a cosmetic reward (e.g. alternate app icon or theme) — no content is ever gated behind payment.
+- New "Journey" swipeable browsing mode: a new home/menu screen offers "Browse All" (today's list) or "Random Journey" (an unfiltered shuffle through every fact, swiped one at a time via `HorizontalPager`); a "Start Journey" action on the list screen launches the same swipeable mode scoped to whatever categories are currently checked in the existing filter chips (no new filter UI). A journey reshuffles and loops forever rather than stopping at the end.
 - iOS app (SwiftUI, consuming the same shared core) is explicitly **out of scope for this change** and deferred to a follow-up change once the shared core and Android app are stable — this keeps this change's task list focused on validating the content pipeline and shared logic in pure Kotlin first.
 - Remote content sync/refresh, user accounts, social/leaderboard features, and notification filtering by category are explicitly deferred (not decided against) — candidates for later changes if they turn out to matter after v1 ships.
 
@@ -23,6 +24,7 @@ There's no simple, offline, no-nonsense app that teaches curious newcomers Bitco
 - `daily-fact-notifications`: Selecting and scheduling exactly one local notification per day, drawing randomly from the fact pool without repeats until exhausted, then reshuffling.
 - `favorites-and-history`: Persisting user-favorited facts and a seen-fact history (used for notification no-repeat tracking, an in-app progress view, and a derived daily-open streak counter), stored locally via SQLDelight.
 - `support-tip`: An optional, one-time, non-content-gating in-app purchase that unlocks a cosmetic reward as a thank-you.
+- `journey-mode`: A swipeable, one-fact-at-a-time browsing mode reachable either unfiltered ("Random Journey" from the home screen) or scoped to the list screen's current category filter ("Start Journey"), reshuffling and looping forever rather than ending.
 
 ### Modified Capabilities
 _None — this is a new project with no existing specs._
