@@ -46,3 +46,10 @@ The content compiler SHALL run at build time and produce a single runtime-consum
 #### Scenario: Successful build produces a bundled index
 - **WHEN** all fact files pass validation
 - **THEN** the compiler produces a runtime index file containing every fact, its resolved category list, its mirrored related-facts list, and its sources, ready to be embedded in the app build
+
+### Requirement: Compiled index declares a schema version
+The compiled runtime index SHALL include a schema version number identifying the shape of its own contents, separate from any individual fact's data.
+
+#### Scenario: Compiled index includes a schema version
+- **WHEN** the content compiler produces a runtime index
+- **THEN** the index includes a schema version field alongside the compiled facts

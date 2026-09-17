@@ -13,6 +13,8 @@
 - [x] 2.5 Implement compiled runtime index output (format per design.md's open question: JSON or generated SQLite) and wire it to be bundled into the Android app resources at build time. Resolved: plain JSON via kotlinx.serialization, written to `build/generated/assets/facts/facts.json` and registered as an extra Android assets source dir.
 - [x] 2.6 Wire the compiler as a Gradle task that runs before the app build and fails the build on any validation error, with a clear error message naming the file and problem. `compileFacts` (JavaExec) added as a dependency of every `merge*Assets` task; verified a deliberately invalid fact fails `:androidApp:assembleDebug` with both problems named.
 - [x] 2.7 Write a handful of intentionally-invalid sample fact files (bad category, duplicate ID, dangling related ID, missing sources) as a regression check that the compiler rejects them. Fixtures in `content/test-fixtures/invalid/`, exercised by `ContentCompilerTest` (all 6 tests passing).
+- [x] 2.8 Add a `schemaVersion` field to the compiled index envelope (design.md decision 11) as a forward-compatibility hook for a possible future remote-refresh mechanism (decision 5, still deferred) — no fetch/versioning logic added, just the field.
+- [x] 2.9 Document a reserved locale-suffix filename convention (`fact-021.es.md` alongside `fact-021.md`) in `content/facts/README.md` for possible future translations (design.md decision 12) — documentation only, no compiler/schema changes; a locale-suffixed file created today would correctly fail the build's filename/id-match check until real support is built.
 
 ## 3. Shared core: models and content loading
 

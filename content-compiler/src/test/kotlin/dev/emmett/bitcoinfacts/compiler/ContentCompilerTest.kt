@@ -1,5 +1,6 @@
 package dev.emmett.bitcoinfacts.compiler
 
+import kotlinx.serialization.encodeToString
 import java.io.File
 import java.nio.file.Files
 import kotlin.test.Test
@@ -69,5 +70,15 @@ class ContentCompilerTest {
         val result = ContentCompiler.compile(dir)
         assertIs<CompileResult.Failure>(result)
         assertTrue(result.errors.any { it.contains("sources") })
+    }
+
+    @Test
+    fun `serialized index always includes schemaVersion even at its default value`() {
+        // Regression test: kotlinx.serialization silently omits a field that equals
+        // its default unless encodeDefaults is set, which would defeat the whole
+        // point of schemaVersion as an inspectable compatibility marker (decision 11).
+        val index = FactIndexOutput(facts = emptyList())
+        val json = outputJson.encodeToString(index)
+        assertContains(json, "\"schemaVersion\"")
     }
 }

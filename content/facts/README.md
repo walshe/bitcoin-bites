@@ -12,6 +12,16 @@ Filename is `<id>.md`, and `id` inside the frontmatter must match the filename (
 extension) exactly, e.g. `fact-021.md` must declare `id: fact-021`. This keeps the ID
 visible in the filesystem/git history without needing to open the file.
 
+**Future translations (not implemented — naming convention reserved only):** v1 is
+English-only, and the compiler has no locale awareness. If a fact is ever translated,
+the translated file should live alongside the English original using a locale suffix,
+e.g. `fact-021.es.md` next to `fact-021.md` — sharing the same `id`, `categories`,
+`related`, and `sources` structure, with only `title` and body text translated. This
+is reserved purely so a future translation effort doesn't collide with the plain
+`<id>.md` convention above; the compiler would need real changes (grouping by base id,
+a locale dimension in the runtime index) before any `*.<locale>.md` file would actually
+be picked up — don't create one yet.
+
 ## Frontmatter schema
 
 ```yaml

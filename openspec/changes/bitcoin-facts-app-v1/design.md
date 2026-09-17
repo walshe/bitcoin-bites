@@ -83,6 +83,20 @@ The streak (consecutive days the user has opened the app / received a notificati
 ### 10. Content-writing guideline: name the pre-Bitcoin gap
 Not a code feature — a discipline applied during fact authoring (Task group 10, "Initial content authoring"): every fact should explicitly name what was impossible, or required a trusted third party, before Bitcoin, and how Bitcoin closes that gap. This is what turns a neutral fact ("supply is capped at 21 million") into the intended "aha, nothing like this existed before" reaction, and costs nothing architecturally — it only shapes how facts get written and reviewed.
 
+### 11. Compiled index carries a `schemaVersion` field
+The runtime index (`facts.json`) is wrapped in an envelope — `{ "schemaVersion": 1, "facts": [...] }` — rather than being a bare array. This is a deliberate, minimal forward-compatibility hook for Decision 5's deferred remote-refresh idea: v1 has no fetch mechanism and no versioning logic, but *if* a later change adds one, the app can check this field before attempting to parse a remote file, without the compiler itself needing rework. `CURRENT_SCHEMA_VERSION` bumps only when `FactOutput`'s shape changes in a way older app versions couldn't parse.
+
+**Alternatives considered:**
+- *Design the full remote-refresh mechanism now (versioning, fetch/merge strategy, hosting)* — rejected: still genuinely deferred per Decision 5; speculative design for a feature that may never be needed if app-store review turnaround turns out fine in practice.
+- *No hook at all* — rejected: this one field costs nothing today and avoids a schema migration headache if remote refresh is ever added later.
+
+### 12. Locale-suffix filename convention reserved (not implemented)
+No multi-language support exists in v1, and none is planned near-term — but to avoid a painful rename/restructure later, a naming convention is reserved and documented in `content/facts/README.md`: a future translation of `fact-021.md` would live alongside it as `fact-021.es.md` (etc.), sharing the same `id`/`categories`/`related`/`sources` structure, with only title and body text translated. Nothing about the compiler or runtime index changes today — a `*.<locale>.md` file created now would simply fail the build's filename/id-match check, which is the correct (safe) failure mode until real locale support is built.
+
+**Alternatives considered:**
+- *Design real multi-locale content/compiler support now* — rejected: no actual translation plan exists yet; this would be speculative scope on a project explicitly trying to stay lean.
+- *Do nothing, not even document a convention* — rejected: the filename convention is the one thing that's expensive to change retroactively once dozens of facts exist (renaming files, updating `related` references); documenting it now is free.
+
 ## Risks / Trade-offs
 
 - **[Risk] Canonical taxonomy is too rigid or picked wrong early, requiring a painful re-tag of many facts later.** → Mitigation: keep the taxonomy list itself in one small, easy-to-edit constant; the build-time validator makes a taxonomy *change* (not just a fact change) a fast, safe, all-or-nothing operation (rename a category, rebuild, see every failure).

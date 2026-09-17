@@ -1,7 +1,6 @@
 package dev.emmett.bitcoinfacts.compiler
 
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.io.File
 import kotlin.system.exitProcess
 
@@ -28,8 +27,8 @@ fun main(args: Array<String>) {
         }
         is CompileResult.Success -> {
             outputFile.parentFile?.mkdirs()
-            val json = Json { prettyPrint = true }
-            outputFile.writeText(json.encodeToString(result.facts))
+            val index = FactIndexOutput(facts = result.facts)
+            outputFile.writeText(outputJson.encodeToString(index))
             println("Compiled ${result.facts.size} fact(s) -> ${outputFile.absolutePath}")
         }
     }
