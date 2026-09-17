@@ -39,7 +39,10 @@ fun FavoritesScreen(
     onBack: () -> Unit,
     onFactClick: (String) -> Unit,
 ) {
-    val favoriteFacts = favoriteIds.mapNotNull { container.factRepository.findById(it) }
+    // Use the repository's own order (the canonical `order` field facts.json is compiled
+    // by - see design.md decision 16) rather than favoriteIds' iteration order, so Favorites
+    // reads in the same sequence as Browse All/Journey instead of a third, undocumented sort.
+    val favoriteFacts = container.factRepository.all().filter { it.id in favoriteIds }
 
     Scaffold(
         topBar = {

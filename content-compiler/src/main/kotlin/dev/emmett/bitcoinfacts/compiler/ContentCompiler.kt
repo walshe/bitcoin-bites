@@ -59,12 +59,19 @@ object ContentCompiler {
                 errors += "${file.name}: missing required field 'title'"
             }
 
-            @Suppress("UNCHECKED_CAST")
-            val categories = fm["categories"] as? List<String>
-            if (categories.isNullOrEmpty()) {
-                errors += "${file.name}: missing required non-empty field 'categories'"
-            } else {
-                for (category in categories) {
+            // Cast to List<*> first (not List<String>) so a non-string element - e.g. bare
+            // `no`/`yes` in YAML 1.1, which SnakeYAML parses as Boolean - is caught as a
+            // validation error below instead of passing an erased generic cast and throwing
+            // an uncaught ClassCastException later at Category.fromId(category).
+            val categoriesRaw = fm["categories"] as? List<*>
+            val categories = categoriesRaw?.takeIf { raw -> raw.all { it is String } }
+                ?.map { it as String }
+            when {
+                categoriesRaw.isNullOrEmpty() ->
+                    errors += "${file.name}: missing required non-empty field 'categories'"
+                categories == null ->
+                    errors += "${file.name}: 'categories' must be a list of strings"
+                else -> for (category in categories) {
                     if (Category.fromId(category) == null) {
                         errors += "${file.name}: unknown category '$category' " +
                             "(canonical taxonomy: ${Category.allIds.sorted().joinToString()})"
@@ -72,13 +79,19 @@ object ContentCompiler {
                 }
             }
 
-            @Suppress("UNCHECKED_CAST")
-            val sourcesRaw = fm["sources"] as? List<Map<String, Any?>>
+            // Same defensive cast as categories above - a non-map element (e.g. a bare
+            // string instead of {title, url}) is caught here instead of crashing on
+            // source["title"] below.
+            val sourcesRaw = fm["sources"] as? List<*>
+            val sourceMaps = sourcesRaw?.takeIf { raw -> raw.all { it is Map<*, *> } }
+                ?.map { it as Map<*, *> }
             val sources = mutableListOf<SourceOutput>()
-            if (sourcesRaw.isNullOrEmpty()) {
-                errors += "${file.name}: missing required non-empty field 'sources'"
-            } else {
-                sourcesRaw.forEachIndexed { index, source ->
+            when {
+                sourcesRaw.isNullOrEmpty() ->
+                    errors += "${file.name}: missing required non-empty field 'sources'"
+                sourceMaps == null ->
+                    errors += "${file.name}: 'sources' must be a list of {title, url} objects"
+                else -> sourceMaps.forEachIndexed { index, source ->
                     val sourceTitle = source["title"] as? String
                     val sourceUrl = source["url"] as? String
                     if (sourceTitle.isNullOrBlank() || sourceUrl.isNullOrBlank()) {
@@ -106,7 +119,7 @@ object ContentCompiler {
 
             val hasFatalFieldError = title.isNullOrBlank() ||
                 categories.isNullOrEmpty() ||
-                sourcesRaw.isNullOrEmpty() ||
+                sourceMaps.isNullOrEmpty() ||
                 notifyEligible !is Boolean ||
                 order == null
             if (hasFatalFieldError) continue

@@ -3,6 +3,7 @@ package dev.emmett.bitcoinfacts.android.ui
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -41,7 +43,34 @@ fun FactDetailScreen(
     onBack: () -> Unit,
     onRelatedFactClick: (String) -> Unit,
 ) {
-    val fact = container.factRepository.findById(factId) ?: return
+    val fact = container.factRepository.findById(factId)
+    if (fact == null) {
+        // A stale fact id (e.g. a pending notification pointing at a fact removed in a
+        // content update) must still land on a screen with a way back, not a blank one.
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("Fact not found") },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                        }
+                    },
+                )
+            },
+        ) { padding ->
+            Box(
+                modifier = Modifier.fillMaxSize().padding(padding),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = "This fact is no longer available.",
+                    modifier = Modifier.padding(32.dp),
+                )
+            }
+        }
+        return
+    }
     val related = container.factRepository.relatedFacts(fact)
     val context = LocalContext.current
 

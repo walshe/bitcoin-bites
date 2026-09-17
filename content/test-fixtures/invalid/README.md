@@ -11,3 +11,5 @@ input. These are **not** real content and must never be included in the
 | `duplicate-id-a.md` / `duplicate-id-b.md` | Two files declaring the same `id` |
 | `dangling-related.md` | `related` references a fact ID that doesn't exist |
 | `missing-sources.md` | Omits the required non-empty `sources` field |
+| `non-string-category.md` | `categories` contains a non-string element (e.g. unquoted YAML `no`) |
+| `non-map-source.md` | `sources` contains a bare string instead of a `{title, url}` object |

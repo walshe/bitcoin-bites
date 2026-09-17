@@ -18,7 +18,14 @@ class DailyFactNotificationWorker(
 
     override suspend fun doWork(): Result {
         val container = (applicationContext as BitcoinFactsApplication).container
-        val fact = container.dailyFactPicker.pickTodaysFact()
+        val fact = try {
+            container.dailyFactPicker.pickTodaysFact()
+        } catch (e: IllegalArgumentException) {
+            // DailyFactSelector requires a non-empty notify_eligible pool; if a content
+            // update ever ships with none, skip today's notification instead of crashing
+            // the whole app process from a background worker.
+            return Result.failure()
+        }
         showDailyFactNotification(applicationContext, fact)
         return Result.success()
     }

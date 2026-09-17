@@ -85,6 +85,26 @@ class ContentCompilerTest {
     }
 
     @Test
+    fun `rejects a non-string category element instead of crashing`() {
+        // Regression test: unquoted YAML `no` parses as Boolean (YAML 1.1), which used
+        // to pass an erased `as? List<String>` cast and throw ClassCastException later.
+        val dir = tempDirWith(File(invalidFixturesDir, "non-string-category.md"))
+        val result = ContentCompiler.compile(dir)
+        assertIs<CompileResult.Failure>(result)
+        assertTrue(result.errors.any { it.contains("must be a list of strings") })
+    }
+
+    @Test
+    fun `rejects a non-map source element instead of crashing`() {
+        // Regression test: a bare string in `sources` used to pass an erased
+        // `as? List<Map<String, Any?>>` cast and throw ClassCastException later.
+        val dir = tempDirWith(File(invalidFixturesDir, "non-map-source.md"))
+        val result = ContentCompiler.compile(dir)
+        assertIs<CompileResult.Failure>(result)
+        assertTrue(result.errors.any { it.contains("must be a list of") && it.contains("title, url") })
+    }
+
+    @Test
     fun `serialized index always includes schemaVersion even at its default value`() {
         // Regression test: kotlinx.serialization silently omits a field that equals
         // its default unless encodeDefaults is set, which would defeat the whole
