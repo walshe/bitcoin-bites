@@ -16,9 +16,11 @@ Bitcoin isn't one invention — it's three, working together:
 1. **A digital asset** (bitcoin, lowercase b) with a supply that's limited,
    known in advance, and unchangeable — unlike government-issued money,
    whose supply can expand unpredictably.
+
 2. **A network of computers** that anyone can join, tracking who owns what
    and moving coins between people without banks, payment companies, or
    governments in the middle.
+
 3. **Open source client software** — code anyone can run to join the
    network, and anyone can read to see exactly how it works.
 

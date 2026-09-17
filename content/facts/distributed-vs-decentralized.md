@@ -12,9 +12,9 @@ related: [the-decentralized-ledger-experiment]
 ---
 
 These two words get used interchangeably, but they describe different
-things. A system is *distributed* simply because its data lives in more
+things. A system is **distributed** simply because its data lives in more
 than one place — copies of the ledger sit on many different computers
-instead of one. A system is *decentralized* because no single party is
+instead of one. A system is **decentralized** because no single party is
 in charge of it — no company or person can unilaterally change the
 rules or rewrite history.
 

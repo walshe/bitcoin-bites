@@ -14,7 +14,7 @@ related: [banks-are-just-ledgers, double-spending]
 If you already spent $2 and try to spend it again, your bank simply
 refuses — it checks its own ledger, sees the money is already gone,
 and rejects the second attempt. This works because the bank is the
-*only* party allowed to write to the ledger, backed by audits,
+**only** party allowed to write to the ledger, backed by audits,
 backups, and internal checks to keep that one record correct.
 
 That's easy to police with a single trusted referee in charge. The
