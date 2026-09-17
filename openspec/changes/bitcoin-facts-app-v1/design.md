@@ -74,11 +74,18 @@ Fact detail exposes a "share" action that hands the fact's title + a short excer
 **Alternatives considered:**
 - *Generate a shareable image/card* — rejected for v1: real design and rendering work for a feature that's meant to be nearly free; plain text sharing captures most of the "send this to a friend" value at a fraction of the cost. Could revisit later if shared facts turn out to be a meaningful acquisition channel.
 
-### 9. Daily-open streak counter derived from existing seen-history
-The streak (consecutive days the user has opened the app / received a notification fact) is computed on read from the same seen-fact-history timestamps already persisted for notification no-repeat tracking (see Decision 4 and the `favorites-and-history` capability) — no new table, no new write path. It's a derived value, not stored state.
+### 9. Daily-open streak counter derived from a durable open-day log (corrected during task 4.1)
+**Correction found during implementation:** the original plan below turned out to have a real bug, caught before any code was written. It's kept here (struck through) so the reasoning trail isn't lost, followed by the fix.
+
+~~The streak is computed on read from the same seen-fact-history timestamps already persisted for notification no-repeat tracking — no new table, no new write path.~~ **Bug:** that table is *cleared* by the notification no-repeat cycle reset (`daily-fact-notifications`'s "all eligible facts shown → reset" requirement) — so finishing the fact pool would silently zero out the user's streak too, even though they'd opened the app every day. Sharing one table conflated two different lifetimes: "facts shown in the current notification cycle" (meant to be wiped periodically) and "which calendar days the user was active" (meant to never be wiped).
+
+**Fix:** two separate append-only tables instead of one, each still a plain timestamp/day log (not a mutable counter, so Decision 9's original objection — a second source of truth that can drift — still doesn't apply to either):
+- `notificationShownFact` (cycle-scoped, cleared on cycle reset) — no-repeat tracking only, used by `daily-fact-notifications`.
+- `appOpenDay` (durable, never cleared) — one row per calendar day the user opened the app or received a notification fact; the streak is derived read-only from this table.
 
 **Alternatives considered:**
-- *Store a dedicated streak counter field, incremented/reset on each app open* — rejected: adds a second source of truth that can drift from the underlying history (e.g. if history is ever cleared or migrated); computing it on read from timestamps that already exist is simpler and can't get out of sync.
+- *Store a dedicated streak counter field, incremented/reset on each app open* — still rejected for the original reason: a mutable counter is a second source of truth that can drift from the underlying history.
+- *Keep one shared table, exclude it from the cycle-reset clear* — rejected: would require the no-repeat query to filter by "current cycle start time" instead of just "table is empty," adding complexity to the no-repeat logic to work around a modeling problem, when two small tables are simpler and each stays single-purpose.
 
 ### 10. Content-writing guideline: name the pre-Bitcoin gap
 Not a code feature — a discipline applied during fact authoring (Task group 10, "Initial content authoring"): every fact should explicitly name what was impossible, or required a trusted third party, before Bitcoin, and how Bitcoin closes that gap. This is what turns a neutral fact ("supply is capped at 21 million") into the intended "aha, nothing like this existed before" reaction, and costs nothing architecturally — it only shapes how facts get written and reviewed.

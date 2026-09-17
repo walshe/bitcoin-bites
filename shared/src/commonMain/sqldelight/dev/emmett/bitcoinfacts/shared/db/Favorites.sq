@@ -1,0 +1,17 @@
+CREATE TABLE favoriteFact (
+    factId TEXT NOT NULL PRIMARY KEY,
+    favoritedAtEpochMillis INTEGER NOT NULL
+);
+
+addFavorite:
+INSERT OR REPLACE INTO favoriteFact(factId, favoritedAtEpochMillis)
+VALUES (?, ?);
+
+removeFavorite:
+DELETE FROM favoriteFact WHERE factId = ?;
+
+isFavorite:
+SELECT EXISTS(SELECT 1 FROM favoriteFact WHERE factId = ?);
+
+allFavoriteIds:
+SELECT factId FROM favoriteFact ORDER BY favoritedAtEpochMillis DESC;

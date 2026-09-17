@@ -25,11 +25,11 @@
 
 ## 4. Shared core: favorites and history persistence (`favorites-and-history`)
 
-- [ ] 4.1 Design the SQLDelight schema for favorites (fact ID + favorited flag/timestamp) and seen-history (fact ID + shown timestamp, scoped to the current notification cycle).
-- [ ] 4.2 Implement favorite/unfavorite read+write operations in the shared module.
-- [ ] 4.3 Implement seen-history read+write operations (mark fact shown, query not-yet-shown eligible set, reset cycle).
-- [ ] 4.4 Wire the Android SQLDelight driver (`actual` implementation) so the shared queries run against a real local database on-device.
-- [ ] 4.5 Implement the streak calculation as a derived read over seen-history timestamps (consecutive-day count, reset on a missed day) — no new stored counter.
+- [x] 4.1 Design the SQLDelight schema for favorites (fact ID + favorited flag/timestamp) and seen-history (fact ID + shown timestamp, scoped to the current notification cycle). Corrected during implementation into **three** tables, not two — see design.md decision 9's correction: `favoriteFact`, cycle-scoped `notificationShownFact`, and a durable `appOpenDay` log kept separate so the streak survives a notification-cycle reset.
+- [x] 4.2 Implement favorite/unfavorite read+write operations in the shared module. `FavoritesStore` — 3 passing tests.
+- [x] 4.3 Implement seen-history read+write operations (mark fact shown, query not-yet-shown eligible set, reset cycle). `NotificationHistoryStore` — 3 passing tests. (The "not-yet-shown eligible set" query itself lives in task group 5's selection logic, which combines this store's `shownFactIds()` with the eligible fact pool.)
+- [x] 4.4 Wire the Android SQLDelight driver (`actual` implementation) so the shared queries run against a real local database on-device. `createBitcoinFactsDatabase(context)` in `shared/src/androidMain`; verified via a full `:androidApp:assembleDebug`. (A JVM JDBC driver was also added, `jvmTest`-only, purely so these stores are genuinely unit-testable without Android/Robolectric.)
+- [x] 4.5 Implement the streak calculation as a derived read over seen-history timestamps (consecutive-day count, reset on a missed day) — no new stored counter. `StreakCalculator` (pure function) + `AppOpenLogStore` — 6 + 2 passing tests covering gaps, exact-today, and ends-yesterday-still-counts cases.
 
 ## 5. Shared core: daily notification selection (`daily-fact-notifications`)
 

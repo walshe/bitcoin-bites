@@ -14,6 +14,7 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":taxonomy"))
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.datetime)
             implementation(libs.sqldelight.runtime)
             implementation(libs.sqldelight.coroutines.ext)
         }
@@ -22,6 +23,9 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.sqldelight.android.driver)
+        }
+        jvmTest.dependencies {
+            implementation(libs.sqldelight.sqlite.driver)
         }
     }
 }

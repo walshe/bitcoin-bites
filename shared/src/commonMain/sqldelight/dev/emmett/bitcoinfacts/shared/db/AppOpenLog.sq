@@ -1,0 +1,13 @@
+-- Durable, never cleared by the notification cycle reset - see design.md
+-- decision 9's correction. One row per calendar day the user opened the app
+-- or received a daily notification fact; the streak is a pure derived read
+-- over this table (task 4.5), not a stored counter.
+CREATE TABLE appOpenDay (
+    epochDay INTEGER NOT NULL PRIMARY KEY
+);
+
+recordOpenDay:
+INSERT OR IGNORE INTO appOpenDay(epochDay) VALUES (?);
+
+allOpenEpochDays:
+SELECT epochDay FROM appOpenDay ORDER BY epochDay DESC;
