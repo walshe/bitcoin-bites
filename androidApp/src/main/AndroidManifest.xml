@@ -3,6 +3,7 @@
 
     <!-- android:icon intentionally omitted for now; real app icon/branding is task 6.2 -->
     <application
+        android:name=".BitcoinFactsApplication"
         android:label="Bitcoin Facts"
         android:theme="@style/Theme.BitcoinFacts">
 

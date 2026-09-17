@@ -39,18 +39,18 @@
 
 ## 6. Android app: fact browsing and detail (`fact-discovery`)
 
-- [ ] 6.1 Set up the Android app's base Compose navigation shell (list screen, detail screen, favorites screen).
-- [ ] 6.2 Establish the app's visual identity: color palette, typography, and basic Bitcoin-appropriate theming (treat as a fast creative pass, not a long design cycle).
-- [ ] 6.3 Build the fact list screen consuming the shared loader, showing title + categories per fact.
-- [ ] 6.4 Build the category filter UI (multi-select against the canonical taxonomy) wired to the shared filtering logic.
-- [ ] 6.5 Build the fact detail screen: full text, analogy, tappable source links, and a related-facts section (hidden when empty) that navigates to another fact's detail on tap.
-- [ ] 6.6 Add a share action to the fact detail screen that invokes Android's native share sheet (`Intent.ACTION_SEND`) with the fact's title and a short excerpt.
+- [x] 6.1 Set up the Android app's base Compose navigation shell (list screen, detail screen, favorites screen). `navigation-compose` with 3 routes in `MainActivity.kt`; manual DI via `AppContainer` (no framework needed at this size).
+- [x] 6.2 Establish the app's visual identity: color palette, typography, and basic Bitcoin-appropriate theming (treat as a fast creative pass, not a long design cycle). Dark-first Material3 theme, Bitcoin-orange (`#F7931A`) accent, bold headline weights - based on a style reference the user provided.
+- [x] 6.3 Build the fact list screen consuming the shared loader, showing title + categories per fact. `FactListScreen.kt`.
+- [x] 6.4 Build the category filter UI (multi-select against the canonical taxonomy) wired to the shared filtering logic. `FilterChip` row; verified union semantics visually on-device (selecting/deselecting correctly narrows and restores the list).
+- [x] 6.5 Build the fact detail screen: full text, analogy, tappable source links, and a related-facts section (hidden when empty) that navigates to another fact's detail on tap. `FactDetailScreen.kt`. Found and fixed a real bug during on-device verification: `**bold**` markdown wasn't rendered (shown literally) - added `MarkdownBold.kt`, a small inline-bold parser, rather than pulling in a full markdown library for one construct. Verified related-fact navigation is correctly bidirectional (fact-001 ↔ fact-002).
+- [x] 6.6 Add a share action to the fact detail screen that invokes Android's native share sheet (`Intent.ACTION_SEND`) with the fact's title and a short excerpt. Verified on-device - real share sheet opens with title+excerpt pre-populated.
 
 ## 7. Android app: favorites UI and streak display
 
-- [ ] 7.1 Add a favorite toggle control to both the list and detail screens, wired to the shared favorites read/write operations.
-- [ ] 7.2 Build the favorites list screen showing only currently-favorited facts.
-- [ ] 7.3 Display the current streak (from the shared streak calculation) somewhere visible on app open, e.g. the fact list screen header.
+- [x] 7.1 Add a favorite toggle control to both the list and detail screens, wired to the shared favorites read/write operations. Verified on-device on both screens; state stays consistent navigating between them (backed by the same hoisted `favoriteIds` state in `MainActivity`).
+- [x] 7.2 Build the favorites list screen showing only currently-favorited facts. `FavoritesScreen.kt`, verified on-device.
+- [x] 7.3 Display the current streak (from the shared streak calculation) somewhere visible on app open, e.g. the fact list screen header. Shown as a 🔥 badge in the list screen's top bar; `MainActivity.onCreate` records the app-open day.
 
 ## 8. Android app: daily notifications
 

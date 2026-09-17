@@ -12,7 +12,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":taxonomy"))
+            // api, not implementation: Category is part of shared's own public
+            // surface (Fact.categories), so consumers like androidApp need it
+            // transitively without declaring their own dependency on :taxonomy.
+            api(project(":taxonomy"))
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
             implementation(libs.sqldelight.runtime)
