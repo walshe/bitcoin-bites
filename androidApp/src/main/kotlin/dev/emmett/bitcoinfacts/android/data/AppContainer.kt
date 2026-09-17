@@ -5,6 +5,7 @@ import dev.emmett.bitcoinfacts.shared.FactIndexLoader
 import dev.emmett.bitcoinfacts.shared.FactRepository
 import dev.emmett.bitcoinfacts.shared.history.AppOpenLogStore
 import dev.emmett.bitcoinfacts.shared.history.FavoritesStore
+import dev.emmett.bitcoinfacts.shared.history.JourneyProgressStore
 import dev.emmett.bitcoinfacts.shared.history.NotificationHistoryStore
 import dev.emmett.bitcoinfacts.shared.history.createBitcoinFactsDatabase
 import dev.emmett.bitcoinfacts.shared.notifications.DailyFactPicker
@@ -25,6 +26,7 @@ class AppContainer(context: Context) {
     val favoritesStore: FavoritesStore by lazy { FavoritesStore(database) }
     val notificationHistoryStore: NotificationHistoryStore by lazy { NotificationHistoryStore(database) }
     val appOpenLogStore: AppOpenLogStore by lazy { AppOpenLogStore(database) }
+    val journeyProgressStore: JourneyProgressStore by lazy { JourneyProgressStore(database) }
 
     val dailyFactPicker: DailyFactPicker by lazy {
         DailyFactPicker(factRepository, notificationHistoryStore, appOpenLogStore)

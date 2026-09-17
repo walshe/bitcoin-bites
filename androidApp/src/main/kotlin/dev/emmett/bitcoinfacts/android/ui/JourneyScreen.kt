@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.emmett.bitcoinfacts.android.data.AppContainer
+import dev.emmett.bitcoinfacts.shared.history.JourneyMode
 import dev.emmett.bitcoinfacts.taxonomy.Category
 
 /**
@@ -43,12 +44,21 @@ private const val VIRTUAL_PAGE_COUNT = 100_000
 
 /**
  * Task group 12: swipeable one-fact-at-a-time browsing, scoped to [categories]
- * (empty = every fact). In random mode ([guided] false), reshuffles and loops
- * forever once the shuffled order is exhausted (design.md decision 13) rather
- * than showing an end state. In guided mode, facts are shown in their
- * canonical `order` (i.e. the order they were authored in, chapter by
- * chapter) instead of shuffled, and that order never reshuffles - looping
- * back to the start after the last fact just replays the same sequence.
+ * (empty = every fact). In random mode ([mode] not [JourneyMode.GUIDED]),
+ * reshuffles and loops forever once the shuffled order is exhausted
+ * (design.md decision 13) rather than showing an end state. In guided mode,
+ * facts are shown in their canonical `order` (i.e. the order they were
+ * authored in, chapter by chapter) instead of shuffled, and that order never
+ * reshuffles - looping back to the start after the last fact just replays
+ * the same sequence.
+ *
+ * [mode] also controls resume-position persistence: passing [JourneyMode.GUIDED]
+ * or [JourneyMode.RANDOM] remembers the last fact viewed (via
+ * [AppContainer.journeyProgressStore]) and resumes there next time the same
+ * mode is opened; passing null (the category-filtered "Start Journey" entry
+ * point from the list screen) skips persistence entirely, since a filtered
+ * journey's scope varies run to run and isn't a single "position" worth
+ * remembering.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,11 +68,20 @@ fun JourneyScreen(
     favoriteIds: Set<String>,
     onToggleFavorite: (String) -> Unit,
     onBack: () -> Unit,
-    guided: Boolean = false,
+    mode: JourneyMode? = null,
 ) {
-    var journeyFacts by remember(categories, guided) {
+    val guided = mode == JourneyMode.GUIDED
+
+    var journeyFacts by remember(categories, mode) {
         val filtered = container.factRepository.filterByCategories(categories)
-        mutableStateOf(if (guided) filtered else filtered.shuffled())
+        val resumeFact = mode?.let { container.journeyProgressStore.lastFactId(it) }
+            ?.let { savedId -> filtered.find { it.id == savedId } }
+        val ordered = when {
+            guided -> filtered
+            resumeFact != null -> listOf(resumeFact) + (filtered - resumeFact).shuffled()
+            else -> filtered.shuffled()
+        }
+        mutableStateOf(ordered)
     }
 
     if (journeyFacts.isEmpty()) {
@@ -70,7 +89,17 @@ fun JourneyScreen(
         return
     }
 
-    val pagerState = rememberPagerState(pageCount = { VIRTUAL_PAGE_COUNT })
+    // Only guided mode needs a non-zero starting page - random/filtered modes
+    // already put the resume fact (if any) at index 0 above.
+    val initialPage = remember(categories, mode) {
+        if (guided) {
+            val savedId = mode?.let { container.journeyProgressStore.lastFactId(it) }
+            savedId?.let { id -> journeyFacts.indexOfFirst { it.id == id } }?.takeIf { it >= 0 } ?: 0
+        } else {
+            0
+        }
+    }
+    val pagerState = rememberPagerState(initialPage = initialPage, pageCount = { VIRTUAL_PAGE_COUNT })
     var lastCycle by remember { mutableStateOf(0) }
 
     if (!guided) {
@@ -84,6 +113,12 @@ fun JourneyScreen(
     }
 
     val currentFact = journeyFacts[pagerState.currentPage % journeyFacts.size]
+
+    if (mode != null) {
+        LaunchedEffect(currentFact.id, mode) {
+            container.journeyProgressStore.setLastFactId(mode, currentFact.id)
+        }
+    }
 
     Scaffold(
         topBar = {

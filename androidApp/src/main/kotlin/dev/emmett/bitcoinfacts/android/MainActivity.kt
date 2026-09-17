@@ -28,6 +28,7 @@ import dev.emmett.bitcoinfacts.android.ui.FavoritesScreen
 import dev.emmett.bitcoinfacts.android.ui.HomeScreen
 import dev.emmett.bitcoinfacts.android.ui.JourneyScreen
 import dev.emmett.bitcoinfacts.android.ui.theme.BitcoinFactsTheme
+import dev.emmett.bitcoinfacts.shared.history.JourneyMode
 import dev.emmett.bitcoinfacts.taxonomy.Category
 
 private const val ROUTE_HOME = "home"
@@ -92,8 +93,10 @@ private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?
     // moment - neither should leak into the other via a single shared variable.
     var journeyCategories by remember { mutableStateOf(setOf<Category>()) }
     // "Start Journey" and "Random Bites" both shuffle; only "Guided Bites" walks
-    // facts in their canonical `order` instead.
-    var journeyGuided by remember { mutableStateOf(false) }
+    // facts in their canonical `order` instead. Also controls resume-position
+    // persistence (null for "Start Journey" - its filtered scope varies run to
+    // run, so there's no single position worth remembering).
+    var journeyMode by remember { mutableStateOf<JourneyMode?>(null) }
     var favoriteIds by remember { mutableStateOf(container.favoritesStore.allFavoriteIds().toSet()) }
     val streak = remember { container.appOpenLogStore.currentStreak() }
 
@@ -116,12 +119,12 @@ private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?
                 onBrowseAll = { navController.navigate(ROUTE_LIST) },
                 onGuidedJourney = {
                     journeyCategories = emptySet()
-                    journeyGuided = true
+                    journeyMode = JourneyMode.GUIDED
                     navController.navigate(ROUTE_JOURNEY)
                 },
                 onRandomJourney = {
                     journeyCategories = emptySet()
-                    journeyGuided = false
+                    journeyMode = JourneyMode.RANDOM
                     navController.navigate(ROUTE_JOURNEY)
                 },
                 onOpenFavorites = { navController.navigate(ROUTE_FAVORITES) },
@@ -146,7 +149,7 @@ private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?
                 onBack = { navController.popBackStack() },
                 onStartJourney = {
                     journeyCategories = selectedCategories
-                    journeyGuided = false
+                    journeyMode = null
                     navController.navigate(ROUTE_JOURNEY)
                 },
             )
@@ -158,7 +161,7 @@ private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?
                 favoriteIds = favoriteIds,
                 onToggleFavorite = ::toggleFavorite,
                 onBack = { navController.popBackStack() },
-                guided = journeyGuided,
+                mode = journeyMode,
             )
         }
         composable(

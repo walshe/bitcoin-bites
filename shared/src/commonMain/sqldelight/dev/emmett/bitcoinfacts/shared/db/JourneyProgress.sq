@@ -1,0 +1,11 @@
+CREATE TABLE journeyProgress (
+    mode TEXT NOT NULL PRIMARY KEY,
+    factId TEXT NOT NULL
+);
+
+setProgress:
+INSERT OR REPLACE INTO journeyProgress(mode, factId)
+VALUES (?, ?);
+
+getProgress:
+SELECT factId FROM journeyProgress WHERE mode = ?;
