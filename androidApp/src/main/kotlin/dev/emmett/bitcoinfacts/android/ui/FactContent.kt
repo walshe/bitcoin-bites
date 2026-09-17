@@ -16,6 +16,13 @@ import androidx.compose.ui.unit.dp
 import dev.emmett.bitcoinfacts.shared.model.Fact
 
 /**
+ * Sources are kept on every fact (compiler still requires them) but hidden
+ * from the UI for now - flip this back on once we decide how we want
+ * citations to look/read in-app.
+ */
+private const val SHOW_SOURCES = false
+
+/**
  * Body text (with markdown bold rendering) + sources - shared between
  * [FactDetailScreen] and the Journey screen's per-page card, since both show
  * the same "full detail" content (design.md decision 1 for Journey mode).
@@ -26,18 +33,20 @@ fun FactBodyAndSources(fact: Fact, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(fact.body.parseBoldMarkdown())
 
-        Spacer(modifier = Modifier.height(24.dp))
-        Text("Sources", style = MaterialTheme.typography.titleMedium)
-        fact.sources.forEach { source ->
-            Text(
-                text = source.title,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .clickable {
-                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(source.url)))
-                    },
-            )
+        if (SHOW_SOURCES) {
+            Spacer(modifier = Modifier.height(24.dp))
+            Text("Sources", style = MaterialTheme.typography.titleMedium)
+            fact.sources.forEach { source ->
+                Text(
+                    text = source.title,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .clickable {
+                            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(source.url)))
+                        },
+                )
+            }
         }
     }
 }
