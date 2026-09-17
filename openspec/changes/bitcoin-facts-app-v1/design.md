@@ -141,6 +141,15 @@ The `sources` field stays required in frontmatter and is still validated by the 
 - *Remove sources from the schema entirely* — rejected: the project's credibility goal (design.md intro) depends on every fact being traceable to a real source even if that isn't surfaced in the UI yet; removing the field would lose that discipline during content authoring.
 - *Redesign the sources UI now instead of just hiding it* — deferred: no clear design intent yet for how citations should look/read in-app; hiding behind a flag keeps the data ready without blocking content work on an unresolved UI question.
 
+### 18. App icon and in-app branding use the bunny mascot artwork only
+Two logo concepts existed (`bitcoin-bites-assets/`, a bunny reading a Bitcoin-branded book, and `bitcoin-bites-book-icon-assets/`, a flatter stacked-books glyph) - the user chose to use the bunny exclusively, everywhere. It's wired in as: the Android launcher icon (legacy `ic_launcher`/`ic_launcher_round` at all five densities, generated directly from the source artwork - see below for why not a true adaptive icon), a hero image on the Home screen above the "Browse All"/"Random Journey" buttons, and the Favorites empty-state illustration.
+
+**Why legacy icon assets instead of Android's adaptive icon format:** the source PNG is a fully-flattened, full-bleed rounded square (its flat edges touch the canvas edge; only the four corners are transparent) with its own baked-in drop shadow, meant to sit on a plain light background. Layering it as an adaptive-icon *foreground* over a solid-color *background* (the standard two-layer adaptive icon approach) produced a visible double-ring artifact - the source's own shadow/halo showing up as an ugly outline against the near-identical orange background color. Using the artwork directly as a legacy icon (letting Android/launchers apply their own automatic masking to the single flattened image, as they do for any pre-adaptive-icon app) avoided the artifact entirely; a direct circular crop test confirmed no important content (the bunny's face, the book) gets clipped by common mask shapes.
+
+**Alternatives considered:**
+- *True adaptive icon (separate inset foreground + solid background layers)* — rejected after visual testing showed a double-background/shadow-ring artifact; would require a version of the artwork without its own baked-in background/shadow, which doesn't exist yet.
+- *Use the book-glyph icon for the launcher and the bunny only in-app* — rejected per explicit user preference: bunny everywhere, no mixed branding.
+
 ## Risks / Trade-offs
 
 - **[Risk] Canonical taxonomy is too rigid or picked wrong early, requiring a painful re-tag of many facts later.** → Mitigation: keep the taxonomy list itself in one small, easy-to-edit constant; the build-time validator makes a taxonomy *change* (not just a fact change) a fast, safe, all-or-nothing operation (rename a category, rebuild, see every failure).

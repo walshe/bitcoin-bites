@@ -5,10 +5,11 @@
          requested at runtime in MainActivity, not just declared here. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!-- android:icon intentionally omitted for now; real app icon/branding is task 6.2 -->
     <application
         android:name=".BitcoinFactsApplication"
         android:label="Bitcoin Bites"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.BitcoinFacts">
 
         <activity

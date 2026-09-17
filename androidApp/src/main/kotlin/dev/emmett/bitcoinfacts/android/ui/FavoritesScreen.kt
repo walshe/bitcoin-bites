@@ -1,9 +1,14 @@
 package dev.emmett.bitcoinfacts.android.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -20,7 +25,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import dev.emmett.bitcoinfacts.android.R
 import dev.emmett.bitcoinfacts.android.data.AppContainer
 
 /** Task 7.2: lists only currently-favorited facts. */
@@ -53,11 +60,21 @@ fun FavoritesScreen(
                     .padding(padding),
                 contentAlignment = Alignment.Center,
             ) {
-                Text(
-                    text = "No favorites yet - tap the heart on any fact to save it here.",
-                    style = MaterialTheme.typography.bodyMedium,
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(32.dp),
-                )
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.bunny_mascot),
+                        contentDescription = null, // decorative
+                        modifier = Modifier.size(96.dp),
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "No favorites yet - tap the heart on any fact to save it here.",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
             }
         } else {
             LazyColumn(modifier = Modifier.padding(padding)) {
