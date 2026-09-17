@@ -33,9 +33,9 @@
 
 ## 5. Shared core: daily notification selection (`daily-fact-notifications`)
 
-- [ ] 5.1 Implement the pure selection function: given the eligible (`notify_eligible`) fact set and the seen-history, return today's fact ID (random from not-yet-shown; reset-and-reshuffle when exhausted).
-- [ ] 5.2 Unit test the selection function's no-repeat-until-exhausted behavior and its reshuffle-on-exhaustion behavior.
-- [ ] 5.3 Define the shared-module interface the platform layer calls daily (e.g. `pickTodaysFact(): Fact`) and that records the pick into seen-history.
+- [x] 5.1 Implement the pure selection function: given the eligible (`notify_eligible`) fact set and the seen-history, return today's fact ID (random from not-yet-shown; reset-and-reshuffle when exhausted). `DailyFactSelector.selectNext` — no store dependency, injectable `Random`.
+- [x] 5.2 Unit test the selection function's no-repeat-until-exhausted behavior and its reshuffle-on-exhaustion behavior. 4 tests across many seeds (property-style: asserts membership in the correct subset, not one hardcoded outcome).
+- [x] 5.3 Define the shared-module interface the platform layer calls daily (e.g. `pickTodaysFact(): Fact`) and that records the pick into seen-history. `DailyFactPicker.pickTodaysFact()` — also calls `resetCycle()` when reshuffled and records the pick into `AppOpenLogStore` (a notification pick counts toward the streak, per the favorites-and-history spec). 4 integration tests against real (in-memory) SQLDelight stores, including a full-cycle-then-reshuffle end-to-end check.
 
 ## 6. Android app: fact browsing and detail (`fact-discovery`)
 
