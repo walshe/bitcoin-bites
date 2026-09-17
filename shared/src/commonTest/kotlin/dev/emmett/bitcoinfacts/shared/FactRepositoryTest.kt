@@ -7,7 +7,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-private fun fact(id: String, categories: List<Category>, related: List<String> = emptyList()) = Fact(
+private fun fact(id: String, categories: List<Category>, related: List<String> = emptyList(), order: Int = 0) = Fact(
     id = id,
     title = "Title $id",
     categories = categories,
@@ -16,6 +16,7 @@ private fun fact(id: String, categories: List<Category>, related: List<String> =
     difficulty = null,
     related = related,
     body = "body",
+    order = order,
 )
 
 class FactRepositoryTest {

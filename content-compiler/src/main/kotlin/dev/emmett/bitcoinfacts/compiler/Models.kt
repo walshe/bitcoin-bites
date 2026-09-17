@@ -18,6 +18,7 @@ data class FactOutput(
     val difficulty: String?,
     val related: List<String>,
     val body: String,
+    val order: Int,
 )
 
 @Serializable

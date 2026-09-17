@@ -35,6 +35,8 @@ sources:                      # required, non-empty
     url: "https://..."
 notify_eligible: true         # required boolean — can this fact be used as a
                                # daily push-notification pick?
+order: 4500                   # required integer — controls Browse All / Journey
+                               # ordering (see "Fact ordering" below)
 difficulty: beginner          # optional: beginner | intermediate | advanced
 related: [fact-007, fact-118] # optional — other fact IDs. Declaring the link on
                                # ONE side is enough; the compiler mirrors it onto
@@ -47,6 +49,16 @@ Body: the fact's explanation, in plain language, followed by a short analogy.
 Per design.md decision 10, prefer naming the specific pre-Bitcoin gap this fact
 closes — what was impossible, or required trusting a third party, before Bitcoin —
 so the "nothing like this has existed before" reaction is explicit, not implicit.
+
+## Fact ordering
+
+`order` is a plain integer the compiler sorts `facts.json` by (ties break on
+`id`), which is what determines the sequence facts appear in for Browse All
+and Journey mode. It's deliberately sparse — the first chapter-1 batch uses
+1000, 2000, 3000... — so a fact discovered later that belongs *between* two
+existing facts can just take a number in the gap (e.g. 1500) instead of
+forcing a renumber of everything after it. Only renumber a whole range if a
+gap actually runs out.
 ```
 
 ## Canonical category taxonomy

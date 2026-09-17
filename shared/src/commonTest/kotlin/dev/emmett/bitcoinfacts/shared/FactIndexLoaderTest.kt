@@ -18,7 +18,8 @@ private val SAMPLE_JSON = """
       "notifyEligible": true,
       "difficulty": "beginner",
       "related": ["fact-002"],
-      "body": "Fixed supply."
+      "body": "Fixed supply.",
+      "order": 1000
     },
     {
       "id": "fact-002",
@@ -28,7 +29,8 @@ private val SAMPLE_JSON = """
       "notifyEligible": true,
       "difficulty": null,
       "related": ["fact-001"],
-      "body": "Self custody."
+      "body": "Self custody.",
+      "order": 2000
     }
   ]
 }

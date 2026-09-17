@@ -8,6 +8,7 @@ sources:
   - title: "Bitcoin: A Peer-to-Peer Electronic Cash System"
     url: "https://bitcoin.org/bitcoin.pdf"
 notify_eligible: true
+order: 13000
 difficulty: intermediate
 ---
 

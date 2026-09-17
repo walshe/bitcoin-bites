@@ -24,6 +24,7 @@ internal data class FactDto(
     val difficulty: String? = null,
     val related: List<String> = emptyList(),
     val body: String,
+    val order: Int,
 )
 
 @Serializable

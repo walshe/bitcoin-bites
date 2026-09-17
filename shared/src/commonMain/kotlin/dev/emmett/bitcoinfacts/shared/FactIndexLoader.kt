@@ -41,5 +41,6 @@ object FactIndexLoader {
         difficulty = difficulty,
         related = related,
         body = body,
+        order = order,
     )
 }

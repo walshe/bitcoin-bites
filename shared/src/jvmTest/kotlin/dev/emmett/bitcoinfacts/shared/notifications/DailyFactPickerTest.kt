@@ -21,6 +21,7 @@ private fun fact(id: String, notifyEligible: Boolean) = Fact(
     difficulty = null,
     related = emptyList(),
     body = "body",
+    order = 0,
 )
 
 class DailyFactPickerTest {

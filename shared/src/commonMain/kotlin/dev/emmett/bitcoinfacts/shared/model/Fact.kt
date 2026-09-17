@@ -16,6 +16,7 @@ data class Fact(
     val difficulty: String?,
     val related: List<String>,
     val body: String,
+    val order: Int,
 )
 
 data class Source(

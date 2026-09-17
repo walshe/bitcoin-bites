@@ -6,6 +6,7 @@ sources:
   - title: "Inventing Bitcoin, Yan Pritzker, ch. 1"
     url: "https://inventingbitcoin.com"
 notify_eligible: true
+order: 8000
 difficulty: beginner
 ---
 

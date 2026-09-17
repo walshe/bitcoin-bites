@@ -99,10 +99,16 @@ object ContentCompiler {
             @Suppress("UNCHECKED_CAST")
             val related = (fm["related"] as? List<String>) ?: emptyList()
 
+            val order = fm["order"] as? Int
+            if (order == null) {
+                errors += "${file.name}: missing/invalid required integer field 'order'"
+            }
+
             val hasFatalFieldError = title.isNullOrBlank() ||
                 categories.isNullOrEmpty() ||
                 sourcesRaw.isNullOrEmpty() ||
-                notifyEligible !is Boolean
+                notifyEligible !is Boolean ||
+                order == null
             if (hasFatalFieldError) continue
 
             parsedFacts += FactOutput(
@@ -114,6 +120,7 @@ object ContentCompiler {
                 difficulty = difficulty,
                 related = related,
                 body = parsed.body,
+                order = order,
             )
         }
 
@@ -149,6 +156,6 @@ object ContentCompiler {
         }
         return facts
             .map { fact -> fact.copy(related = mirroredRelated.getValue(fact.id).toList().sorted()) }
-            .sortedBy { it.id }
+            .sortedWith(compareBy({ it.order }, { it.id }))
     }
 }

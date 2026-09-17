@@ -6,6 +6,7 @@ sources:
   - title: "n/a"
     url: "https://example.com"
 notify_eligible: false
+order: 1
 ---
 
 This fixture, together with duplicate-id-a.md, verifies the compiler rejects

@@ -8,6 +8,7 @@ sources:
   - title: "Satoshi Nakamoto, P2P Foundation forum post, Feb 2009"
     url: "https://satoshi.nakamotoinstitute.org/"
 notify_eligible: true
+order: 4000
 difficulty: beginner
 related: [crypto-proof-vs-trust]
 ---

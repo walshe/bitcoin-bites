@@ -36,11 +36,11 @@ class ContentCompilerTest {
         // library. See ContentCompiler.mirrorRelated's doc comment for why.
         val a = FactOutput(
             id = "a", title = "A", categories = emptyList(), sources = emptyList(),
-            notifyEligible = false, difficulty = null, related = listOf("b"), body = "",
+            notifyEligible = false, difficulty = null, related = listOf("b"), body = "", order = 1000,
         )
         val b = FactOutput(
             id = "b", title = "B", categories = emptyList(), sources = emptyList(),
-            notifyEligible = false, difficulty = null, related = emptyList(), body = "",
+            notifyEligible = false, difficulty = null, related = emptyList(), body = "", order = 2000,
         )
 
         val mirrored = ContentCompiler.mirrorRelated(listOf(a, b))

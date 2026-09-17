@@ -126,6 +126,21 @@ Rather than the user authoring every fact alone (task group 10's original plan) 
 - *User writes every fact text themselves* — this was task group 10's original plan, superseded once the user chose to work chapter-by-chapter from real books with Claude doing the extraction/rewording/citation work instead.
 - *Generate facts without a specific source text* — rejected: given the project's credibility goal, grounding every fact in a specific, named, real book (with a citation) is a stronger accuracy/trust story than facts synthesized from general knowledge with no traceable source.
 
+### 16. Explicit sparse `order` field controls Browse All / Journey sequence
+Before this decision, `facts.json` was sorted alphabetically by `id` (a semantic slug like `what-is-bitcoin`), which meant Browse All and Journey mode presented facts in an arbitrary order unrelated to how they read in the source chapter. Every fact now declares a required integer `order` in its frontmatter; the compiler sorts the compiled index by it (falling back to `id` only to break an exact tie), and the app's list/Journey ordering just follows whatever order `facts.json` is already in. The first batch (chapter 1) uses sparse round numbers - 1000, 2000, 3000... - so a fact discovered later that belongs between two existing ones can take a number in the gap (e.g. 1500) instead of forcing a renumber of everything after it.
+
+**Alternatives considered:**
+- *Keep alphabetical-by-id ordering* — rejected: fine as a stable, zero-maintenance default, but actively works against the goal of Journey mode reading like the source material as more chapters/books get added.
+- *Preserve file/insertion order instead of an explicit field* — rejected: fragile (depends on filesystem iteration or git history, both unreliable/opaque signals) and gives no way to express "insert this fact between these two" without touching unrelated files.
+- *Densely-numbered order (1, 2, 3...)* — rejected: any future insertion between two adjacent facts would require renumbering every fact after the insertion point.
+
+### 17. Sources are hidden from the fact detail/Journey UI (data still required)
+The `sources` field stays required in frontmatter and is still validated by the compiler - it's not being removed from the content model. Only the rendering is toggled off, via a single `SHOW_SOURCES` constant in the shared `FactBodyAndSources` composable, while citation UI/UX (placement, styling, whether it's inline vs. a separate screen) gets decided later rather than shipped as an afterthought.
+
+**Alternatives considered:**
+- *Remove sources from the schema entirely* — rejected: the project's credibility goal (design.md intro) depends on every fact being traceable to a real source even if that isn't surfaced in the UI yet; removing the field would lose that discipline during content authoring.
+- *Redesign the sources UI now instead of just hiding it* — deferred: no clear design intent yet for how citations should look/read in-app; hiding behind a flag keeps the data ready without blocking content work on an unresolved UI question.
+
 ## Risks / Trade-offs
 
 - **[Risk] Canonical taxonomy is too rigid or picked wrong early, requiring a painful re-tag of many facts later.** → Mitigation: keep the taxonomy list itself in one small, easy-to-edit constant; the build-time validator makes a taxonomy *change* (not just a fact change) a fast, safe, all-or-nothing operation (rename a category, rebuild, see every failure).

@@ -6,6 +6,7 @@ sources:
   - title: "n/a"
     url: "https://example.com"
 notify_eligible: false
+order: 1
 related: [fact-does-not-exist]
 ---
 
