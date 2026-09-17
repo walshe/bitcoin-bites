@@ -1,15 +1,32 @@
 package dev.emmett.bitcoinfacts.android.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -114,6 +131,13 @@ fun JourneyScreen(
 
     val currentFact = journeyFacts[pagerState.currentPage % journeyFacts.size]
 
+    // Subtle one-off affordance: it's not obvious this screen is swipeable, so
+    // nudge with a small animated hint until the user actually swipes once.
+    var hasSwiped by remember(initialPage) { mutableStateOf(false) }
+    LaunchedEffect(pagerState.currentPage) {
+        if (pagerState.currentPage != initialPage) hasSwiped = true
+    }
+
     if (mode != null) {
         LaunchedEffect(currentFact.id, mode) {
             container.journeyProgressStore.setLastFactId(mode, currentFact.id)
@@ -141,27 +165,76 @@ fun JourneyScreen(
             )
         },
     ) { padding ->
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.fillMaxSize().padding(padding),
-        ) { page ->
-            val fact = journeyFacts[page % journeyFacts.size]
-            Column(
+        Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize(),
+            ) { page ->
+                val fact = journeyFacts[page % journeyFacts.size]
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState()),
+                ) {
+                    Text(fact.title, style = MaterialTheme.typography.headlineMedium)
+                    Text(
+                        text = fact.categories.joinToString(" · ") { it.displayName() },
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(top = 4.dp, bottom = 16.dp),
+                    )
+                    FactBodyAndSources(fact)
+                }
+            }
+            AnimatedVisibility(
+                visible = !hasSwiped,
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState()),
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 24.dp),
+                enter = fadeIn(),
+                exit = fadeOut(),
             ) {
-                Text(fact.title, style = MaterialTheme.typography.headlineMedium)
-                Text(
-                    text = fact.categories.joinToString(" · ") { it.displayName() },
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Normal,
-                    modifier = Modifier.padding(top = 4.dp, bottom = 16.dp),
-                )
-                FactBodyAndSources(fact)
+                SwipeHint()
             }
         }
+    }
+}
+
+/** Small pill nudging left-right, hinting the screen above it can be swiped. */
+@Composable
+private fun SwipeHint() {
+    val offset by rememberInfiniteTransition(label = "swipeHint").animateFloat(
+        initialValue = 0f,
+        targetValue = 8f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 650, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse,
+        ),
+        label = "swipeHintOffset",
+    )
+    Row(
+        modifier = Modifier
+            .offset(x = offset.dp)
+            .background(
+                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
+                shape = RoundedCornerShape(50),
+            )
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = "Swipe",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Icon(
+            imageVector = Icons.Filled.ArrowForward,
+            contentDescription = null,
+            modifier = Modifier.size(14.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 
