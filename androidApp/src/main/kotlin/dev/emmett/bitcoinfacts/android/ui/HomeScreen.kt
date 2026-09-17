@@ -27,11 +27,11 @@ import androidx.compose.ui.unit.dp
 import dev.emmett.bitcoinfacts.android.R
 
 /**
- * Task 12.1: new nav-graph start destination, offering "All Bites" (the
- * existing list screen), "Guided Bites" (an unfiltered swipeable journey in
- * canonical `order` - the order facts were authored in, chapter by chapter),
- * and "Random Bites" (the same swipeable journey, shuffled) as distinct
- * entry points.
+ * Task 12.1: new nav-graph start destination, offering "Guided Bites" (an
+ * unfiltered swipeable journey in canonical `order` - the order facts were
+ * authored in, chapter by chapter), "Random Bites" (the same swipeable
+ * journey, shuffled), and "All Bites" (the existing list screen) as distinct
+ * entry points, in that display order.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,16 +74,16 @@ fun HomeScreen(
                 modifier = Modifier.size(120.dp),
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Button(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
-                Text("All ₿ites")
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            OutlinedButton(onClick = onGuidedJourney, modifier = Modifier.fillMaxWidth()) {
+            Button(onClick = onGuidedJourney, modifier = Modifier.fillMaxWidth()) {
                 Text("Guided ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onRandomJourney, modifier = Modifier.fillMaxWidth()) {
                 Text("Random ₿ites")
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            OutlinedButton(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
+                Text("All ₿ites")
             }
         }
     }
