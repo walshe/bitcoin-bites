@@ -30,8 +30,9 @@ import dev.emmett.bitcoinfacts.android.R
  * Task 12.1: new nav-graph start destination, offering "Guided Bites" (an
  * unfiltered swipeable journey in canonical `order` - the order facts were
  * authored in, chapter by chapter), "Random Bites" (the same swipeable
- * journey, shuffled), and "All Bites" (the existing list screen) as distinct
- * entry points, in that display order.
+ * journey, shuffled), "All Bites" (the existing list screen), and "Purchase
+ * Bitcoin" (a placeholder page for exchange referral links, added later) as
+ * distinct entry points, in that display order.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,6 +42,7 @@ fun HomeScreen(
     onGuidedJourney: () -> Unit,
     onRandomJourney: () -> Unit,
     onOpenFavorites: () -> Unit,
+    onPurchaseBitcoin: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -65,15 +67,16 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(padding)
                 .padding(24.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
             Image(
                 painter = painterResource(R.drawable.bunny_mascot),
                 contentDescription = null, // decorative - the screen title already says "Bitcoin Bites"
-                modifier = Modifier.size(120.dp),
+                modifier = Modifier.size(200.dp),
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             Button(onClick = onGuidedJourney, modifier = Modifier.fillMaxWidth()) {
                 Text("Guided ₿ites")
             }
@@ -84,6 +87,10 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
                 Text("All ₿ites")
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            OutlinedButton(onClick = onPurchaseBitcoin, modifier = Modifier.fillMaxWidth()) {
+                Text("Purchase Bitcoin")
             }
         }
     }
