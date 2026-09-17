@@ -60,6 +60,8 @@
 
 ## 9. Android app: tip/support purchase (`support-tip`)
 
+**Deferred** (user decision): real purchase-flow testing needs a signed build on a Play Console testing track with a test account, which isn't achievable in this local dev/emulator environment. Revisit once a Play Console listing exists, so the integration is built and verified in one pass rather than built now and verified much later.
+
 - [ ] 9.1 Integrate an Android billing library and configure the one-time tip product.
 - [ ] 9.2 Build the tip/support entry point in the UI (e.g. a settings or about screen) that is clearly optional and separate from all content.
 - [ ] 9.3 On successful purchase, persist the purchase state locally and unlock the cosmetic reward (alternate icon/theme); verify purchase state survives app restart and billing library's restore-purchases flow.
@@ -67,11 +69,13 @@
 
 ## 10. Initial content authoring
 
+**Deferred** (user decision): the user is building out the fact library themselves. The 2 example facts (`fact-001`, `fact-002`) authored during earlier task groups remain as working examples of the format and the "name the pre-Bitcoin gap" writing rule.
+
 - [ ] 10.1 Draft an initial batch of facts (aim for enough breadth to exercise every canonical category at least once) each with a citation-backed `sources` entry.
 - [ ] 10.2 Apply the "name the pre-Bitcoin gap" writing rule (design.md Decision 10) to each fact — state what was impossible or required a trusted third party before Bitcoin, and how it's solved now.
 - [ ] 10.3 Self-review (or informal outside review) the initial batch for technical accuracy before considering v1 content-complete.
 
 ## 11. End-to-end verification
 
-- [ ] 11.1 Manually verify the full user flow on a real or emulated Android device: browse, filter, view detail with sources/related, share a fact, favorite, receive and tap a daily notification, view favorites list and streak, exercise the tip flow.
-- [ ] 11.2 Confirm the app functions fully offline (airplane mode) end to end, since v1 has no server dependency.
+- [x] 11.1 Manually verify the full user flow on a real or emulated Android device: browse, filter, view detail with sources/related, share a fact, favorite, receive and tap a daily notification, view favorites list and streak, exercise the tip flow. Verified on an emulator throughout task groups 6-8: browsing, category filter (select/deselect), fact detail (markdown rendering, sources, bidirectional related-facts navigation), native share sheet, favoriting from both list and detail, the favorites screen, the streak badge, notification permission/firing, and notification-tap deep-linking (including the already-running-app case, where a real bug was found and fixed). The tip flow is excluded here since task group 9 is deferred.
+- [x] 11.2 Confirm the app functions fully offline (airplane mode) end to end, since v1 has no server dependency. Verified on-device with wifi + mobile data disabled: cold app launch, full fact list, category filtering, and fact detail (including sources and related-facts, all bundled data) all rendered correctly with zero connectivity.
