@@ -43,8 +43,12 @@ private const val VIRTUAL_PAGE_COUNT = 100_000
 
 /**
  * Task group 12: swipeable one-fact-at-a-time browsing, scoped to [categories]
- * (empty = every fact). Reshuffles and loops forever once the shuffled order is
- * exhausted (design.md decision 13) rather than showing an end state.
+ * (empty = every fact). In random mode ([guided] false), reshuffles and loops
+ * forever once the shuffled order is exhausted (design.md decision 13) rather
+ * than showing an end state. In guided mode, facts are shown in their
+ * canonical `order` (i.e. the order they were authored in, chapter by
+ * chapter) instead of shuffled, and that order never reshuffles - looping
+ * back to the start after the last fact just replays the same sequence.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,12 +58,14 @@ fun JourneyScreen(
     favoriteIds: Set<String>,
     onToggleFavorite: (String) -> Unit,
     onBack: () -> Unit,
+    guided: Boolean = false,
 ) {
-    var shuffledFacts by remember(categories) {
-        mutableStateOf(container.factRepository.filterByCategories(categories).shuffled())
+    var journeyFacts by remember(categories, guided) {
+        val filtered = container.factRepository.filterByCategories(categories)
+        mutableStateOf(if (guided) filtered else filtered.shuffled())
     }
 
-    if (shuffledFacts.isEmpty()) {
+    if (journeyFacts.isEmpty()) {
         EmptyJourneyMessage(onBack)
         return
     }
@@ -67,20 +73,22 @@ fun JourneyScreen(
     val pagerState = rememberPagerState(pageCount = { VIRTUAL_PAGE_COUNT })
     var lastCycle by remember { mutableStateOf(0) }
 
-    LaunchedEffect(pagerState.currentPage, shuffledFacts.size) {
-        val cycle = pagerState.currentPage / shuffledFacts.size
-        if (cycle > lastCycle) {
-            lastCycle = cycle
-            shuffledFacts = shuffledFacts.shuffled()
+    if (!guided) {
+        LaunchedEffect(pagerState.currentPage, journeyFacts.size) {
+            val cycle = pagerState.currentPage / journeyFacts.size
+            if (cycle > lastCycle) {
+                lastCycle = cycle
+                journeyFacts = journeyFacts.shuffled()
+            }
         }
     }
 
-    val currentFact = shuffledFacts[pagerState.currentPage % shuffledFacts.size]
+    val currentFact = journeyFacts[pagerState.currentPage % journeyFacts.size]
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Journey") },
+                title = { Text(if (guided) "Guided Bites" else "Journey") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -102,7 +110,7 @@ fun JourneyScreen(
             state = pagerState,
             modifier = Modifier.fillMaxSize().padding(padding),
         ) { page ->
-            val fact = shuffledFacts[page % shuffledFacts.size]
+            val fact = journeyFacts[page % journeyFacts.size]
             Column(
                 modifier = Modifier
                     .fillMaxSize()
