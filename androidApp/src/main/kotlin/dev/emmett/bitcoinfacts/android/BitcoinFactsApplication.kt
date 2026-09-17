@@ -2,6 +2,8 @@ package dev.emmett.bitcoinfacts.android
 
 import android.app.Application
 import dev.emmett.bitcoinfacts.android.data.AppContainer
+import dev.emmett.bitcoinfacts.android.notifications.createNotificationChannel
+import dev.emmett.bitcoinfacts.android.notifications.scheduleDailyFactNotification
 
 class BitcoinFactsApplication : Application() {
     lateinit var container: AppContainer
@@ -9,5 +11,7 @@ class BitcoinFactsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppContainer(this)
+        createNotificationChannel(this)
+        scheduleDailyFactNotification(this)
     }
 }

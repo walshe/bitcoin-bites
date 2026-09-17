@@ -54,9 +54,9 @@
 
 ## 8. Android app: daily notifications
 
-- [ ] 8.1 Implement the Android `actual` notification scheduler (WorkManager or AlarmManager) that calls the shared `pickTodaysFact()` once per day and fires a local notification with that fact's title.
-- [ ] 8.2 Implement notification-tap deep link into the fact detail screen for the referenced fact.
-- [ ] 8.3 Handle the Android notification permission request flow (Android 13+ runtime permission) with a reasonable in-app prompt.
+- [x] 8.1 Implement the Android `actual` notification scheduler (WorkManager or AlarmManager) that calls the shared `pickTodaysFact()` once per day and fires a local notification with that fact's title. `DailyFactNotificationWorker` (CoroutineWorker) + `DailyFactScheduler` (daily `PeriodicWorkRequest`, `KEEP` policy). Verified on-device: permission granted, channel created, notification fires and displays correctly.
+- [x] 8.2 Implement notification-tap deep link into the fact detail screen for the referenced fact. Found and fixed a real bug during on-device testing: the activity only read the `factId` intent extra in `onCreate`, so a tap while the app was already running (delivered via `onNewIntent`, not `onCreate`) was silently dropped. Fixed by holding the deep-link id in a `mutableStateOf` property that `onNewIntent` also updates. Verified end-to-end: notification tap while backgrounded correctly opens straight to that fact's detail screen.
+- [x] 8.3 Handle the Android notification permission request flow (Android 13+ runtime permission) with a reasonable in-app prompt. Requested once via `ActivityResultContracts.RequestPermission` on first launch if not already granted; verified the system permission dialog appears. The app remains fully usable if denied (`showDailyFactNotification` checks and no-ops rather than crashing).
 
 ## 9. Android app: tip/support purchase (`support-tip`)
 
