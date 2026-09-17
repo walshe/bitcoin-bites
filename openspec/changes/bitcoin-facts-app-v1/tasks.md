@@ -18,10 +18,10 @@
 
 ## 3. Shared core: models and content loading
 
-- [ ] 3.1 Define `Fact` and `Category` models in the shared module matching the compiled index shape.
-- [ ] 3.2 Implement the runtime loader that reads the bundled compiled index into in-memory `Fact` objects at app startup.
-- [ ] 3.3 Implement category-based filtering logic (single and multi-category union filtering) over the loaded facts.
-- [ ] 3.4 Implement the related-facts resolver (given a fact ID, return its related `Fact` objects).
+- [x] 3.1 Define `Fact` and `Category` models in the shared module matching the compiled index shape. `Fact`/`Source` domain models in `model/Fact.kt`; wire-shape DTOs (`FactIndexDto`/`FactDto`/`SourceDto`) kept separate/internal in `FactIndexDto.kt`.
+- [x] 3.2 Implement the runtime loader that reads the bundled compiled index into in-memory `Fact` objects at app startup. `FactIndexLoader.parse(rawJson: String)` — pure function (platform layer owns reading the actual asset bytes), validates `schemaVersion`, maps DTOs to domain models. 3 passing tests.
+- [x] 3.3 Implement category-based filtering logic (single and multi-category union filtering) over the loaded facts. `FactRepository.filterByCategories` — verified union (not intersection) semantics with a test.
+- [x] 3.4 Implement the related-facts resolver (given a fact ID, return its related `Fact` objects). `FactRepository.relatedFacts`. 6 passing tests total for `FactRepository`.
 
 ## 4. Shared core: favorites and history persistence (`favorites-and-history`)
 
