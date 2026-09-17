@@ -30,7 +30,7 @@ import dev.emmett.bitcoinfacts.android.R
  * Task 12.1: new nav-graph start destination, offering "All Bites" (the
  * existing list screen), "Guided Bites" (an unfiltered swipeable journey in
  * canonical `order` - the order facts were authored in, chapter by chapter),
- * and "Random Journey" (the same swipeable journey, shuffled) as distinct
+ * and "Random Bites" (the same swipeable journey, shuffled) as distinct
  * entry points.
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,7 +83,7 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onRandomJourney, modifier = Modifier.fillMaxWidth()) {
-                Text("Random Journey")
+                Text("Random Bites")
             }
         }
     }

@@ -86,12 +86,12 @@ class MainActivity : ComponentActivity() {
 private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?) {
     val navController = rememberNavController()
     var selectedCategories by remember { mutableStateOf(setOf<Category>()) }
-    // Separate from selectedCategories: "Random Journey" and "Guided Bites" are
+    // Separate from selectedCategories: "Random Bites" and "Guided Bites" are
     // always unfiltered by definition, while "Start Journey" (from the list
     // screen) captures whatever the list's filter happened to be at that
     // moment - neither should leak into the other via a single shared variable.
     var journeyCategories by remember { mutableStateOf(setOf<Category>()) }
-    // "Start Journey" and "Random Journey" both shuffle; only "Guided Bites" walks
+    // "Start Journey" and "Random Bites" both shuffle; only "Guided Bites" walks
     // facts in their canonical `order` instead.
     var journeyGuided by remember { mutableStateOf(false) }
     var favoriteIds by remember { mutableStateOf(container.favoritesStore.allFavoriteIds().toSet()) }
