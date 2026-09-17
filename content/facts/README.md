@@ -91,6 +91,8 @@ filter UI), update the table below to match, then re-run the build.
 | `custody`               | Self-custody vs. third-party custody, freezing/seizure risk                |
 | `censorship-resistance` | Money/state separation, resistance to seizure or control                   |
 | `cryptography`          | Proof vs. trust, verifiable claims                                         |
+| `hashing`               | Hash functions, SHA-256, one-way functions, fixed-size digests             |
+| `proof-of-work`         | The mining lottery, nonces, difficulty targets, energy tied to security   |
 
 This first batch came entirely from chapter 1 of "Inventing Bitcoin" by Yan
 Pritzker — the very first real content added to this app. Expect this table to

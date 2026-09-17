@@ -24,7 +24,9 @@ enum class Category(val id: String) {
     PRIVACY("privacy"),
     CUSTODY("custody"),
     CENSORSHIP_RESISTANCE("censorship-resistance"),
-    CRYPTOGRAPHY("cryptography");
+    CRYPTOGRAPHY("cryptography"),
+    HASHING("hashing"),
+    PROOF_OF_WORK("proof-of-work");
 
     companion object {
         private val byId = entries.associateBy { it.id }
