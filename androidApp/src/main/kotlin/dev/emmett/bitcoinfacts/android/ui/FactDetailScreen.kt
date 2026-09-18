@@ -97,20 +97,22 @@ fun FactDetailScreen(
             )
         },
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState()),
-        ) {
-            FactBodyAndSources(fact)
+        Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+            TopGlow()
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                FactBodyAndSources(fact)
 
-            if (related.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(24.dp))
-                Text("Related bites", style = MaterialTheme.typography.titleMedium)
-                related.forEach { relatedFact ->
-                    RelatedFactCard(relatedFact, onClick = { onRelatedFactClick(relatedFact.id) })
+                if (related.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Text("Related bites", style = MaterialTheme.typography.titleMedium)
+                    related.forEach { relatedFact ->
+                        RelatedFactCard(relatedFact, onClick = { onRelatedFactClick(relatedFact.id) })
+                    }
                 }
             }
         }

@@ -2,7 +2,9 @@ package dev.emmett.bitcoinfacts.android.ui
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +16,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.emmett.bitcoinfacts.shared.model.Fact
@@ -39,7 +43,9 @@ fun FactBodyAndSources(fact: Fact, modifier: Modifier = Modifier) {
     val (mainText, analogyText) = fact.body.splitOutAnalogy()
 
     Column(modifier = modifier) {
-        Text(mainText.parseBoldMarkdown())
+        CategoryAndDifficultyRow(fact)
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(mainText.parseBoldMarkdown(boldColor = MaterialTheme.colorScheme.primary))
 
         if (analogyText != null) {
             Spacer(modifier = Modifier.height(20.dp))
@@ -72,6 +78,27 @@ fun FactBodyAndSources(fact: Fact, modifier: Modifier = Modifier) {
             }
         }
     }
+}
+
+/**
+ * Very subtle warm glow anchored to the top of the viewport, behind a fact's
+ * title/metadata. Deliberately a fixed decorative layer, not part of the
+ * scrollable content - it stays put as a bit of ambient depth while the text
+ * scrolls past it, rather than scrolling away with the title.
+ */
+@Composable
+fun TopGlow(modifier: Modifier = Modifier) {
+    val glowColor = MaterialTheme.colorScheme.primary
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(180.dp)
+            .background(
+                Brush.radialGradient(
+                    colors = listOf(glowColor.copy(alpha = 0.14f), Color.Transparent),
+                ),
+            ),
+    )
 }
 
 /**

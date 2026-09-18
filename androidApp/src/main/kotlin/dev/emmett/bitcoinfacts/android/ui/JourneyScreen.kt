@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,6 +34,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -44,7 +47,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.emmett.bitcoinfacts.android.data.AppContainer
 import dev.emmett.bitcoinfacts.shared.history.JourneyMode
@@ -129,7 +131,8 @@ fun JourneyScreen(
         }
     }
 
-    val currentFact = journeyFacts[pagerState.currentPage % journeyFacts.size]
+    val currentIndex = pagerState.currentPage % journeyFacts.size
+    val currentFact = journeyFacts[currentIndex]
 
     // Subtle one-off affordance: it's not obvious this screen is swipeable, so
     // nudge with a small animated hint until the user actually swipes once.
@@ -146,26 +149,45 @@ fun JourneyScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(if (guided) "Guided ₿ites" else "Journey") },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { onToggleFavorite(currentFact.id) }) {
-                        val isFavorite = currentFact.id in favoriteIds
-                        Icon(
-                            imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                            contentDescription = if (isFavorite) "Unfavorite" else "Favorite",
-                        )
-                    }
-                },
-            )
+            Column {
+                TopAppBar(
+                    title = { Text(if (guided) "Guided ₿ites" else "Journey") },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                        }
+                    },
+                    actions = {
+                        if (guided) {
+                            Text(
+                                text = "${currentIndex + 1}/${journeyFacts.size}",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(end = 8.dp),
+                            )
+                        }
+                        IconButton(onClick = { onToggleFavorite(currentFact.id) }) {
+                            val isFavorite = currentFact.id in favoriteIds
+                            Icon(
+                                imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                                contentDescription = if (isFavorite) "Unfavorite" else "Favorite",
+                            )
+                        }
+                    },
+                )
+                // Reinforces the "moving through the book in order" framing that sets
+                // guided mode apart from the shuffled modes - not shown for those.
+                if (guided) {
+                    LinearProgressIndicator(
+                        progress = { (currentIndex + 1) / journeyFacts.size.toFloat() },
+                        modifier = Modifier.fillMaxWidth().height(2.dp),
+                    )
+                }
+            }
         },
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+            TopGlow()
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize(),
@@ -177,12 +199,10 @@ fun JourneyScreen(
                         .padding(16.dp)
                         .verticalScroll(rememberScrollState()),
                 ) {
-                    Text(fact.title, style = MaterialTheme.typography.headlineMedium)
                     Text(
-                        text = fact.categories.joinToString(" · ") { it.displayName() },
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Normal,
-                        modifier = Modifier.padding(top = 4.dp, bottom = 16.dp),
+                        fact.title,
+                        style = MaterialTheme.typography.headlineMedium,
+                        modifier = Modifier.padding(bottom = 16.dp),
                     )
                     FactBodyAndSources(fact)
                 }

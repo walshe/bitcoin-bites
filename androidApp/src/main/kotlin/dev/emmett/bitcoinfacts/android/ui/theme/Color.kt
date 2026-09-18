@@ -18,3 +18,6 @@ val TextPrimary = Color(0xFFF5F5F5)
 val TextSecondary = Color(0xFFB0B0B0)
 
 val ErrorRed = Color(0xFFCF6679)
+
+/** Difficulty indicator color for "beginner" facts; "advanced" reuses [ErrorRed], "intermediate" reuses [BitcoinOrange]. */
+val BeginnerGreen = Color(0xFF6FCF97)
