@@ -124,3 +124,77 @@ consumes directly — the app's real icon resources live under
 
 Compiles and validates all fact content, runs the shared-core test suite,
 and assembles the debug Android APK.
+
+## Play Store preparation and deployment
+
+### Release signing (one-time setup per machine)
+
+Release builds (`bundleRelease`/`assembleRelease`) need a signing keystore
+that deliberately lives **outside** the repo, since it can never be
+committed:
+
+1. Generate it once:
+   ```
+   keytool -genkeypair -v -keystore ~/android-keystores/bitcoin-bites-upload.jks \
+     -alias bitcoin-bites-upload -keyalg RSA -keysize 2048 -validity 10000
+   ```
+2. Copy [`keystore.properties.example`](keystore.properties.example) to
+   `keystore.properties` (already gitignored) in the repo root, and fill in
+   the real `storeFile` path + passwords from step 1.
+
+`androidApp/build.gradle.kts` loads `keystore.properties` if present and
+wires it up as the `release` signing config; without the file, every other
+build target (debug builds, tests) still works fine — only a *signed*
+release build needs it.
+
+### Building a release bundle
+
+```
+./gradlew bundleRelease
+```
+
+Produces `androidApp/build/outputs/bundle/release/androidApp-release.aab`
+— the `.aab` (Android App Bundle) format Play Store requires, already
+signed. Sanity-check the signature any time with:
+
+```
+jarsigner -verify -verbose:summary androidApp/build/outputs/bundle/release/androidApp-release.aab
+```
+
+### Shipping an update
+
+1. Bump `versionCode` (must strictly increase every release) and
+   `versionName` (human-readable, e.g. `"0.1"` → `"0.1.1"`) in
+   `androidApp/build.gradle.kts`.
+2. `./gradlew bundleRelease` for a fresh signed `.aab`.
+3. Upload it to the existing app listing in Play Console, add release
+   notes, and roll out — no new fee, no re-doing the store listing. Consider
+   a staged rollout (e.g. 10-20% of users first) for anything riskier than a
+   trivial fix, and/or installing via the Internal Testing track first to
+   catch problems before any real users see them.
+
+### Play Console account
+
+One-time $25 registration fee, covers unlimited apps and unlimited updates
+forever (Play only additionally takes a revenue cut on paid
+apps/IAP — irrelevant here, this app is free with no IAP). Individual
+account (not Organization — that needs a registered business/D-U-N-S
+number, unnecessary for a personal project like this one). Expect a few
+days for Google's identity verification to clear before you can create the
+app listing; a physical Android device is also needed to verify device
+access from the Play Console mobile app.
+
+### Store listing requirements
+
+- **Privacy policy URL** (required even though the app collects nothing):
+  `https://walshe.github.io/cv/bitcoin-bites/` — source lives in the
+  separate `walshe/cv` GitHub Pages repo, not this one.
+- **App icon**: a 512×512 PNG uploaded directly in Play Console, separate
+  from the APK/bundle's own launcher icon resources.
+- **Screenshots**: phone screenshots in Play's required sizes, plus a
+  feature graphic.
+- **Data Safety form**: straightforward for this app — no data collected,
+  no network calls, no third-party SDKs; everything (favorites, streak,
+  journey progress) stays in local SQLite on-device (see
+  [`shared/`](#shared) above).
+- **Content rating questionnaire**: filled out in Console.
