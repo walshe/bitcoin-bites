@@ -134,12 +134,12 @@ fun HomeScreen(
 }
 
 /**
- * Icon + label for a home screen button, laid out so the icon sits in a
- * fixed-width leading slot instead of being centered as one block with the
- * text. Centering icon+text together made each icon land at a different x
- * position depending on how long that button's label was ("Purchase
- * Bitcoin" vs "All ₿ites"); this keeps every icon in the same column while
- * still centering the label within the remaining space.
+ * Icon + label for a home screen button. The icon sits at the trailing edge
+ * of a fixed-width leading slot (close to the text, not pinned to the far
+ * left edge), and the label is centered in the remaining space with a
+ * matching trailing spacer so it stays centered in the button overall.
+ * Every icon lands at the same x position across all four buttons, but
+ * pulled in toward the middle rather than hugging the button's left edge.
  */
 @Composable
 private fun HomeButtonContent(icon: ImageVector, label: String) {
@@ -147,13 +147,14 @@ private fun HomeButtonContent(icon: ImageVector, label: String) {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Box(modifier = Modifier.width(32.dp), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.width(56.dp), contentAlignment = Alignment.CenterEnd) {
             Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
         }
+        Spacer(modifier = Modifier.width(8.dp))
         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
             Text(label)
         }
-        Spacer(modifier = Modifier.width(32.dp))
+        Spacer(modifier = Modifier.width(64.dp))
     }
 }
 
