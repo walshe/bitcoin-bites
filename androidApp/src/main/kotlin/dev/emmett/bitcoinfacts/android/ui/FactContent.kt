@@ -16,9 +16,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import dev.emmett.bitcoinfacts.shared.model.Fact
 
@@ -81,10 +83,12 @@ fun FactBodyAndSources(fact: Fact, modifier: Modifier = Modifier) {
 }
 
 /**
- * Very subtle warm glow anchored to the top of the viewport, behind a fact's
+ * Warm glow anchored to the top-left of the viewport, behind a fact's
  * title/metadata. Deliberately a fixed decorative layer, not part of the
  * scrollable content - it stays put as a bit of ambient depth while the text
- * scrolls past it, rather than scrolling away with the title.
+ * scrolls past it, rather than scrolling away with the title. Biased toward
+ * the top-left (rather than centered) since that's where the title and
+ * category chips actually sit.
  */
 @Composable
 fun TopGlow(modifier: Modifier = Modifier) {
@@ -92,10 +96,12 @@ fun TopGlow(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(180.dp)
+            .height(220.dp)
             .background(
                 Brush.radialGradient(
-                    colors = listOf(glowColor.copy(alpha = 0.14f), Color.Transparent),
+                    colors = listOf(glowColor.copy(alpha = 0.35f), Color.Transparent),
+                    center = Offset(0f, 0f),
+                    radius = with(LocalDensity.current) { 340.dp.toPx() },
                 ),
             ),
     )
