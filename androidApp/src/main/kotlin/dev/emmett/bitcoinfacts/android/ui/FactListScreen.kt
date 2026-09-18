@@ -56,8 +56,8 @@ fun FactListScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Bitcoin Bites") },
+            AppTopBar(
+                title = "Bitcoin Bites",
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")

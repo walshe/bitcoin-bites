@@ -39,7 +39,6 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -151,8 +150,8 @@ fun JourneyScreen(
     Scaffold(
         topBar = {
             Column {
-                TopAppBar(
-                    title = { Text(if (guided) "Guided ₿ites" else "Journey") },
+                AppTopBar(
+                    title = if (guided) "Guided ₿ites" else "Journey",
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -176,6 +175,7 @@ fun JourneyScreen(
                             )
                         }
                     },
+                    showAccentLine = !guided,
                 )
                 // Reinforces the "moving through the book in order" framing that sets
                 // guided mode apart from the shuffled modes - not shown for those.
@@ -269,8 +269,8 @@ private fun SwipeHint() {
 private fun EmptyJourneyMessage(onBack: () -> Unit) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Journey") },
+            AppTopBar(
+                title = "Journey",
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")

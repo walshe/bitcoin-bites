@@ -13,6 +13,8 @@ val BitcoinOrangeDim = Color(0xFFC9740A)
 val AppBackground = Color(0xFF121212)
 val AppSurface = Color(0xFF1E1E1E)
 val AppSurfaceVariant = Color(0xFF2A2A2A)
+/** Same lightness as [AppSurface], shifted warm - the top app bar's background, so it isn't neutral gray. */
+val AppSurfaceWarm = Color(0xFF241C14)
 
 val TextPrimary = Color(0xFFF5F5F5)
 val TextSecondary = Color(0xFFB0B0B0)
