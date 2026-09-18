@@ -1,30 +1,56 @@
 package dev.emmett.bitcoinfacts.android.ui
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.emmett.bitcoinfacts.android.R
+import dev.emmett.bitcoinfacts.android.data.AppContainer
+import dev.emmett.bitcoinfacts.shared.history.JourneyMode
 
 /**
  * Task 12.1: new nav-graph start destination, offering "Guided Bites" (an
@@ -37,6 +63,7 @@ import dev.emmett.bitcoinfacts.android.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    container: AppContainer,
     streak: Int,
     onBrowseAll: () -> Unit,
     onGuidedJourney: () -> Unit,
@@ -44,16 +71,17 @@ fun HomeScreen(
     onOpenFavorites: () -> Unit,
     onPurchaseBitcoin: () -> Unit,
 ) {
+    val continueFact = remember {
+        container.journeyProgressStore.lastFactId(JourneyMode.GUIDED)?.let { container.factRepository.findById(it) }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Bitcoin Bites") },
                 actions = {
                     if (streak > 0) {
-                        Text(
-                            text = "🔥 $streak",
-                            modifier = Modifier.padding(end = 8.dp),
-                        )
+                        StreakBadge(streak)
                     }
                     IconButton(onClick = onOpenFavorites) {
                         Icon(Icons.Filled.Favorite, contentDescription = "Favorites")
@@ -71,27 +99,116 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(24.dp))
-            Image(
-                painter = painterResource(R.drawable.bunny_mascot),
-                contentDescription = null, // decorative - the screen title already says "Bitcoin Bites"
-                modifier = Modifier.size(200.dp),
-            )
+            Box(contentAlignment = Alignment.Center) {
+                MascotGlow()
+                Image(
+                    painter = painterResource(R.drawable.bunny_mascot),
+                    contentDescription = null, // decorative - the screen title already says "Bitcoin Bites"
+                    modifier = Modifier.size(200.dp),
+                )
+            }
             Spacer(modifier = Modifier.height(32.dp))
             Button(onClick = onGuidedJourney, modifier = Modifier.fillMaxWidth()) {
+                Icon(Icons.Filled.PlayArrow, contentDescription = null, modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.width(8.dp))
                 Text("Guided ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onRandomJourney, modifier = Modifier.fillMaxWidth()) {
+                Icon(Icons.Filled.Refresh, contentDescription = null, modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.width(8.dp))
                 Text("Random ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
+                Icon(Icons.Filled.List, contentDescription = null, modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.width(8.dp))
                 Text("All ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onPurchaseBitcoin, modifier = Modifier.fillMaxWidth()) {
+                Icon(Icons.Filled.ShoppingCart, contentDescription = null, modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.width(8.dp))
                 Text("Purchase Bitcoin")
             }
+
+            if (continueFact != null) {
+                Spacer(modifier = Modifier.height(20.dp))
+                ContinueReadingCard(title = continueFact.title, onClick = onGuidedJourney)
+            }
+        }
+    }
+}
+
+/** One-time bouncy pop-in for the streak counter on screen load, instead of sitting static. */
+@Composable
+private fun StreakBadge(streak: Int) {
+    var settled by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { settled = true }
+    val scale by animateFloatAsState(
+        targetValue = if (settled) 1f else 0.6f,
+        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow),
+        label = "streakPulse",
+    )
+    Text(
+        text = "🔥 $streak",
+        modifier = Modifier
+            .padding(end = 8.dp)
+            .graphicsLayer { scaleX = scale; scaleY = scale },
+    )
+}
+
+/** Very subtle warm halo centered behind the mascot - purely decorative. */
+@Composable
+private fun MascotGlow() {
+    val glowColor = MaterialTheme.colorScheme.primary
+    Box(
+        modifier = Modifier
+            .size(260.dp)
+            .background(
+                Brush.radialGradient(
+                    colors = listOf(
+                        glowColor.copy(alpha = 0.22f),
+                        glowColor.copy(alpha = 0.08f),
+                        Color.Transparent,
+                    ),
+                ),
+            ),
+    )
+}
+
+/** Shortcut back into Guided ₿ites, showing the title of the fact it'll resume on. */
+@Composable
+private fun ContinueReadingCard(title: String, onClick: () -> Unit) {
+    Surface(
+        onClick = onClick,
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "Continue reading",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            Icon(
+                imageVector = Icons.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }

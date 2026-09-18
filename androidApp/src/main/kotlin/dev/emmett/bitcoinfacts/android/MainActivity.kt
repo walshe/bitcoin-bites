@@ -117,6 +117,7 @@ private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?
     NavHost(navController = navController, startDestination = ROUTE_HOME) {
         composable(ROUTE_HOME) {
             HomeScreen(
+                container = container,
                 streak = streak,
                 onBrowseAll = { navController.navigate(ROUTE_LIST) },
                 onGuidedJourney = {
