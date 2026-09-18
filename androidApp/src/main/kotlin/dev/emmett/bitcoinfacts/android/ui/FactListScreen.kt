@@ -78,7 +78,7 @@ fun FactListScreen(
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(onClick = onStartJourney) {
-                Text("Start Journey")
+                Text("Browse One by One")
             }
         },
     ) { padding ->
@@ -95,6 +95,13 @@ fun FactListScreen(
                     )
                 }
             }
+
+            Text(
+                text = "${facts.size} bite" + if (facts.size == 1) "" else "s",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            )
 
             LazyColumn {
                 items(facts, key = { it.id }) { fact ->
@@ -124,7 +131,7 @@ private fun FactRow(
             .clickable(onClick = onClick),
         headlineContent = { Text(fact.title) },
         supportingContent = {
-            Text(fact.categories.joinToString(" · ") { it.displayName() })
+            CategoryAndDifficultyRow(fact, modifier = Modifier.padding(top = 4.dp))
         },
         trailingContent = {
             IconButton(onClick = onToggleFavorite) {
