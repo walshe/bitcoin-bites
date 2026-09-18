@@ -45,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -109,27 +110,19 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.height(32.dp))
             Button(onClick = onGuidedJourney, modifier = Modifier.fillMaxWidth()) {
-                Icon(Icons.Filled.PlayArrow, contentDescription = null, modifier = Modifier.size(20.dp))
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Guided ₿ites")
+                HomeButtonContent(Icons.Filled.PlayArrow, "Guided ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onRandomJourney, modifier = Modifier.fillMaxWidth()) {
-                Icon(Icons.Filled.Refresh, contentDescription = null, modifier = Modifier.size(20.dp))
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Random ₿ites")
+                HomeButtonContent(Icons.Filled.Refresh, "Random ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
-                Icon(Icons.Filled.List, contentDescription = null, modifier = Modifier.size(20.dp))
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("All ₿ites")
+                HomeButtonContent(Icons.Filled.List, "All ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onPurchaseBitcoin, modifier = Modifier.fillMaxWidth()) {
-                Icon(Icons.Filled.ShoppingCart, contentDescription = null, modifier = Modifier.size(20.dp))
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Purchase Bitcoin")
+                HomeButtonContent(Icons.Filled.ShoppingCart, "Purchase Bitcoin")
             }
 
             if (continueFact != null) {
@@ -137,6 +130,30 @@ fun HomeScreen(
                 ContinueReadingCard(title = continueFact.title, onClick = onGuidedJourney)
             }
         }
+    }
+}
+
+/**
+ * Icon + label for a home screen button, laid out so the icon sits in a
+ * fixed-width leading slot instead of being centered as one block with the
+ * text. Centering icon+text together made each icon land at a different x
+ * position depending on how long that button's label was ("Purchase
+ * Bitcoin" vs "All ₿ites"); this keeps every icon in the same column while
+ * still centering the label within the remaining space.
+ */
+@Composable
+private fun HomeButtonContent(icon: ImageVector, label: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(modifier = Modifier.width(32.dp), contentAlignment = Alignment.Center) {
+            Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
+        }
+        Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+            Text(label)
+        }
+        Spacer(modifier = Modifier.width(32.dp))
     }
 }
 
