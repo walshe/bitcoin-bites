@@ -147,14 +147,14 @@ private fun HomeButtonContent(icon: ImageVector, label: String) {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Box(modifier = Modifier.width(56.dp), contentAlignment = Alignment.CenterEnd) {
+        Box(modifier = Modifier.width(84.dp), contentAlignment = Alignment.CenterEnd) {
             Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
         }
         Spacer(modifier = Modifier.width(8.dp))
         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
             Text(label)
         }
-        Spacer(modifier = Modifier.width(64.dp))
+        Spacer(modifier = Modifier.width(92.dp))
     }
 }
 
