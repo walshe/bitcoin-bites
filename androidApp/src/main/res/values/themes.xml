@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Placeholder theme; real Bitcoin-appropriate palette/typography is task 6.2 -->
-    <style name="Theme.BitcoinFacts" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.BitcoinFacts" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Android 12+ (targetSdk 34) draws this cold-start splash automatically -
+             these attributes are simply ignored on older platforms. Matches the
+             app's dark theme (AppBackground #121212) instead of the default light
+             background, so there's no white flash before Compose content paints,
+             and adds a small branding image (title + tagline) near the bottom. -->
+        <item name="android:windowSplashScreenBackground">#121212</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/splash_branding</item>
+    </style>
 </resources>
