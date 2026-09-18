@@ -8,7 +8,15 @@ import androidx.compose.runtime.Composable
 private val AppDarkColorScheme = darkColorScheme(
     primary = BitcoinOrange,
     onPrimary = AppBackground, // dark text/icons on top of the orange accent, for contrast
+    // Without these two, M3 components that default to *Container roles (FAB,
+    // selected FilterChip, etc.) fall back to the stock Material purple instead
+    // of the app's orange - found via ExtendedFloatingActionButton rendering
+    // purple with no color ever set explicitly for it in this codebase.
+    primaryContainer = BitcoinOrangeDim,
+    onPrimaryContainer = AppBackground,
     secondary = BitcoinOrangeDim,
+    secondaryContainer = BitcoinOrangeDim,
+    onSecondaryContainer = AppBackground,
     background = AppBackground,
     onBackground = TextPrimary,
     surface = AppSurface,
