@@ -104,7 +104,7 @@ fun JourneyScreen(
     }
 
     if (journeyFacts.isEmpty()) {
-        EmptyJourneyMessage(onBack)
+        EmptyJourneyMessage(mode, onBack)
         return
     }
 
@@ -151,7 +151,7 @@ fun JourneyScreen(
         topBar = {
             Column {
                 AppTopBar(
-                    title = if (guided) "Guided ₿ites" else "Journey",
+                    title = journeyModeTitle(mode),
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -264,13 +264,20 @@ private fun SwipeHint() {
     }
 }
 
+/** "Guided ₿ites" / "Random ₿ites" for their respective modes; the category-filtered "Start Journey" entry point (mode null) just gets the generic "₿ites". */
+private fun journeyModeTitle(mode: JourneyMode?): String = when (mode) {
+    JourneyMode.GUIDED -> "Guided ₿ites"
+    JourneyMode.RANDOM -> "Random ₿ites"
+    null -> "₿ites"
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun EmptyJourneyMessage(onBack: () -> Unit) {
+private fun EmptyJourneyMessage(mode: JourneyMode?, onBack: () -> Unit) {
     Scaffold(
         topBar = {
             AppTopBar(
-                title = "Journey",
+                title = journeyModeTitle(mode),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
