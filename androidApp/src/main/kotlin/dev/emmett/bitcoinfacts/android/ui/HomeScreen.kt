@@ -109,15 +109,15 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.height(32.dp))
             Button(onClick = onGuidedJourney, modifier = Modifier.fillMaxWidth()) {
-                HomeButtonContent(Icons.Filled.PlayArrow, "Guided ₿ites")
+                HomeButtonContent(Icons.Filled.PlayArrow, "Guided Bites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onRandomJourney, modifier = Modifier.fillMaxWidth()) {
-                HomeButtonContent(Icons.Filled.Refresh, "Random ₿ites")
+                HomeButtonContent(Icons.Filled.Refresh, "Random Bites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
-                HomeButtonContent(Icons.Filled.List, "All ₿ites")
+                HomeButtonContent(Icons.Filled.List, "All Bites")
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onPurchaseBitcoin, modifier = Modifier.fillMaxWidth()) {
@@ -194,7 +194,7 @@ private fun MascotGlow() {
     )
 }
 
-/** Shortcut back into Guided ₿ites, showing the title of the fact it'll resume on. */
+/** Shortcut back into Guided Bites, showing the title of the fact it'll resume on. */
 @Composable
 private fun ContinueReadingCard(title: String, onClick: () -> Unit) {
     Surface(

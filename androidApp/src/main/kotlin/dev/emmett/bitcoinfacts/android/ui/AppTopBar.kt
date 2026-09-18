@@ -30,7 +30,7 @@ import dev.emmett.bitcoinfacts.android.ui.theme.AppSurfaceWarm
  * warm-tinted background instead of flat neutral gray, and a thin orange
  * accent line along the bottom edge. [showAccentLine] is false where a
  * screen already puts something more meaningful right below the bar
- * (Guided ₿ites' own progress bar) - avoids stacking two orange lines.
+ * (Guided Bites' own progress bar) - avoids stacking two orange lines.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

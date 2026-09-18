@@ -264,11 +264,11 @@ private fun SwipeHint() {
     }
 }
 
-/** "Guided ₿ites" / "Random ₿ites" for their respective modes; the category-filtered "Start Journey" entry point (mode null) just gets the generic "₿ites". */
+/** "Guided Bites" / "Random Bites" for their respective modes; the category-filtered "Start Journey" entry point (mode null) just gets the generic "Bites". */
 private fun journeyModeTitle(mode: JourneyMode?): String = when (mode) {
-    JourneyMode.GUIDED -> "Guided ₿ites"
-    JourneyMode.RANDOM -> "Random ₿ites"
-    null -> "₿ites"
+    JourneyMode.GUIDED -> "Guided Bites"
+    JourneyMode.RANDOM -> "Random Bites"
+    null -> "Bites"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
