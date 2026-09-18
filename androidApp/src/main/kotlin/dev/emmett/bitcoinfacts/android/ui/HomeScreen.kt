@@ -107,7 +107,13 @@ fun HomeScreen(
                     modifier = Modifier.size(200.dp),
                 )
             }
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = "Bitcoin Knowledge — one bite at a time",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
             Button(onClick = onGuidedJourney, modifier = Modifier.fillMaxWidth()) {
                 HomeButtonContent(Icons.Filled.PlayArrow, "Guided Bites")
             }
