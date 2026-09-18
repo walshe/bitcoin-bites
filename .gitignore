@@ -1,6 +1,11 @@
 # Local environment (machine-specific SDK path)
 local.properties
 
+# Release signing (never commit - see keystore.properties.example)
+keystore.properties
+*.jks
+*.keystore
+
 # Claude Code runtime state
 .claude/scheduled_tasks.lock
 
