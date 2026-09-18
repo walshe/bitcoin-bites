@@ -24,7 +24,9 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,6 +44,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
@@ -50,6 +53,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.emmett.bitcoinfacts.android.R
 import dev.emmett.bitcoinfacts.android.data.AppContainer
+import dev.emmett.bitcoinfacts.android.ui.theme.AppBackground
+import dev.emmett.bitcoinfacts.android.ui.theme.BitcoinOrange
+import dev.emmett.bitcoinfacts.android.ui.theme.BitcoinOrangeDim
+import dev.emmett.bitcoinfacts.android.ui.theme.BitcoinOrangeLight
 import dev.emmett.bitcoinfacts.shared.history.JourneyMode
 
 /**
@@ -104,29 +111,54 @@ fun HomeScreen(
                 Image(
                     painter = painterResource(R.drawable.bunny_mascot),
                     contentDescription = null, // decorative - the screen title already says "Bitcoin Bites"
-                    modifier = Modifier.size(200.dp),
+                    modifier = Modifier
+                        .size(200.dp)
+                        .shadow(elevation = 16.dp, shape = CircleShape),
                 )
             }
             Spacer(modifier = Modifier.height(32.dp))
-            Button(onClick = onGuidedJourney, modifier = Modifier.fillMaxWidth()) {
+            val outlinedElevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp, pressedElevation = 1.dp)
+            Button(
+                onClick = onGuidedJourney,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        brush = Brush.linearGradient(listOf(BitcoinOrangeLight, BitcoinOrange, BitcoinOrangeDim)),
+                        shape = ButtonDefaults.shape,
+                    ),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = AppBackground),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 6.dp, pressedElevation = 2.dp),
+            ) {
                 Icon(Icons.Filled.PlayArrow, contentDescription = null, modifier = Modifier.size(20.dp))
                 Spacer(modifier = Modifier.width(8.dp))
                 Text("Guided ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
-            OutlinedButton(onClick = onRandomJourney, modifier = Modifier.fillMaxWidth()) {
+            OutlinedButton(
+                onClick = onRandomJourney,
+                modifier = Modifier.fillMaxWidth(),
+                elevation = outlinedElevation,
+            ) {
                 Icon(Icons.Filled.Refresh, contentDescription = null, modifier = Modifier.size(20.dp))
                 Spacer(modifier = Modifier.width(8.dp))
                 Text("Random ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
-            OutlinedButton(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
+            OutlinedButton(
+                onClick = onBrowseAll,
+                modifier = Modifier.fillMaxWidth(),
+                elevation = outlinedElevation,
+            ) {
                 Icon(Icons.Filled.List, contentDescription = null, modifier = Modifier.size(20.dp))
                 Spacer(modifier = Modifier.width(8.dp))
                 Text("All ₿ites")
             }
             Spacer(modifier = Modifier.height(12.dp))
-            OutlinedButton(onClick = onPurchaseBitcoin, modifier = Modifier.fillMaxWidth()) {
+            OutlinedButton(
+                onClick = onPurchaseBitcoin,
+                modifier = Modifier.fillMaxWidth(),
+                elevation = outlinedElevation,
+            ) {
                 Icon(Icons.Filled.ShoppingCart, contentDescription = null, modifier = Modifier.size(20.dp))
                 Spacer(modifier = Modifier.width(8.dp))
                 Text("Purchase Bitcoin")

@@ -9,6 +9,8 @@ import androidx.compose.ui.graphics.Color
  */
 val BitcoinOrange = Color(0xFFF7931A)
 val BitcoinOrangeDim = Color(0xFFC9740A)
+/** Lightened tint of [BitcoinOrange], used as the highlight end of the primary button's glossy gradient. */
+val BitcoinOrangeLight = Color(0xFFFFB74D)
 
 val AppBackground = Color(0xFF121212)
 val AppSurface = Color(0xFF1E1E1E)
