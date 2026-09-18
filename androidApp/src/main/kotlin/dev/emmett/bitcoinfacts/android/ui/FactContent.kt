@@ -93,15 +93,23 @@ fun FactBodyAndSources(fact: Fact, modifier: Modifier = Modifier) {
 @Composable
 fun TopGlow(modifier: Modifier = Modifier) {
     val glowColor = MaterialTheme.colorScheme.primary
+    // The box must be taller than the gradient radius, or the fade gets cut off
+    // mid-way by the box's own bottom edge - which reads as an abrupt hard line
+    // rather than a smooth fade to nothing.
+    val radius = 260.dp
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(220.dp)
+            .height(radius * 1.6f)
             .background(
                 Brush.radialGradient(
-                    colors = listOf(glowColor.copy(alpha = 0.35f), Color.Transparent),
+                    colors = listOf(
+                        glowColor.copy(alpha = 0.20f),
+                        glowColor.copy(alpha = 0.08f),
+                        Color.Transparent,
+                    ),
                     center = Offset(0f, 0f),
-                    radius = with(LocalDensity.current) { 340.dp.toPx() },
+                    radius = with(LocalDensity.current) { radius.toPx() },
                 ),
             ),
     )
