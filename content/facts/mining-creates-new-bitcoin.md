@@ -16,7 +16,7 @@ other people's payments into the ledger — it also lets you write one
 special transaction of your own, called a coinbase transaction. It
 says, in effect, "brand new bitcoin was just created and given to me,
 as payment for the electricity I burned to win this round." That
-coinbase transaction is the *only* way new bitcoin has ever entered
+coinbase transaction is the **only** way new bitcoin has ever entered
 existence — there was no pre-existing stash sitting somewhere waiting
 to be distributed, even Satoshi had to mine the very first block to
 get the very first bitcoin.

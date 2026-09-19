@@ -19,7 +19,7 @@ central referee to call which one is "correct."
 
 Bitcoin's answer: don't decide, just keep mining. Everyone keeps
 building on the version they heard first, and as soon as anyone mines
-the *next* block on top of one of the two versions, that version pulls
+the **next** block on top of one of the two versions, that version pulls
 ahead. The rule, hardcoded into every node, is simple — whichever
 chain represents the most accumulated Proof of Work wins. Everyone
 still building on the losing version switches over, and the block that
@@ -28,4 +28,4 @@ lost is discarded (an "orphan"), along with its reward.
 **Analogy:** Like two relay teams that both cross a finish line at
 nearly the same instant — instead of arguing over a photo, the race
 organizers just check which team's baton makes it furthest down the
-*next* leg of the track.
+**next** leg of the track.

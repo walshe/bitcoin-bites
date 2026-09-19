@@ -15,7 +15,7 @@ To spend coins, you have to prove you hold the private key for that
 address — without handing that key to anyone. The trick: you take the
 transaction itself ("send 2 bitcoin from address A to address B"),
 hash it, and encrypt that hash with your private key. That's your
-digital signature. Anyone can then use your *public* key — which
+digital signature. Anyone can then use your **public** key — which
 you've already shared openly — to decrypt the signature and confirm
 it lines up, which is only possible if it was really encrypted with the
 matching private key. Your private key itself never has to leave your

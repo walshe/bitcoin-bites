@@ -15,7 +15,7 @@ Winning a block doesn't just mean hashing transactions and a nonce —
 it means hashing those together with one more thing: the hash of the
 block that came right before it. That third ingredient links every
 block to its predecessor, all the way back to the very first "Genesis"
-block, which is what actually makes it a *chain*.
+block, which is what actually makes it a **chain**.
 
 Because changing even one character scrambles a hash completely,
 tampering with any old block changes its hash — which changes the
