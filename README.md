@@ -10,6 +10,10 @@ planned as a fast-follow once the shared Kotlin core is stable.
 
 ## Development
 
+For a guided walkthrough of how to actually read the code — where to start,
+and how a fact flows from Markdown file to on-screen UI — see
+[`dev-notes.md`](dev-notes.md).
+
 ### High-level folder guide
 
 ```
