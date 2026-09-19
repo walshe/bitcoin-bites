@@ -135,9 +135,22 @@ private fun RelatedFactCard(fact: Fact, onClick: () -> Unit) {
     }
 }
 
+/**
+ * `fact.body` already contains the Analogy paragraph inline (the highlighted
+ * card in [FactBodyAndSources] is a pure rendering trick, not a real split -
+ * see design.md for fact-sharing) and is already reflowed at compile time
+ * ([dev.emmett.bitcoinfacts.compiler.FrontmatterParser]'s `normalizeBody`),
+ * so sharing it as-is needs nothing beyond stripping the `**bold**` markers,
+ * which only make sense for the app's own on-screen rendering.
+ */
+private val BOLD_MARKER = Regex("\\*\\*(.+?)\\*\\*")
+
+private fun String.stripBoldMarkdown(): String = BOLD_MARKER.replace(this) { it.groupValues[1] }
+
+private const val PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=dev.emmett.bitcoinfacts.android"
+
 private fun shareFact(context: android.content.Context, fact: Fact) {
-    val excerpt = fact.body.lineSequence().firstOrNull { it.isNotBlank() } ?: ""
-    val shareText = "${fact.title}\n\n$excerpt"
+    val shareText = "${fact.title}\n\n${fact.body.stripBoldMarkdown()}\n\n— Shared from Bitcoin Bites\n$PLAY_STORE_URL"
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, shareText)
