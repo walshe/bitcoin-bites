@@ -29,6 +29,11 @@ burning as much energy as a mid-sized country and buying hardware
 worth millions — a cost that scales with exactly how much honest
 hash rate you're trying to overpower.
 
+**What Bitcoin fixes here:** Even in the worst realistic attack, the
+damage has a ceiling. Someone out-spending the entire honest network
+can disrupt recent history, but still can't take your coins or print
+themselves new ones — limits no amount of money removes.
+
 **Analogy:** Like bribing the majority of referees at a match — you
 might get bad calls made in your favor, but you still can't change the
 final score displayed on everyone else's independently-kept

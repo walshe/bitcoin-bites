@@ -16,10 +16,11 @@ fixed by the software's rules, not by any person's decision. Each bitcoin
 can be divided into 100 million smaller units, called satoshis, so the cap
 doesn't limit how usable it is even as the price changes.
 
-This is the direct answer to the problem of fiat debasement: instead of a
-currency whose supply can expand unpredictably whenever a government
-wants, Bitcoin was designed so that its supply and issuance schedule are
-fixed and knowable in advance, by anyone, forever.
+**What Bitcoin fixes here:** This is the direct answer to fiat
+debasement. Instead of a currency whose supply can expand
+unpredictably whenever a government wants, Bitcoin's supply and
+issuance schedule are fixed and knowable in advance, by anyone,
+forever.
 
 **Analogy:** Like a concert venue that printed exactly 21 million tickets
 on opening day and destroyed the printing press — no matter how popular the

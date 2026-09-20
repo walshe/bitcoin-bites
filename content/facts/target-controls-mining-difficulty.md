@@ -20,10 +20,11 @@ winning one. Make it bigger, and winners turn up faster.
 This is the whole reason Bitcoin mining costs real energy: the Target
 is deliberately kept small relative to the total space of possible
 hashes, so producing a valid winning hash is genuinely expensive to
-do, but trivial for everyone else to check. That gap — expensive to
-find, cheap to verify — is what gives the network a way to measure
-"someone truly did the work," without asking anyone to trust their
-word for it.
+do, but trivial for everyone else to check.
+
+**What Bitcoin fixes here:** That gap — expensive to find, cheap to
+check — is what lets the network measure that somebody truly did the
+work, without asking anyone to take their word for it.
 
 **Analogy:** Like a limbo bar — lower it and fewer people can slip
 underneath on any given try, so it takes many more attempts before

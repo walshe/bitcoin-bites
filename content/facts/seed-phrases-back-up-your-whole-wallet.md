@@ -21,10 +21,15 @@ sequence of ordinary words instead of a string of digits — something
 like "witch collapse practice feed shame open despair creek road
 again ice least."
 
-That plain-language format means your entire net worth in Bitcoin can
-be written on a slip of paper, locked in a safe, or simply memorized —
+That plain-language format is what makes the whole thing portable: a
+short list of everyday words, rather than a long string of digits
+nobody could reliably copy out or remember.
+
+**What Bitcoin fixes here:** Your entire net worth becomes something
+you can write on a slip of paper, lock in a safe, or simply memorize —
 letting someone walk across a border out of a collapsing economy with
-their savings carried entirely in their head, nothing to search or seize.
+their savings carried entirely in their head, and nothing on them to
+search or seize.
 
 **Analogy:** Like being handed a master key that regrows into every
 lock you'll ever own, small enough to memorize as a short poem instead

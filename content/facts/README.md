@@ -68,11 +68,19 @@ describes a problem or a mechanism but never closes the loop, add an explicit
 `**What Bitcoin fixes here:**` paragraph just before the analogy, so a learner
 can see what's actually being solved without having to infer it.
 
-This is **deliberately not on every fact.** Facts that are pure building blocks
-(how a hash function works, why 256 bits is a large number) aren't fixing
-anything on their own, and bolting the heading onto them makes the claim feel
-manufactured. Facts whose explanation already ends on a crisp statement of what
-changed don't need it repeated either. Add it when it earns its place.
+Most facts have one (48 of 55 at time of writing), so treat it as the default
+and the omission as the deliberate choice. Where the explanation already ended
+on a statement of what changed, that sentence was **promoted** into this
+section rather than duplicated — don't write the point twice.
+
+The seven facts that deliberately have none are the ones with no "before
+Bitcoin" to point at: the maths primitives (`what-a-hash-function-does`,
+`small-change-scrambles-the-hash`, `256-bits-is-a-universe-of-numbers`), the
+history (`bitcoin-not-invented-in-a-vacuum`, `mining-hardware-arms-race`), the
+definitional taxonomy (`soft-forks-vs-hard-forks`), and
+`mining-pools-share-the-risk`, which solves a problem *inside* Bitcoin rather
+than one Bitcoin inherited. Bolting the heading onto these makes the claim feel
+manufactured. If a new fact is in one of those categories, leave it off.
 
 It renders as a normal paragraph whose bold lead-in picks up the app's orange
 accent — no special UI handling, just the existing `**bold**` support.

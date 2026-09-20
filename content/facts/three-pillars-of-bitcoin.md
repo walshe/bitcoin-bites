@@ -24,9 +24,10 @@ Bitcoin isn't one invention — it's three, working together:
 3. **Open source client software** — code anyone can run to join the
    network, and anyone can read to see exactly how it works.
 
-No one of these three pieces would matter much alone. Together, they add up
-to money nobody can print more of, on a network nobody can shut off, running
-software nobody has to take on faith.
+**What Bitcoin fixes here:** No one of these three pieces would matter
+much alone. Together they add up to money nobody can print more of, on
+a network nobody can shut off, running software nobody has to take on
+faith.
 
 **Analogy:** Like a board game that comes with a fixed number of
 playing pieces, a table anyone can pull up a chair to, and the rules

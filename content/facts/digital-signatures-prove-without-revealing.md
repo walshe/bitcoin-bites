@@ -22,10 +22,10 @@ passes if the signature really was made using the matching private
 key, so it proves you hold the key without ever showing it. Your
 private key never has to leave your device.
 
-Unlike a bank password or a signature on a paper check, this signature
-is tied to the exact transaction data being signed. Sign one payment,
-and that signature only proves authorization for that specific
-payment — it can't be copied and reused to authorize a different one.
+**What Bitcoin fixes here:** Unlike a bank password or a signature on
+a paper check, this signature is tied to the exact transaction being
+signed. Sign one payment and that signature authorizes only that
+payment — someone who copies it can't reuse it on a different one.
 
 **Analogy:** Like a wax seal stamped onto one specific letter — anyone
 can check the seal matches your signet ring without you ever handing

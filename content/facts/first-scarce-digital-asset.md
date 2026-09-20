@@ -18,11 +18,12 @@ a movie on iTunes only "expires" because iTunes controls delivery and can
 cut you off, the same way a bank enforces scarcity on your account balance
 by controlling transfers.
 
-Bitcoin is the first digital network to enforce real scarcity with no
-middleman at all — and arguably the first asset of any kind, digital or
-physical, whose entire future supply schedule is knowable completely in
-advance. Even gold doesn't have that property: we can always discover or
-mine more of it at an unpredictable rate if it becomes profitable to do so.
+**What Bitcoin fixes here:** Bitcoin is the first digital network to
+enforce real scarcity with no middleman at all — and arguably the
+first asset of any kind, digital or physical, whose entire future
+supply is knowable completely in advance. Even gold doesn't have that
+property: we can always discover or mine more of it at an
+unpredictable rate if it becomes profitable to.
 
 **Analogy:** Every file you have ever owned can be copied and pasted —
 photos, songs, documents, all of it, endlessly and for free. Bitcoin

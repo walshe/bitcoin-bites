@@ -23,10 +23,12 @@ The clever part is what happens after someone wins. Hashing forward
 (input to output) is fast; reversing it is effectively impossible. So
 while finding a winning nonce might take billions of attempts, anyone
 else can check the answer in a single try — just hash the same
-transaction data with the reported nonce and see if it matches. This
-is exactly the referee-free trick needed to stop double-spending: no
-one company decides whose version of the ledger is real, everyone can
-independently verify who won.
+transaction data with the reported nonce and see if it matches.
+
+**What Bitcoin fixes here:** This is exactly the referee-free trick
+needed to stop double-spending. No one company decides whose version
+of the ledger is real — everyone can independently verify who won, in
+a single check.
 
 **Analogy:** Like a raffle where everyone scribbles random ticket
 numbers as fast as they can, hoping to land under a cutoff everyone

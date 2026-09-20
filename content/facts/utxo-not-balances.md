@@ -30,6 +30,12 @@ double-spends simple — a given UTXO can only ever be consumed once,
 with no need to replay someone's entire transaction history to know
 if a payment is valid.
 
+**What Bitcoin fixes here:** Checking a payment never means trusting a
+stated balance or replaying somebody's whole history — a given chunk
+of bitcoin either is still unspent or it isn't. It also means you're
+never forced to reuse an address, so your payments needn't all be
+linkable to each other.
+
 **Analogy:** Like a cash register that never tracks "how much money
 does this customer have" — it only tracks which individual bills and
 coins exist and haven't been spent, and hands out exact change as new

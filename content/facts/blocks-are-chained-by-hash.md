@@ -24,6 +24,11 @@ ingredient — which changes the block after that, and so on through
 the entire rest of the chain. Rewriting history isn't just against the
 rules; it's mathematically visible to everyone the instant you try.
 
+**What Bitcoin fixes here:** Paper records can be quietly edited by
+whoever holds them. Here, altering anything in the past breaks every
+block that came after it, so tampering isn't merely against the rules
+— it's instantly visible to everybody.
+
 **Analogy:** Like a paper chain where each new link is stamped with an
 imprint of the link before it — tug on a link from years ago and
 every link made after it visibly doesn't match anymore.

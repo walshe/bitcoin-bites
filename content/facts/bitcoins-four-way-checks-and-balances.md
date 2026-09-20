@@ -20,11 +20,10 @@ the coin's market value, and can simply dump a currency that changed
 in a way they don't like; and developers can propose and peer-review
 improvements, but can't make anyone actually install them.
 
-Try to unilaterally double the 21 million coin cap, and it plays out
-the same way regardless of which group attempts it: the other three
-groups just don't go along, and the change is worthless. It's closer to
-a free market held in equilibrium by self-interest than to a
-government passing laws.
+**What Bitcoin fixes here:** Try to unilaterally double the 21 million
+cap and it plays out the same way regardless of which group attempts
+it: the other three don't go along, and the change is worthless.
+Nobody occupies the seat that would let them simply decide.
 
 **Analogy:** Like four cooks sharing one kitchen who all have to eat
 the meal themselves. Any of them can refuse to serve something they

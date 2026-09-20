@@ -25,6 +25,11 @@ chain represents the most accumulated Proof of Work wins. Everyone
 still building on the losing version switches over, and the block that
 lost is discarded (an "orphan"), along with its reward.
 
+**What Bitcoin fixes here:** Two conflicting versions of the truth
+would normally need an authority to settle them. Bitcoin settles it
+with no vote, no arbitrator and no discussion at all — whichever
+version people keep building on simply wins.
+
 **Analogy:** Like a walking group hitting a fork where two people each
 insist their path is the real trail. Nobody argues it out — everyone
 just keeps walking, and whichever path someone pushes furthest ahead

@@ -28,6 +28,11 @@ than half of everyone else combined, the more real money and hash
 rate the honest majority has already committed, the more an attacker
 would need to spend just to catch up.
 
+**What Bitcoin fixes here:** Nobody has to manage how many miners
+there are, or step in when too many leave. The same loop that keeps
+mining roughly profitable is what keeps the network expensive to
+attack — with no one administering either.
+
 **Analogy:** Like a gold rush. A rising price draws more prospectors
 to the river, the good spots get crowded, and whoever is spending the
 most to dig quietly packs up and leaves — until the river is empty

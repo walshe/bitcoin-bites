@@ -19,9 +19,10 @@ match the rules and simply rejects the whole block — including the
 miner's payment. They still burned the electricity to win the lottery;
 they just get nothing for it.
 
-No central authority has to catch the cheater or punish them. The
-punishment is built directly into the math: everyone else independently
-enforces the same rule, so breaking it is economically pointless.
+**What Bitcoin fixes here:** No central authority has to catch the
+cheater or punish them. The punishment is built directly into the
+math: everyone else independently enforces the same rule, so breaking
+it is economically pointless.
 
 **Analogy:** Like burning a full tank of fuel driving to an auction,
 then trying to pay with a forged cheque — every buyer there checks it,

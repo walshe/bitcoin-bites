@@ -19,10 +19,10 @@ a proposed change, they simply keep running their current software,
 or something else entirely, and the change never takes effect for them
 no matter how polished the code is.
 
-That's what keeps the core developers from becoming rulers by
-default: their software only stays the de facto standard for as long as
-people keep voluntarily choosing to run it. Losing that trust means
-losing the software's influence, not the users' money.
+**What Bitcoin fixes here:** This is what stops the core developers
+becoming rulers by default: their software remains the de facto
+standard only as long as people keep voluntarily choosing to run it.
+Losing that trust costs them their influence, not you your money.
 
 **Analogy:** Like a restaurant that can print a new menu any time it
 wants, but can't make a single existing customer order off of it —

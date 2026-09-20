@@ -18,9 +18,10 @@ controls in the former USSR are all real, recent examples. Even in stable
 countries this happens on a smaller scale: PayPal has frozen accounts
 simply for going unused for a few months.
 
-Bitcoin held with your own private key removes the third party that could
-freeze or seize it in the first place — access depends on a key only you
-hold, not on any bank's or government's permission.
+**What Bitcoin fixes here:** Bitcoin held with your own private key
+removes the third party that could freeze or seize it in the first
+place — access depends on a key only you hold, not on any bank's or
+government's permission.
 
 **Analogy:** Money in a bank is like a coat you checked at a coatroom — the
 attendant can simply refuse to hand it back. Self-custodied Bitcoin is like

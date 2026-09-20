@@ -16,10 +16,10 @@ more than it might sound — it means nobody has to take Satoshi's word (or
 anyone else's) for how the system behaves. You can verify it yourself, line
 by line, or find someone who has.
 
-This single property removes the need for trust in the software's authors
-entirely, which is the whole point: a system built to eliminate trusted
-middlemen wouldn't mean much if you still had to trust the people who wrote
-the code.
+**What Bitcoin fixes here:** This single property removes the need to
+trust the software's authors, which is the whole point: a system built
+to eliminate trusted middlemen wouldn't mean much if you still had to
+trust the people who wrote the code.
 
 **Analogy:** A recipe printed right on the box instead of a restaurant's
 secret sauce — you don't have to trust the chef's word about what's in it,

@@ -26,6 +26,11 @@ wallet providers, ordinary users — while miners are more like
 contestants competing under whatever rules those nodes have already
 agreed to accept.
 
+**What Bitcoin fixes here:** Money usually ends up controlled by
+whoever owns the most infrastructure. Here, buying more hardware buys
+you more chances to win blocks and no say whatsoever over the rules —
+those stay with the ordinary people running nodes.
+
 **Analogy:** Like a marathon where runners can sprint however they
 like, but judges standing at every mile marker simply refuse to count
 anyone who cut the course — no runner, however fast, gets to redraw

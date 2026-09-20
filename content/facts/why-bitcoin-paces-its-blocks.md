@@ -19,11 +19,14 @@ they'd even heard about each other's — turning simultaneous chain
 splits from a rare event into a constant one, and making it much
 harder for the network to agree on a single history.
 
-Keeping blocks modestly sized helps too: it keeps the cost of running a
-full node low enough that ordinary computers, not just data centers,
-can keep a copy of the ledger and check the rules for themselves. Both
-choices trade a bit of raw speed for something Bitcoin values more —
-a network anyone can actually participate in verifying.
+Keeping blocks modestly sized helps too: it keeps the cost of running
+a full node low enough that ordinary computers, not just data centers,
+can keep a copy of the ledger and check the rules for themselves.
+
+**What Bitcoin fixes here:** Both choices trade a little raw speed for
+something Bitcoin values more: a network ordinary people can still
+afford to help verify, rather than one only data centers can keep up
+with.
 
 **Analogy:** Like a large meeting run with a strict "one person speaks
 at a time" rule — slower than everyone shouting at once, but it's the

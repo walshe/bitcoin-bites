@@ -30,6 +30,11 @@ transaction pay hundreds of people at once, and an upgrade called
 Segregated Witness freed up extra room within the existing block
 size.
 
+**What Bitcoin fixes here:** Card networks take a percentage, so
+moving more money costs you more despite being no more work. Bitcoin
+charges for the resource actually being consumed — room in a block —
+so a large payment isn't penalized simply for being large.
+
 **Analogy:** Like a toll road that prices by how much room your
 vehicle takes up, not by how valuable your cargo is — a truck full of
 pennies pays more than a tiny envelope stuffed with gold.

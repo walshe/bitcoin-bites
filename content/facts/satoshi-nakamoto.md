@@ -17,10 +17,11 @@ first working prototype on an online cypherpunk forum. Then, after a few
 years of emails and forum posts, Satoshi disappeared — and hasn't been
 heard from since. No one knows who they really are.
 
-This isn't just trivia: it matters because Bitcoin doesn't depend on
-trusting its creator. Nobody can call Satoshi to change the rules, grant
-themselves more coins, or shut the network down, because there's no one
-left (or ever publicly identified) to call.
+**What Bitcoin fixes here:** Most systems have somebody at the top who
+can be pressured, bought, or compelled. Bitcoin doesn't depend on
+trusting its creator — nobody can call Satoshi to change the rules,
+grant themselves more coins, or shut the network down, because there's
+no one left to call.
 
 **Analogy:** Like an anonymous architect who built a bridge, handed everyone
 the public blueprints, and walked away before it even opened — the bridge

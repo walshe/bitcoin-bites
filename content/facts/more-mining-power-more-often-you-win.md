@@ -19,6 +19,11 @@ guaranteed win. Control 10% of everyone's combined computing power
 time — but on any single block, luck can still go the other way for
 hours or even days.
 
+**What Bitcoin fixes here:** Money can buy better odds here, but it
+can't buy certainty. No amount of hardware guarantees you the next
+block, which is why no single miner — however rich — can simply decide
+what the ledger says.
+
 **Analogy:** Like buying 10% of the raffle tickets in the box — you'll
 win about a tenth of the time on average, but any individual drawing
 could still go to someone else entirely.

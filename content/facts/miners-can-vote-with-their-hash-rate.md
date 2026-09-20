@@ -21,9 +21,10 @@ miners started voluntarily leaving for smaller pools, since the coin
 they were mining loses value for everyone (including them) if the
 network looks centralized enough to be attacked.
 
-Nobody had to force that outcome. It happened because every miner
-in the pool had a direct financial stake in Bitcoin staying
-decentralized enough to be trusted.
+**What Bitcoin fixes here:** No regulator had to step in to break up a
+dangerous concentration of power. The people causing it had their own
+savings riding on Bitcoin staying decentralized, so they took it apart
+themselves.
 
 **Analogy:** Like shareholders quietly selling out of a company the
 moment one shareholder starts accumulating a controlling stake — no

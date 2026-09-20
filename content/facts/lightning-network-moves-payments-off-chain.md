@@ -27,7 +27,13 @@ until they finally close the channel and settle the net result on-chain
 once. Most of the running tab never needs the whole world to see or
 store it.
 
-**Analogy:** Like two neighbours who are forever covering each other's
+**What Bitcoin fixes here:** It buys everyday-payment speed without
+the usual price of bigger blocks and a network only data centers can
+run. The base layer stays cheap enough for ordinary people to verify,
+while small payments move somewhere that doesn't need the whole
+world's attention.
+
+**Analogy:** Like two neighbors who are forever covering each other's
 coffees and keeping a running tally on the fridge — dozens of small
 debts all month, but only one actual bank transfer to square it all
 up at the end.

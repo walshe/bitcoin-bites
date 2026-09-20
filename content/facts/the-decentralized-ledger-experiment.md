@@ -18,11 +18,11 @@ transaction into their own ledger and confirms it. There's no single
 ledger anywhere — there are dozens of identical copies, kept in sync
 by everyone talking to each other.
 
-This actually solves double-spending too: if Alice tries to spend that
-same $2 again, everyone in the group checks their own copy, sees it's
-already gone, and rejects it — no central referee required. It's a
-small-scale, low-tech preview of exactly what Bitcoin's network does
-at a global scale.
+**What Bitcoin fixes here:** This actually solves double-spending too:
+if Alice tries to spend that same $2 again, everyone checks their own
+copy, sees it's already gone, and rejects it — no central referee
+required. It's a small-scale, low-tech preview of exactly what
+Bitcoin's network does globally.
 
 **Analogy:** Like a group chat where everyone screenshots every
 payment as it happens — no one person's phone is the "official"

@@ -27,6 +27,11 @@ That's the fundamental rule for any hard fork attempted without full
 agreement — it doesn't overwrite the original, it just forks off a new
 coin.
 
+**What Bitcoin fixes here:** Bitcoin can't be captured by force or by
+argument. A disagreement can't overwrite the original chain — the most
+it can ever do is start a separate one, and let people choose which of
+the two they keep running.
+
 **Analogy:** Like a country splitting when a breakaway region declares
 independence — the old country doesn't disappear just because the
 new one insists it's the true successor; both simply exist side by side

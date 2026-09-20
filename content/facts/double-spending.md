@@ -19,11 +19,12 @@ double-spending, and every attempt at digital cash before Bitcoin had to
 solve it somehow, usually by trusting one central company to keep the only
 official ledger.
 
-Satoshi's fix: a peer-to-peer network that acts like a distributed
-timestamp server, collectively agreeing on the order transactions happened
-in. Once the network agrees a coin was spent first in transaction A, a
-later attempt to spend it again in transaction B is simply rejected — no
-central company required to referee it.
+**What Bitcoin fixes here:** Satoshi's answer was a peer-to-peer
+network acting like a distributed timestamp server, collectively
+agreeing on the order transactions happened in. Once the network
+agrees a coin was spent first in transaction A, a later attempt to
+spend it again in transaction B is simply rejected — no central
+company required to referee it.
 
 **Analogy:** Like a single shared sign-in sheet that thousands of witnesses
 watch at once, so nobody can quietly erase an entry or claim they signed in

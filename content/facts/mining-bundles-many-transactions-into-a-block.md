@@ -25,6 +25,12 @@ the included payments conflict with anything already written earlier,
 and then appends it to their own copy of the ledger. Do that over and
 over, and you get a chain of these blocks — a blockchain.
 
+**What Bitcoin fixes here:** Agreeing on one payment at a time,
+worldwide, would never keep up. Bundling hundreds of them into a
+single race means one contest settles them all at once — and pins down
+their order in the process, which is exactly what stops the same coin
+being spent twice.
+
 **Analogy:** Like a courier who waits for the mailbag to fill before
 sealing it and racing off — the whole bag gets stamped and delivered
 as one, rather than making a separate trip for every letter.

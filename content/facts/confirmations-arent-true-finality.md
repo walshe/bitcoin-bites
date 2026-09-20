@@ -20,11 +20,11 @@ roughly an hour) is a common convention, not a rule: a shop selling a
 cheap digital download might accept zero confirmations, while someone
 closing on a house might wait for twelve.
 
-It's worth comparing this to what it's replacing: a typical card
-payment can still be reversed up to 120 days after the fact. Bitcoin's
-finality is a judgment call rather than a fixed guarantee, but it's a
-call you get to make yourself — and it only gets more certain with
-time, never less.
+**What Bitcoin fixes here:** Compare it to what it replaces: a typical
+card payment can still be reversed up to 120 days after the fact, by
+someone else. Bitcoin's finality is a judgment call rather than a
+fixed guarantee, but it's a call you get to make yourself — and it
+only grows more certain with time.
 
 **Analogy:** Like wet concrete that keeps hardening the longer it
 sits — nobody declares the exact moment it's "done," but everyone can

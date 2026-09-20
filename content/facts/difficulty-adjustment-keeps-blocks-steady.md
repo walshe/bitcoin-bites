@@ -19,9 +19,10 @@ computer on the network independently looks back at how long that
 batch actually took, then raises or lowers the Target proportionally —
 tighter if blocks came too fast, looser if they came too slow.
 
-No central party sets this. Everyone runs the exact same rule against
-the exact same shared history, so everyone lands on the identical new
-Target without needing to ask anyone else or trust an announcement.
+**What Bitcoin fixes here:** No central party sets this. Everyone runs
+the exact same rule against the exact same shared history, so everyone
+lands on the identical new Target without needing to ask anyone or
+trust an announcement.
 
 **Analogy:** Like a thermostat that checks the last two weeks of
 readings and nudges its own setting up or down — no repair technician

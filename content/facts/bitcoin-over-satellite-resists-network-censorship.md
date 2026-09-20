@@ -26,6 +26,10 @@ TxTenna, and it becomes extremely difficult for any single country to
 cut its population off from Bitcoin, even by controlling every internet
 connection crossing its borders.
 
+**What Bitcoin fixes here:** Cutting a population off from Bitcoin
+would mean controlling not just every internet cable crossing the
+border, but the sky above it too.
+
 **Analogy:** Like a radio station broadcasting from orbit — jamming
 every road into a country doesn't help if the news is falling out of
 the sky everywhere at once.

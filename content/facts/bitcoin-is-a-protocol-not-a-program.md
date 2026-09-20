@@ -27,6 +27,11 @@ what's valid. But nothing stops anyone from writing their own client
 from scratch, in any language, as long as it follows the same rules
 everyone else is enforcing.
 
+**What Bitcoin fixes here:** No company owns Bitcoin, because there's
+nothing to own — only rules to follow. You can't be locked into one
+vendor's software, and no single development team can quietly turn
+into the gatekeeper.
+
 **Analogy:** Like a card game with a fixed rulebook that anyone can
 print their own deck for — as long as your deck follows the printed
 rules, the table doesn't care whose printer made it.
