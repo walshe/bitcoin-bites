@@ -20,13 +20,20 @@ register anything, because the numbers are so large that two people
 ever generating the same pair by accident is effectively impossible.
 
 That same size is what keeps your coins safe from guessing, not a
-password policy. Line up the odds: guessing an 8-digit coin-flip
-sequence is 1-in-256. Guessing a 6-character license plate is 1-in-2
-billion. Guessing someone's 16-digit credit card number is 1-in-10
-quintillion. A 256-bit private key sits at roughly 1-in-10^77 — a scale
+password policy. Line the odds up and the jump is the whole point:
+calling 8 coin tosses in a row is 1-in-256. Guessing a 6-character
+license plate is 1-in-2 billion. Guessing someone's 16-digit credit
+card number is 1-in-10 quintillion. Guessing a 256-bit private key is
+closer to winning the Powerball jackpot nine times in a row — a scale
 where even a planet turned into a hard drive, powered by every star in
-reach, running at a trillion guesses a second, wouldn't get through a
+reach, running a trillion guesses a second, wouldn't get through a
 meaningful fraction of the possibilities before the universe grew old.
+
+**What Bitcoin fixes here:** Opening a bank account means applying to
+someone and being approved — which means you can also be refused, or
+closed down later. A Bitcoin account is just a number you generate
+yourself, so there's nobody to apply to, and nobody who can take it
+away afterwards.
 
 **Analogy:** Like a lock with more possible keys than there are atoms
 in the universe — nobody's picking it by trying combinations, no

@@ -21,5 +21,10 @@ identity. When you hand someone physical cash, they don't need to know who
 you are, and you don't have to worry they'll use your information against
 you later. Bitcoin tries to give digital money that same property.
 
+**What Bitcoin fixes here:** The breach risk exists because the data
+is piled up in one place to begin with. Paying in bitcoin doesn't
+require handing your identity to anyone, so there's no central store
+of customer records sitting there waiting to be leaked.
+
 **Analogy:** Handing someone cash for a coffee doesn't require handing over
 your ID and home address too — so why should paying digitally require it?

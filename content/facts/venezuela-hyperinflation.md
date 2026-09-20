@@ -22,5 +22,11 @@ risks in practice: not an abstract inconvenience, but watching a lifetime
 of savings evaporate within a decade, without the saver doing anything
 wrong at all.
 
+**What Bitcoin fixes here:** Those savers did nothing wrong — the
+rules of their money changed underneath them. Bitcoin takes that
+power off the table entirely: no government, company, or developer
+can inflate away what you're holding, because the issuance schedule
+isn't anyone's to change.
+
 **Analogy:** Imagine saving your paycheck under your mattress and coming
 back ten years later to find it's worth about one candy bar.

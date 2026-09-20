@@ -23,6 +23,12 @@ This is the real problem Bitcoin has to solve: how do you keep a
 shared ledger honest among total strangers, at global scale, with no
 one in charge and no reputations at stake?
 
+**What Bitcoin fixes here:** Bitcoin's answer is to stop depending on
+honesty at all. Rather than hoping strangers won't cheat, it makes
+cheating cost more real money than it could ever earn — so the ledger
+stays accurate even though nobody keeping it knows or trusts anyone
+else.
+
 **Analogy:** Splitting a dinner bill with five close friends works on the
 honor system; splitting it with five thousand strangers who'll never
 see each other again does not.

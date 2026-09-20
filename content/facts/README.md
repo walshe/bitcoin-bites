@@ -43,12 +43,39 @@ related: [fact-007, fact-118] # optional — other fact IDs. Declaring the link 
                                # the other fact automatically. Every ID here must
                                # correspond to a real fact file, or the build fails.
 ---
+```
 
-Body: the fact's explanation, in plain language, followed by a short analogy.
+## Body format
 
-Per design.md decision 10, prefer naming the specific pre-Bitcoin gap this fact
-closes — what was impossible, or required trusting a third party, before Bitcoin —
-so the "nothing like this has existed before" reaction is explicit, not implicit.
+A fact body has up to three parts, in this order:
+
+1. **The explanation**, in plain language — one or two paragraphs.
+2. **`**What Bitcoin fixes here:**`** — optional, see below.
+3. **`**Analogy:**`** — required, always the last paragraph.
+
+Bodies are authored with a hard line-wrap around 70 characters for readable git
+diffs; the compiler reflows each paragraph to fill the screen, so only a genuine
+blank line becomes a real break in the app. The only inline markup supported is
+`**bold**` — single asterisks render as literal asterisks, not italics, so don't
+use them.
+
+### The "What Bitcoin fixes here" paragraph
+
+Per design.md decision 10, a fact should name the specific pre-Bitcoin gap it
+closes — what was impossible, or required trusting a third party, before Bitcoin.
+Where that lands naturally in the explanation, leave it there. Where a fact
+describes a problem or a mechanism but never closes the loop, add an explicit
+`**What Bitcoin fixes here:**` paragraph just before the analogy, so a learner
+can see what's actually being solved without having to infer it.
+
+This is **deliberately not on every fact.** Facts that are pure building blocks
+(how a hash function works, why 256 bits is a large number) aren't fixing
+anything on their own, and bolting the heading onto them makes the claim feel
+manufactured. Facts whose explanation already ends on a crisp statement of what
+changed don't need it repeated either. Add it when it earns its place.
+
+It renders as a normal paragraph whose bold lead-in picks up the app's orange
+accent — no special UI handling, just the existing `**bold**` support.
 
 ## Fact ordering
 
@@ -59,7 +86,6 @@ and Journey mode. It's deliberately sparse — the first chapter-1 batch uses
 existing facts can just take a number in the gap (e.g. 1500) instead of
 forcing a renumber of everything after it. Only renumber a whole range if a
 gap actually runs out.
-```
 
 ## Canonical category taxonomy
 

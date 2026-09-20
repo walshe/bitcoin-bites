@@ -26,6 +26,12 @@ someone else who gets a copy of it can spend those coins as easily as
 you could. Full control over your money comes bundled with full
 responsibility for guarding the one thing that proves it's yours.
 
+**What Bitcoin fixes here:** Keeping money anywhere else means
+somebody is holding it on your behalf — and they can freeze it, lose
+it, or go under with it still inside. A wallet removes that party
+completely. The honest trade-off is that their safety net leaves with
+them, and guarding the key becomes your job instead.
+
 **Analogy:** A wallet is less like a safe holding cash, and more like
 the only copy of a key to a safety deposit box that has no lost-key
 counter — whoever holds the key, holds the contents.

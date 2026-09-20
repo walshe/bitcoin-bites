@@ -21,6 +21,12 @@ existence — there was no pre-existing stash sitting somewhere waiting
 to be distributed, even Satoshi had to mine the very first block to
 get the very first bitcoin.
 
+**What Bitcoin fixes here:** With government money, whoever controls
+issuance gets to spend the new supply first, before prices catch up.
+Bitcoin has no such seat: the only way to get newly created coins is
+to spend real energy competing for them on exactly the same terms as
+everyone else — the inventor included.
+
 **Analogy:** Like a mint that only stamps a new coin each time someone
 wins a fair, energy-burning raffle — nobody, not even the mint's
 designer, gets a shortcut to free coins.

@@ -26,6 +26,11 @@ chain of promises — from your bank, to the clearing houses, to the central
 bank — and the whole system only worked as long as every link in that chain
 kept its word.
 
+**What Bitcoin fixes here:** Every one of those trust relationships is
+a place the system can quietly fail you. Bitcoin's entire design is an
+attempt to remove them rather than improve them — replacing promises
+you have to believe with rules anyone can check for themselves.
+
 **Analogy:** Handing someone cash requires trusting nothing about them.
 Routing a payment through a bank means trusting an entire chain of people
 you've never met, and never will.

@@ -24,6 +24,12 @@ control. That distinction matters a lot once you're judging whether a
 network actually removes a trusted middleman, or just spreads that
 middleman's infrastructure around.
 
+**What Bitcoin fixes here:** Plenty of systems are distributed. Very
+few are decentralized, and decentralized is the property that
+actually removes the middleman. Bitcoin is deliberately both — copies
+everywhere, and nobody holding the authority to overrule what those
+copies say.
+
 **Analogy:** Ten security cameras filming the same store, all owned by
 the store, are distributed — but the store still decides what happens
 to the footage. That's distributed without being decentralized.

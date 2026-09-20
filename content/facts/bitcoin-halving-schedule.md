@@ -23,5 +23,11 @@ Nobody votes on when a halving happens or decides to delay it — it's
 just a rule inside the same open-source software every participant
 runs, triggered by block count rather than the calendar.
 
+**What Bitcoin fixes here:** Central banks decide how fast new money
+appears and can revise that decision at any time — usually printing
+faster in a crisis, exactly when savers can least afford it. Bitcoin's
+issuance is a published schedule that has never once moved, so you
+can work out today precisely how much bitcoin will exist in 2100.
+
 **Analogy:** Like a bag of rice that halves in size every scoop you
 take out — cutting in half forever, but never actually running out.

@@ -22,6 +22,13 @@ much harder question — and the one Bitcoin actually had to solve —
 is how you stop the same trick with no referee at all: no single
 party keeping the one true ledger.
 
+**What Bitcoin fixes here:** Bitcoin keeps the "you can't spend it
+twice" guarantee but throws away the referee that used to provide it.
+Thousands of independent computers each hold the ledger and check
+every payment against it, so a second attempt gets rejected by
+everyone at once rather than by one company with the authority to
+say no.
+
 **Analogy:** Like a single scorekeeper at a game — cheating is easy to
 catch when there's only one scoreboard and one person allowed to
 touch the marker.

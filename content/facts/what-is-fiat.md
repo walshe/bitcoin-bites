@@ -24,6 +24,11 @@ could expand the money supply — print more of it — at will, a process
 called debasement. Pure fiat currency, the money most of us use every day,
 is actually a fairly recent invention: only about a century old.
 
+**What Bitcoin fixes here:** Fiat's supply can be expanded by whoever
+issues it, and you get no say and usually no warning. Bitcoin's
+issuance is fixed in software and knowable by anyone in advance, so
+"just print more" isn't an option available to anybody at all.
+
 **Analogy:** Like a landlord who can print extra rent receipts whenever
 they feel like it — your receipt still says the same number, but it quietly
 buys less every time they print more.

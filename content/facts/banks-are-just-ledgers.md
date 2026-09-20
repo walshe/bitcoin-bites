@@ -21,6 +21,12 @@ That ledger is the entire system, and it belongs to the bank, not to
 you. Your balance is only real because the bank's private records say
 so, and only the bank is allowed to change them.
 
+**What Bitcoin fixes here:** The problem isn't that money is a ledger
+— Bitcoin is a ledger too. It's that this ledger is private and only
+one company is allowed to write in it. Bitcoin makes the ledger
+public, keeps a full copy on thousands of independent computers, and
+lets fixed rules rather than an owner decide what gets written.
+
 **Analogy:** Like a tab at a bar that only the bartender can write in —
 your balance is just ink on the bartender's notepad, and you have to
 trust the bartender to write it down correctly and never erase it.
