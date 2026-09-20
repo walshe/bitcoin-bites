@@ -27,7 +27,7 @@ until they finally close the channel and settle the net result on-chain
 once. Most of the running tab never needs the whole world to see or
 store it.
 
-**Analogy:** Like opening a bar tab instead of swiping your card for
-every single drink — you settle up with the bartender once at the end
-of the night instead of processing dozens of tiny transactions all
-evening.
+**Analogy:** Like two neighbours who are forever covering each other's
+coffees and keeping a running tally on the fridge — dozens of small
+debts all month, but only one actual bank transfer to square it all
+up at the end.

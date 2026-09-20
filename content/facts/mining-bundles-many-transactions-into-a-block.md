@@ -25,6 +25,6 @@ the included payments conflict with anything already written earlier,
 and then appends it to their own copy of the ledger. Do that over and
 over, and you get a chain of these blocks — a blockchain.
 
-**Analogy:** Like a single winning raffle draw that settles an entire
-tray of tickets at once, instead of running a separate draw for every
-individual ticket.
+**Analogy:** Like a courier who waits for the mailbag to fill before
+sealing it and racing off — the whole bag gets stamped and delivered
+as one, rather than making a separate trip for every letter.

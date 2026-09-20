@@ -28,6 +28,7 @@ No one of these three pieces would matter much alone. Together, they add up
 to money nobody can print more of, on a network nobody can shut off, running
 software nobody has to take on faith.
 
-**Analogy:** Like a potluck dinner with a public recipe book (the open
-source code) that anyone can cook from (join the network), where there's no
-host's uncle deciding who gets to eat first (no central authority).
+**Analogy:** Like a board game that comes with a fixed number of
+playing pieces, a table anyone can pull up a chair to, and the rules
+printed right on the lid — no banker in the corner handing themselves
+extra pieces, and nobody who can rewrite the rules mid-game.

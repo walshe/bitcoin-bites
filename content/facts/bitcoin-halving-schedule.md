@@ -29,5 +29,6 @@ faster in a crisis, exactly when savers can least afford it. Bitcoin's
 issuance is a published schedule that has never once moved, so you
 can work out today precisely how much bitcoin will exist in 2100.
 
-**Analogy:** Like a bag of rice that halves in size every scoop you
-take out — cutting in half forever, but never actually running out.
+**Analogy:** Like stepping half the remaining distance to a wall each
+time. You never stop moving, every step is smaller than the last, and
+you edge closer and closer to the wall without ever quite touching it.

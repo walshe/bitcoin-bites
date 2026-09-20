@@ -26,7 +26,6 @@ groups just don't go along, and the change is worthless. It's closer to
 a free market held in equilibrium by self-interest than to a
 government passing laws.
 
-**Analogy:** Like four people each holding one key to the same safe —
-no single key-holder, however senior, can open it alone; a change
-only happens when enough of the others independently agree to turn
-their key too.
+**Analogy:** Like four cooks sharing one kitchen who all have to eat
+the meal themselves. Any of them can refuse to serve something they
+think is spoiled, and not one of them can make the others swallow it.

@@ -23,7 +23,6 @@ No central authority has to catch the cheater or punish them. The
 punishment is built directly into the math: everyone else independently
 enforces the same rule, so breaking it is economically pointless.
 
-**Analogy:** Like trying to cash a check you wrote yourself for more
-than the agreed amount — the bank (everyone else on the network)
-just bounces the whole thing, and you're out the cost of the paper and
-the stamp.
+**Analogy:** Like burning a full tank of fuel driving to an auction,
+then trying to pay with a forged cheque — every buyer there checks it,
+the sale is voided on the spot, and nobody hands you back the fuel.

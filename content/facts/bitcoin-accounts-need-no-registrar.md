@@ -35,6 +35,7 @@ closed down later. A Bitcoin account is just a number you generate
 yourself, so there's nobody to apply to, and nobody who can take it
 away afterwards.
 
-**Analogy:** Like a lock with more possible keys than there are atoms
-in the universe — nobody's picking it by trying combinations, no
-matter how fast they try.
+**Analogy:** Like inventing your own phone number out of thin air,
+knowing nobody else on Earth could ever dial into it by chance —
+no company to apply to, no form to fill in, and nobody with the
+power to disconnect you later.

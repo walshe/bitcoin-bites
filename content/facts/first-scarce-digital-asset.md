@@ -24,5 +24,6 @@ physical, whose entire future supply schedule is knowable completely in
 advance. Even gold doesn't have that property: we can always discover or
 mine more of it at an unpredictable rate if it becomes profitable to do so.
 
-**Analogy:** Like a photocopier that has never existed before — one that
-can copy absolutely anything in the world except this one specific thing.
+**Analogy:** Every file you have ever owned can be copied and pasted —
+photos, songs, documents, all of it, endlessly and for free. Bitcoin
+is the first digital thing where that simply doesn't work.

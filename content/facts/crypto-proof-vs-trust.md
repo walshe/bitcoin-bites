@@ -22,6 +22,7 @@ This single substitution — proof instead of trust — is the core trick
 behind almost everything else Bitcoin does: verifying ownership, preventing
 forgery, and securing the network, all without a referee.
 
-**Analogy:** A tamper-proof, verifiable receipt versus someone simply
-telling you "trust me, I paid." One can be checked by anyone; the other can
-only be believed.
+**Analogy:** Like holding a banknote up to the light to check the
+watermark yourself, instead of taking the seller's word that it's
+real. One takes a second and settles the matter; the other you can
+only decide whether to believe.

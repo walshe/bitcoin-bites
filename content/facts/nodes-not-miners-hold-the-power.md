@@ -28,5 +28,5 @@ agreed to accept.
 
 **Analogy:** Like a marathon where runners can sprint however they
 like, but judges standing at every mile marker simply refuse to count
-any lap that didn't follow the course — no runner, however fast, gets
-to redraw the route.
+anyone who cut the course — no runner, however fast, gets to redraw
+the route.

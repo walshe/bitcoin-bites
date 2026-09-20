@@ -28,7 +28,7 @@ than half of everyone else combined, the more real money and hash
 rate the honest majority has already committed, the more an attacker
 would need to spend just to catch up.
 
-**Analogy:** Like a thermostat wired to a competitive gym membership —
-more people showing up (miners joining) makes management raise
-the price of admission (difficulty), which thins the crowd back down
-to whoever still finds it worth it.
+**Analogy:** Like a gold rush. A rising price draws more prospectors
+to the river, the good spots get crowded, and whoever is spending the
+most to dig quietly packs up and leaves — until the river is empty
+enough to be worth someone's while to turn up again.

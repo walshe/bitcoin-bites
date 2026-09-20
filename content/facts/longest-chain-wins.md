@@ -25,7 +25,7 @@ chain represents the most accumulated Proof of Work wins. Everyone
 still building on the losing version switches over, and the block that
 lost is discarded (an "orphan"), along with its reward.
 
-**Analogy:** Like two relay teams that both cross a finish line at
-nearly the same instant — instead of arguing over a photo, the race
-organizers just check which team's baton makes it furthest down the
-**next** leg of the track.
+**Analogy:** Like a walking group hitting a fork where two people each
+insist their path is the real trail. Nobody argues it out — everyone
+just keeps walking, and whichever path someone pushes furthest ahead
+quietly becomes the trail everyone follows.

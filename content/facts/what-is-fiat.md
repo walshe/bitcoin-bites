@@ -29,6 +29,7 @@ issues it, and you get no say and usually no warning. Bitcoin's
 issuance is fixed in software and knowable by anyone in advance, so
 "just print more" isn't an option available to anybody at all.
 
-**Analogy:** Like a landlord who can print extra rent receipts whenever
-they feel like it — your receipt still says the same number, but it quietly
-buys less every time they print more.
+**Analogy:** Like casino chips: worth something only because the
+casino says so — and the casino can press more whenever it likes.
+Your stack still reads 500, but each chip quietly buys a little less
+at the bar every time they do.

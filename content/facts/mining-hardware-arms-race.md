@@ -27,7 +27,7 @@ hash rate, which raised the difficulty, which pushed out whoever
 couldn't keep up — the exact self-correcting loop that keeps mining
 profitability in equilibrium.
 
-**Analogy:** Like a foot race that first got run on bicycles, then
-motorcycles, then dedicated race cars — each generation makes the
-previous one obsolete, purely because it's built for nothing except
-winning this one race.
+**Analogy:** Like a race that began on foot, then allowed bicycles,
+then motorcycles, then purpose-built race cars — every generation
+makes the one before it pointless to enter, purely because it's built
+for nothing except winning this one race.

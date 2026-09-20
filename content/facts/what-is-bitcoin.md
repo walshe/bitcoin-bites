@@ -23,6 +23,6 @@ verify every payment, because digital bits (unlike physical cash) need
 someone trusted to control their transfer. Bitcoin brings the "just check it
 yourself" property of cash back to digital money.
 
-**Analogy:** Paying a friend back for lunch in cash needs no referee. Bitcoin
-tries to make digital payments work the same way — no referee required, even
-though the money itself is just bits.
+**Analogy:** Like emailing someone a photo — except that the moment it
+arrives, your copy is gone. Everything else you send digitally is
+really a copy; this is the first kind that actually leaves your hands.
