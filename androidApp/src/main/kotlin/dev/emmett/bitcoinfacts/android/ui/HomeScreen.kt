@@ -22,7 +22,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
@@ -126,7 +126,7 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
-                HomeButtonContent(Icons.Filled.List, "All Bites")
+                HomeButtonContent(Icons.Filled.Menu, "All Bites")
             }
 
             if (continueFact != null) {
