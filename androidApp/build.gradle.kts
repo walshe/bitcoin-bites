@@ -27,7 +27,7 @@ android {
         minSdk = 24
         // Play requires new apps/updates to target API 36 as of 2026-08-31.
         targetSdk = 36
-        versionCode = 3
+        versionCode = 4
         versionName = "1.0"
     }
 

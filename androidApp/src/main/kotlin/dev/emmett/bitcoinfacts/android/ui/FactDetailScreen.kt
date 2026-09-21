@@ -149,7 +149,8 @@ private fun String.stripBoldMarkdown(): String = BOLD_MARKER.replace(this) { it.
 
 private const val PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=dev.emmett.bitcoinfacts.android"
 
-private fun shareFact(context: android.content.Context, fact: Fact) {
+/** Also used by [JourneyScreen], which shares whichever fact is on screen. */
+internal fun shareFact(context: android.content.Context, fact: Fact) {
     val shareText = "${fact.title}\n\n${fact.body.stripBoldMarkdown()}\n\n— Shared from Bitcoin Bites\n$PLAY_STORE_URL"
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"

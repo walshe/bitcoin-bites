@@ -31,6 +31,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -133,6 +135,7 @@ fun JourneyScreen(
 
     val currentIndex = pagerState.currentPage % journeyFacts.size
     val currentFact = journeyFacts[currentIndex]
+    val context = LocalContext.current
 
     // Subtle one-off affordance: it's not obvious this screen is swipeable, so
     // nudge with a small animated hint until the user actually swipes once.
@@ -173,6 +176,9 @@ fun JourneyScreen(
                                 contentDescription = if (isFavorite) "Unfavorite" else "Favorite",
                                 tint = if (isFavorite) MaterialTheme.colorScheme.primary else LocalContentColor.current,
                             )
+                        }
+                        IconButton(onClick = { shareFact(context, currentFact) }) {
+                            Icon(Icons.Filled.Share, contentDescription = "Share")
                         }
                     },
                     showAccentLine = !guided,
