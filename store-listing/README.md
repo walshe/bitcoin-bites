@@ -51,8 +51,23 @@ On the Guided Bites screen, swipe once forward and once back before capturing.
 The first-run "Swipe" hint sits on top of the body text until it's been
 dismissed, and it looks like a rendering fault in a store image.
 
+## feature-graphic.png
+
+1024×500, required by Play to publish a listing. Composed from the app's own
+mascot and palette rather than designed by hand, so it matches what people see
+when they open the app. The title is auto-shrunk to keep a real right-hand
+margin — Play crops the edges of this asset in some placements, so text must
+not run to the edge.
+
+Regenerate or restyle it with `feature-graphic.py` (needs Pillow).
+
+## listing-copy.md
+
+App name, short and full descriptions within Play's character limits, plus
+prepared answers for the Data safety and Content rating forms and a
+pre-submission checklist.
+
 ## Still needed
 
-- **Feature graphic**, 1024×500. A designed banner, not a screenshot — nothing
-  here can stand in for it.
-- The 512×512 listing icon can come from `../bitcoin-bites-bunny-clean-assets/`.
+Nothing here — the 512×512 listing icon comes from
+`../bitcoin-bites-bunny-clean-assets/bitcoin-bites-bunny-512.png`.
