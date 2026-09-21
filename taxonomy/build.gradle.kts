@@ -16,7 +16,7 @@ kotlin {
 
 android {
     namespace = "dev.emmett.bitcoinfacts.taxonomy"
-    compileSdk = 34
+    compileSdk = 36
     defaultConfig {
         minSdk = 24
     }

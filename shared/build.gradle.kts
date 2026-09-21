@@ -43,7 +43,7 @@ sqldelight {
 
 android {
     namespace = "dev.emmett.bitcoinfacts.shared"
-    compileSdk = 34
+    compileSdk = 36
     defaultConfig {
         minSdk = 24
     }

@@ -20,12 +20,13 @@ val keystoreProperties = Properties().apply {
 
 android {
     namespace = "dev.emmett.bitcoinfacts.android"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "dev.emmett.bitcoinfacts.android"
         minSdk = 24
-        targetSdk = 34
+        // Play requires new apps/updates to target API 36 as of 2026-08-31.
+        targetSdk = 36
         versionCode = 1
         versionName = "0.1"
     }
@@ -58,15 +59,19 @@ android {
     buildFeatures {
         compose = true
     }
-
-    sourceSets {
-        getByName("main") {
-            assets.srcDir(layout.buildDirectory.dir("generated/assets/facts"))
-        }
-    }
 }
 
-val compileFacts = tasks.register<JavaExec>("compileFacts") {
+/**
+ * Declares the generated-assets directory as a real task output, so AGP can wire
+ * every consumer of it automatically. Plain `JavaExec` has no `DirectoryProperty`
+ * to hand to `addGeneratedSourceDirectory`, hence the subclass.
+ */
+abstract class CompileFactsTask : JavaExec() {
+    @get:OutputDirectory
+    abstract val outputDir: DirectoryProperty
+}
+
+val compileFacts = tasks.register<CompileFactsTask>("compileFacts") {
     group = "build"
     description = "Compiles content/facts/*.md into the bundled facts.json runtime index (task 2.3-2.6)"
     dependsOn(":content-compiler:classes")
@@ -76,21 +81,25 @@ val compileFacts = tasks.register<JavaExec>("compileFacts") {
     mainClass.set("dev.emmett.bitcoinfacts.compiler.MainKt")
 
     val inputDir = rootProject.file("content/facts")
-    val outputFile = layout.buildDirectory.file("generated/assets/facts/facts.json")
-
     inputs.dir(inputDir)
-    outputs.file(outputFile)
+    outputDir.set(layout.buildDirectory.dir("generated/assets/facts"))
 
     doFirst {
         args = listOf(
             "--input", inputDir.absolutePath,
-            "--output", outputFile.get().asFile.absolutePath,
+            "--output", outputDir.get().file("facts.json").asFile.absolutePath,
         )
     }
 }
 
-tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }.configureEach {
-    dependsOn(compileFacts)
+// Registering through the variant API (rather than `sourceSets.assets.srcDir` plus a
+// hand-maintained `dependsOn` list) means every task that reads assets picks up the
+// dependency - including the lint model tasks, which Gradle 8.13 fails the build over
+// if they read an undeclared task output.
+androidComponents {
+    onVariants { variant ->
+        variant.sources.assets?.addGeneratedSourceDirectory(compileFacts, CompileFactsTask::outputDir)
+    }
 }
 
 dependencies {

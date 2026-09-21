@@ -165,6 +165,19 @@ signed. Sanity-check the signature any time with:
 jarsigner -verify -verbose:summary androidApp/build/outputs/bundle/release/androidApp-release.aab
 ```
 
+### Target API level
+
+Play enforces a minimum target API for new submissions, and it ratchets up every
+year — a bundle below the current floor is rejected at upload, not merely warned
+about. As of 2026-08-31 new apps and updates must target **API 36** (Android 16),
+which is what `androidApp/build.gradle.kts` sets. Check
+[Play's target API level requirements](https://developer.android.com/google/play/requirements/target-sdk)
+before each release; raising it means installing the matching SDK platform, and
+usually bumping AGP and Gradle too, since older AGP can't compile against a newer
+API. Re-test on an emulator running the new API level — display behaviour changes
+(edge-to-edge enforcement in API 35+, for instance) only reproduce there, not on
+an older image.
+
 ### Shipping an update
 
 1. Bump `versionCode` (must strictly increase every release) and
