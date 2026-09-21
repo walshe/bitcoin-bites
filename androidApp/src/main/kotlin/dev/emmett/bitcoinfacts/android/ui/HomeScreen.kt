@@ -138,27 +138,35 @@ fun HomeScreen(
 }
 
 /**
- * Icon + label for a home screen button, centered as a single group.
+ * Icon + label for a home screen button.
  *
- * This previously pinned the icon inside a fixed-width leading slot so every
- * button's icon landed on the same x. That reserved 200dp before the label was
- * measured at all, which is fine on a wide screen and truncates on a narrow
- * one - a 360dp phone left roughly 64dp for the text, so "Guided Bites" and
- * "Random Bites" rendered as "Guided" and "Random" with `maxLines = 1` quietly
- * clipping the rest. Centering the group instead means the label always gets
- * the width it needs; the icons no longer share an x position, which is the
- * cost of the labels being legible at any width or font scale.
+ * The two are positioned independently rather than laid out in a row: the
+ * label is centered in the button and the icon is pinned a fixed distance
+ * from the start. That keeps every button's icon on the same x - a row would
+ * shift it by the label's width - while the label, being centered rather than
+ * sharing a row, is never squeezed by the icon's slot.
+ *
+ * An earlier version did use a row with a fixed 92dp leading slot and a 100dp
+ * trailing spacer. That consumed 200dp before the label was measured, leaving
+ * roughly 64dp on a 360dp phone, and `maxLines = 1` silently clipped the rest:
+ * "Guided Bites" rendered as "Guided". Keeping the label out of the row's
+ * width budget is what stops that recurring at any width or font scale.
  */
 @Composable
 private fun HomeButtonContent(icon: ImageVector, label: String) {
-    Row(
+    Box(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
+        contentAlignment = Alignment.Center,
     ) {
-        Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
-        Spacer(modifier = Modifier.width(12.dp))
         Text(label, maxLines = 1)
+        Icon(
+            icon,
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .padding(start = 16.dp)
+                .size(20.dp),
+        )
     }
 }
 
