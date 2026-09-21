@@ -73,7 +73,7 @@ so you can follow a thread as far as you like.
 ALSO
 
 • A daily fact notification, if you want one
-• Save favourites to come back to
+• Save favorites to come back to
 • A streak that counts the days you show up
 • Share any fact with a friend
 
@@ -83,7 +83,7 @@ BUILT TO RESPECT YOU
   calls at all
 • No account, no sign-up, no email required
 • No ads, no tracking, no analytics
-• Nothing is collected about you. Favourites, streak and progress stay on your
+• Nothing is collected about you. Favorites, streak and progress stay on your
   device
 
 Bitcoin Bites is an educational app. It does not buy, sell, store or transfer
@@ -134,7 +134,7 @@ Everything else then disappears or is not applicable:
 | Third-party SDKs collecting data | None |
 
 **Supporting facts if you're asked to justify it:** the app has no server.
-Favourites, reading streak, journey position and notification history are
+Favorites, reading streak, journey position and notification history are
 written to a local SQLite database on the device and never leave it.
 Uninstalling removes them.
 
