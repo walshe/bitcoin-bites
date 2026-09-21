@@ -16,14 +16,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -56,9 +57,8 @@ import dev.emmett.bitcoinfacts.shared.history.JourneyMode
  * Task 12.1: new nav-graph start destination, offering "Guided Bites" (an
  * unfiltered swipeable journey in canonical `order` - the order facts were
  * authored in, chapter by chapter), "Random Bites" (the same swipeable
- * journey, shuffled), "All Bites" (the existing list screen), and "Purchase
- * Bitcoin" (a placeholder page for exchange referral links, added later) as
- * distinct entry points, in that display order.
+ * journey, shuffled) and "All Bites" (the existing list screen) as distinct
+ * entry points, in that display order.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,7 +69,6 @@ fun HomeScreen(
     onGuidedJourney: () -> Unit,
     onRandomJourney: () -> Unit,
     onOpenFavorites: () -> Unit,
-    onPurchaseBitcoin: () -> Unit,
 ) {
     val continueFact = remember {
         container.journeyProgressStore.lastFactId(JourneyMode.GUIDED)?.let { container.factRepository.findById(it) }
@@ -94,6 +93,10 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
+                // The mascot plus four entry points overflow a short screen (or a
+                // normal one at a large display/font scale), which silently cut off
+                // the "Continue reading" card with no way to reach it.
+                .verticalScroll(rememberScrollState())
                 .padding(24.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -124,10 +127,6 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
                 HomeButtonContent(Icons.Filled.List, "All Bites")
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            OutlinedButton(onClick = onPurchaseBitcoin, modifier = Modifier.fillMaxWidth()) {
-                HomeButtonContent(Icons.Filled.ShoppingCart, "Purchase Bitcoin")
             }
 
             if (continueFact != null) {

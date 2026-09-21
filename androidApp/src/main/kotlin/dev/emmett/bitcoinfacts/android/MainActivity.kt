@@ -27,7 +27,6 @@ import dev.emmett.bitcoinfacts.android.ui.FactListScreen
 import dev.emmett.bitcoinfacts.android.ui.FavoritesScreen
 import dev.emmett.bitcoinfacts.android.ui.HomeScreen
 import dev.emmett.bitcoinfacts.android.ui.JourneyScreen
-import dev.emmett.bitcoinfacts.android.ui.PurchaseBitcoinScreen
 import dev.emmett.bitcoinfacts.android.ui.theme.BitcoinFactsTheme
 import dev.emmett.bitcoinfacts.shared.history.JourneyMode
 import dev.emmett.bitcoinfacts.taxonomy.Category
@@ -37,7 +36,6 @@ private const val ROUTE_LIST = "list"
 private const val ROUTE_FAVORITES = "favorites"
 private const val ROUTE_DETAIL = "detail/{factId}"
 private const val ROUTE_JOURNEY = "journey"
-private const val ROUTE_PURCHASE = "purchase"
 
 class MainActivity : ComponentActivity() {
 
@@ -131,7 +129,6 @@ private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?
                     navController.navigate(ROUTE_JOURNEY)
                 },
                 onOpenFavorites = { navController.navigate(ROUTE_FAVORITES) },
-                onPurchaseBitcoin = { navController.navigate(ROUTE_PURCHASE) },
             )
         }
         composable(ROUTE_LIST) {
@@ -189,9 +186,6 @@ private fun BitcoinFactsNavHost(container: AppContainer, deepLinkFactId: String?
                 onBack = { navController.popBackStack() },
                 onFactClick = { factId -> navController.navigate("detail/$factId") },
             )
-        }
-        composable(ROUTE_PURCHASE) {
-            PurchaseBitcoinScreen(onBack = { navController.popBackStack() })
         }
     }
 }
