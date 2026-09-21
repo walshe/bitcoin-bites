@@ -138,27 +138,27 @@ fun HomeScreen(
 }
 
 /**
- * Icon + label for a home screen button. The icon sits at the trailing edge
- * of a fixed-width leading slot (close to the text, not pinned to the far
- * left edge), and the label is centered in the remaining space with a
- * matching trailing spacer so it stays centered in the button overall.
- * Every icon lands at the same x position across all four buttons, but
- * pulled in toward the middle rather than hugging the button's left edge.
+ * Icon + label for a home screen button, centered as a single group.
+ *
+ * This previously pinned the icon inside a fixed-width leading slot so every
+ * button's icon landed on the same x. That reserved 200dp before the label was
+ * measured at all, which is fine on a wide screen and truncates on a narrow
+ * one - a 360dp phone left roughly 64dp for the text, so "Guided Bites" and
+ * "Random Bites" rendered as "Guided" and "Random" with `maxLines = 1` quietly
+ * clipping the rest. Centering the group instead means the label always gets
+ * the width it needs; the icons no longer share an x position, which is the
+ * cost of the labels being legible at any width or font scale.
  */
 @Composable
 private fun HomeButtonContent(icon: ImageVector, label: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Box(modifier = Modifier.width(92.dp), contentAlignment = Alignment.CenterEnd) {
-            Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
-        }
-        Spacer(modifier = Modifier.width(8.dp))
-        Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-            Text(label, maxLines = 1)
-        }
-        Spacer(modifier = Modifier.width(100.dp))
+        Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(label, maxLines = 1)
     }
 }
 
