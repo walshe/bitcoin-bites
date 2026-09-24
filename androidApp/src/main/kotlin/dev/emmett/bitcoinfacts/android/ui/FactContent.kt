@@ -55,9 +55,10 @@ fun FactBodyAndSources(fact: Fact, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         CategoryAndDifficultyRow(fact)
 
-        if (fact.videoUrl != null) {
+        val videoUrl = fact.videoUrl
+        if (videoUrl != null) {
             Spacer(modifier = Modifier.height(16.dp))
-            VideoPlayer(videoUrl = fact.videoUrl, modifier = Modifier.fillMaxWidth())
+            VideoPlayer(videoUrl = videoUrl, modifier = Modifier.fillMaxWidth())
         }
 
         Spacer(modifier = Modifier.height(16.dp))
