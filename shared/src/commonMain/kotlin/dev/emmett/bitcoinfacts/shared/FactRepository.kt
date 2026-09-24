@@ -15,11 +15,21 @@ class FactRepository(private val facts: List<Fact>) {
 
     fun findById(id: String): Fact? = facts.find { it.id == id }
 
-    /** Empty [selectedCategories] means no filter applied - every fact is returned. */
+    /**
+     * Text facts only (Browse All / Journey) - a fact with a [Fact.videoUrl] is
+     * excluded here and surfaced instead via [videoFacts], since the swipeable
+     * journey and the plain list row aren't built to render a video embed.
+     */
+    private val textFacts: List<Fact> = facts.filter { it.videoUrl == null }
+
+    /** Empty [selectedCategories] means no filter applied - every text fact is returned. */
     fun filterByCategories(selectedCategories: Set<Category>): List<Fact> {
-        if (selectedCategories.isEmpty()) return facts
-        return facts.filter { fact -> fact.categories.any { it in selectedCategories } }
+        if (selectedCategories.isEmpty()) return textFacts
+        return textFacts.filter { fact -> fact.categories.any { it in selectedCategories } }
     }
+
+    /** Facts with a [Fact.videoUrl] set, for the All Videos screen. */
+    fun videoFacts(): List<Fact> = facts.filter { it.videoUrl != null }
 
     /** Resolves a fact's `related` IDs to their actual [Fact] objects, dropping any that can't be found. */
     fun relatedFacts(fact: Fact): List<Fact> = fact.related.mapNotNull { findById(it) }

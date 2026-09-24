@@ -17,6 +17,8 @@ data class Fact(
     val related: List<String>,
     val body: String,
     val order: Int,
+    /** Non-null marks this a "video fact" - excluded from Browse All / Journey, shown in All Videos instead. */
+    val videoUrl: String? = null,
 )
 
 data class Source(

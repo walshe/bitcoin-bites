@@ -7,7 +7,13 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-private fun fact(id: String, categories: List<Category>, related: List<String> = emptyList(), order: Int = 0) = Fact(
+private fun fact(
+    id: String,
+    categories: List<Category>,
+    related: List<String> = emptyList(),
+    order: Int = 0,
+    videoUrl: String? = null,
+) = Fact(
     id = id,
     title = "Title $id",
     categories = categories,
@@ -17,6 +23,7 @@ private fun fact(id: String, categories: List<Category>, related: List<String> =
     related = related,
     body = "body",
     order = order,
+    videoUrl = videoUrl,
 )
 
 class FactRepositoryTest {
@@ -27,17 +34,31 @@ class FactRepositoryTest {
             fact("fact-monetary-policy", listOf(Category.MONETARY_POLICY), related = listOf("fact-fiat")),
             fact("fact-privacy-custody", listOf(Category.PRIVACY, Category.CUSTODY)),
             fact("fact-history", listOf(Category.HISTORY)),
+            fact("fact-video", listOf(Category.HISTORY), videoUrl = "https://x.com/example/status/1"),
         )
     )
 
     @Test
-    fun `all returns every fact`() {
-        assertEquals(4, repo.all().size)
+    fun `all returns every fact, including video facts`() {
+        assertEquals(5, repo.all().size)
     }
 
     @Test
-    fun `empty category filter returns everything`() {
-        assertEquals(4, repo.filterByCategories(emptySet()).size)
+    fun `empty category filter returns every text fact, excluding video facts`() {
+        val result = repo.filterByCategories(emptySet())
+        assertEquals(4, result.size)
+        assertTrue(result.none { it.id == "fact-video" })
+    }
+
+    @Test
+    fun `category filter excludes video facts even when the category matches`() {
+        val result = repo.filterByCategories(setOf(Category.HISTORY))
+        assertEquals(listOf("fact-history"), result.map { it.id })
+    }
+
+    @Test
+    fun `videoFacts returns only facts with a videoUrl`() {
+        assertEquals(listOf("fact-video"), repo.videoFacts().map { it.id })
     }
 
     @Test

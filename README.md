@@ -2,8 +2,9 @@
 
 A no-server, offline-first Bitcoin facts/trivia app. Every fact is a short,
 plainly-worded explanation with an analogy, sourced from real Bitcoin books
-and pulled straight into the app at build time — no network calls, no
-backend.
+and pulled straight into the app at build time — no backend, and no network
+calls except when a "video fact" (see content/facts/README.md) is opened to
+load its embedded player.
 
 Currently ships on Android (Kotlin Multiplatform + Jetpack Compose), with iOS
 planned as a fast-follow once the shared Kotlin core is stable.

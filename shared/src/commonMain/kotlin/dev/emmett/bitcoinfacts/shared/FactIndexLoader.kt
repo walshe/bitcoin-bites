@@ -42,5 +42,6 @@ object FactIndexLoader {
         related = related,
         body = body,
         order = order,
+        videoUrl = videoUrl,
     )
 }
