@@ -5,6 +5,11 @@
          requested at runtime in MainActivity, not just declared here. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Only used by the WebView embed on "video facts" (a fact with a video_url) to
+         load the video player. Every other fact stays fully offline - see
+         VideoEmbed / FactDetailScreen. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".BitcoinFactsApplication"
         android:label="Bitcoin Bites"

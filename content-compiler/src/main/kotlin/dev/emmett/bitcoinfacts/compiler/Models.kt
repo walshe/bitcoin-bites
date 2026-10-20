@@ -19,6 +19,7 @@ data class FactOutput(
     val related: List<String>,
     val body: String,
     val order: Int,
+    val videoUrl: String? = null,
 )
 
 @Serializable

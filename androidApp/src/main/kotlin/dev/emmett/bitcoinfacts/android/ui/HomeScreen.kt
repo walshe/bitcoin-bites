@@ -22,6 +22,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
@@ -69,6 +70,7 @@ fun HomeScreen(
     onGuidedJourney: () -> Unit,
     onRandomJourney: () -> Unit,
     onOpenFavorites: () -> Unit,
+    onBrowseVideos: () -> Unit,
 ) {
     val continueFact = remember {
         container.journeyProgressStore.lastFactId(JourneyMode.GUIDED)?.let { container.factRepository.findById(it) }
@@ -127,6 +129,10 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(12.dp))
             OutlinedButton(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
                 HomeButtonContent(Icons.Filled.Menu, "All Bites")
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            OutlinedButton(onClick = onBrowseVideos, modifier = Modifier.fillMaxWidth()) {
+                HomeButtonContent(Icons.Filled.List, "Videos")
             }
 
             if (continueFact != null) {

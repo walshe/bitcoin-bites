@@ -117,6 +117,10 @@ object ContentCompiler {
                 errors += "${file.name}: missing/invalid required integer field 'order'"
             }
 
+            // Optional: marks this as a "video fact" (task: Videos home button). Filtered
+            // out of the regular Browse All / Journey lists by FactRepository once bundled.
+            val videoUrl = fm["video_url"] as? String
+
             val hasFatalFieldError = title.isNullOrBlank() ||
                 categories.isNullOrEmpty() ||
                 sourceMaps.isNullOrEmpty() ||
@@ -134,6 +138,7 @@ object ContentCompiler {
                 related = related,
                 body = parsed.body,
                 order = order,
+                videoUrl = videoUrl,
             )
         }
 

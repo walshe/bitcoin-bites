@@ -25,6 +25,7 @@ internal data class FactDto(
     val related: List<String> = emptyList(),
     val body: String,
     val order: Int,
+    val videoUrl: String? = null,
 )
 
 @Serializable

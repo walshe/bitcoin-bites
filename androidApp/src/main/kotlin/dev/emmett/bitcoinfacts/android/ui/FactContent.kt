@@ -1,12 +1,17 @@
 package dev.emmett.bitcoinfacts.android.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -22,7 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import dev.emmett.bitcoinfacts.shared.model.Fact
+import dev.emmett.bitcoinfacts.shared.model.VideoEmbed
 
 /**
  * Sources are kept on every fact (compiler still requires them) but hidden
@@ -46,6 +54,13 @@ fun FactBodyAndSources(fact: Fact, modifier: Modifier = Modifier) {
 
     Column(modifier = modifier) {
         CategoryAndDifficultyRow(fact)
+
+        val videoUrl = fact.videoUrl
+        if (videoUrl != null) {
+            Spacer(modifier = Modifier.height(16.dp))
+            VideoPlayer(videoUrl = videoUrl, modifier = Modifier.fillMaxWidth())
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
         Text(mainText.parseBoldMarkdown(boldColor = MaterialTheme.colorScheme.primary))
 
@@ -79,6 +94,37 @@ fun FactBodyAndSources(fact: Fact, modifier: Modifier = Modifier) {
                 )
             }
         }
+    }
+}
+
+/**
+ * Renders a "video fact"'s embedded player. [videoUrl] is the raw link an author
+ * put in `video_url` frontmatter (an X/Twitter status, a YouTube link, ...);
+ * [VideoEmbed] resolves it to the actual chromeless-embed URL the WebView loads.
+ *
+ * This is the one place in the app that makes a network call - see the
+ * `INTERNET` permission comment in AndroidManifest.xml. Every other fact stays
+ * fully offline; only opening a fact with a `video_url` set reaches the network.
+ */
+@SuppressLint("SetJavaScriptEnabled")
+@Composable
+private fun VideoPlayer(videoUrl: String, modifier: Modifier = Modifier) {
+    val embedUrl = remember(videoUrl) { VideoEmbed.resolve(videoUrl) }
+    Surface(
+        shape = RoundedCornerShape(12.dp),
+        modifier = modifier.aspectRatio(16f / 9f),
+    ) {
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
+                    settings.javaScriptEnabled = true
+                    settings.domStorageEnabled = true
+                    webViewClient = WebViewClient()
+                    loadUrl(embedUrl)
+                }
+            },
+            modifier = Modifier.fillMaxSize(),
+        )
     }
 }
 

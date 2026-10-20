@@ -42,8 +42,27 @@ related: [fact-007, fact-118] # optional — other fact IDs. Declaring the link 
                                # ONE side is enough; the compiler mirrors it onto
                                # the other fact automatically. Every ID here must
                                # correspond to a real fact file, or the build fails.
+video_url: "https://..."      # optional — see "Video facts" below
 ---
 ```
+
+## Video facts
+
+Setting `video_url` marks a fact as a "video fact": an X/Twitter status link or a
+YouTube link (watch or `youtu.be` short link). The app resolves it to an
+embeddable player URL (`dev.emmett.bitcoinfacts.shared.model.VideoEmbed`) and
+renders it inline above the body on the fact's detail screen.
+
+A video fact can still have a normal body (explanation/fixes/analogy) — the
+video is additive, not a replacement. It's excluded from Browse All and both
+Journey modes (`FactRepository.filterByCategories`, which the swipeable journey
+also reads from) since neither is built to render a video embed, and instead
+shows up in the "Videos" list reachable from the home screen
+(`FactRepository.videoFacts()`).
+
+This is the one case where the app makes a network call — loading the embedded
+player reaches out to x.com/twitter.com or YouTube. Every other fact stays
+fully offline; see the `INTERNET` permission comment in `AndroidManifest.xml`.
 
 ## Body format
 
