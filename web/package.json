@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "type": "module",
+  "description": "No dependencies - only marks web/'s .js files as ES modules and names the test command.",
+  "scripts": {
+    "test": "node --test \"src/test/js/*.test.js\""
+  }
+}
