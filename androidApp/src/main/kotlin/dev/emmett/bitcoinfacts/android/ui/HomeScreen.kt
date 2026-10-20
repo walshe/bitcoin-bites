@@ -55,6 +55,13 @@ import dev.emmett.bitcoinfacts.android.data.AppContainer
 import dev.emmett.bitcoinfacts.shared.history.JourneyMode
 
 /**
+ * The Videos entry point is hidden for now - video facts aren't ready to
+ * ship. It's the only way to reach them (FactRepository keeps video facts
+ * out of All Bites and the journeys), so flip this back on to release them.
+ */
+private const val SHOW_VIDEOS = false
+
+/**
  * Task 12.1: new nav-graph start destination, offering "Guided Bites" (an
  * unfiltered swipeable journey in canonical `order` - the order facts were
  * authored in, chapter by chapter), "Random Bites" (the same swipeable
@@ -130,9 +137,11 @@ fun HomeScreen(
             OutlinedButton(onClick = onBrowseAll, modifier = Modifier.fillMaxWidth()) {
                 HomeButtonContent(Icons.Filled.Menu, "All Bites")
             }
-            Spacer(modifier = Modifier.height(12.dp))
-            OutlinedButton(onClick = onBrowseVideos, modifier = Modifier.fillMaxWidth()) {
-                HomeButtonContent(Icons.Filled.List, "Videos")
+            if (SHOW_VIDEOS) {
+                Spacer(modifier = Modifier.height(12.dp))
+                OutlinedButton(onClick = onBrowseVideos, modifier = Modifier.fillMaxWidth()) {
+                    HomeButtonContent(Icons.Filled.List, "Videos")
+                }
             }
 
             if (continueFact != null) {
