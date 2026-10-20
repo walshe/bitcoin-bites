@@ -29,6 +29,7 @@ Category display names live in `androidApp/.../CategoryDisplay.kt`, not in
 - Zero-cost hosting and hands-off deployment on merge to `main`.
 
 **Non-Goals:**
+- Video facts: left off the site entirely for now, to match the app, where they're hidden.
 - Daily push notifications (Web Push needs a sending server).
 - Sync between devices or between the web and the Android app.
 - The tip purchase or cosmetic rewards.

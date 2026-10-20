@@ -46,8 +46,15 @@ fun buildSite(inputDir: File, outputDir: File, siteSourceDir: File, templatesDir
             false
         }
         is CompileResult.Success -> {
-            SiteGenerator(config, siteSourceDir, templatesDir).generate(result.facts, outputDir)
-            println("Generated site for ${result.facts.size} fact(s) -> ${outputDir.absolutePath} (${config.baseUrl})")
+            val generator = SiteGenerator(config, siteSourceDir, templatesDir)
+            generator.generate(result.facts, outputDir)
+            val published = generator.publishedFacts(result.facts).size
+            val skipped = result.facts.size - published
+            println(
+                "Generated site for $published fact(s)" +
+                    (if (skipped > 0) " ($skipped video fact(s) left out)" else "") +
+                    " -> ${outputDir.absolutePath} (${config.baseUrl})",
+            )
             true
         }
     }

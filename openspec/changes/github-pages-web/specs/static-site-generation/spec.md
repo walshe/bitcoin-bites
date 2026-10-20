@@ -75,3 +75,14 @@ The system SHALL generate a `sitemap.xml` listing the absolute URL of every page
 #### Scenario: Sitemap lists every fact
 - **WHEN** the site is generated
 - **THEN** `sitemap.xml` contains one entry for each fact page plus the home and All Bites pages
+
+### Requirement: Video facts are not published
+The system SHALL leave every fact with a `video_url` off the site: no fact page, no entry in All Bites, the journeys, `facts.json` or `sitemap.xml`, and no related-fact links pointing to it. This matches the Android app, where video facts are kept out of All Bites and the journeys and their Videos entry point is hidden.
+
+#### Scenario: A video fact is skipped
+- **WHEN** the site is generated from content that includes a fact with a `video_url`
+- **THEN** no page exists for that fact, and no list, journey data, sitemap entry or related link refers to it
+
+#### Scenario: Related links to a video fact are dropped
+- **WHEN** a text fact lists a video fact among its related facts
+- **THEN** the text fact's page shows its other related facts but no link to the video fact

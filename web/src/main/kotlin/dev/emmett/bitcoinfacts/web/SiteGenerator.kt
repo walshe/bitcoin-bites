@@ -45,7 +45,8 @@ class SiteGenerator(
     private val templatesDir: File,
 ) {
 
-    fun generate(facts: List<FactOutput>, outputDir: File) {
+    fun generate(compiledFacts: List<FactOutput>, outputDir: File) {
+        val facts = publishedFacts(compiledFacts)
         outputDir.deleteRecursively()
         outputDir.mkdirs()
 
@@ -61,6 +62,17 @@ class SiteGenerator(
         File(outputDir, "sitemap.xml").writeText(sitemap(pages))
 
         writeServiceWorker(outputDir)
+    }
+
+    /**
+     * Video facts are left off the site entirely for now - not ready to ship,
+     * and hidden in the app too (its Videos button is behind `SHOW_VIDEOS`).
+     * Related links to them are dropped, since their pages don't exist.
+     */
+    fun publishedFacts(compiledFacts: List<FactOutput>): List<FactOutput> {
+        val textFacts = compiledFacts.filter { it.videoUrl == null }
+        val ids = textFacts.map { it.id }.toSet()
+        return textFacts.map { fact -> fact.copy(related = fact.related.filter { it in ids }) }
     }
 
     fun pages(facts: List<FactOutput>): List<Page> {

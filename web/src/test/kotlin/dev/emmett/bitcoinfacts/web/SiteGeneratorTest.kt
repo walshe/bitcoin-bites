@@ -151,13 +151,27 @@ class SiteGeneratorTest {
     }
 
     @Test
-    fun `every real fact id produces a page - the URL the Android share footer builds`() {
+    fun `every real text fact id produces a page - the URL the Android share footer builds`() {
         val result = ContentCompiler.compile(File(System.getProperty("contentFactsDir")))
         check(result is CompileResult.Success) { "real content failed to compile: $result" }
         generate(result.facts)
-        for (fact in result.facts) {
+        for (fact in result.facts.filter { it.videoUrl == null }) {
             assertTrue(File(outputDir, "facts/${fact.id}/index.html").isFile, "missing page for ${fact.id}")
         }
+    }
+
+    @Test
+    fun `video facts are left off the site, and links to them are dropped`() {
+        val video = fact("video", 4, related = listOf("first")).copy(videoUrl = "https://example.test/v")
+        val first = fixtureFacts.first().copy(related = listOf("second", "video"))
+        generate(listOf(first) + fixtureFacts.drop(1) + video)
+
+        assertFalse(File(outputDir, "facts/video").exists())
+        assertFalse(read("facts/index.html").contains("facts/video/"))
+        assertFalse(read("facts/first/index.html").contains("facts/video/"))
+        assertTrue(read("facts/first/index.html").contains("facts/second/"))
+        assertFalse(read("facts.json").contains("\"id\":\"video\""))
+        assertFalse(read("sitemap.xml").contains("facts/video/"))
     }
 
     @Test
