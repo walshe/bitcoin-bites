@@ -77,7 +77,7 @@
 - [x] 5.5 `journey.js`: loads `facts.json`. Guided uses canonical order and resumes
       from stored progress. Random shuffles, then reshuffles and loops at the end.
       Previous/Next buttons, arrow keys, pointer-event swipe, the current fact in
-      the URL hash, progress saved on every move, and each card links to its fact
+      the URL hash, progress saved on every move, and each card's title links to its fact
       page
 - [x] 5.6 `share.js`: Web Share API with the title, plain body, attribution and
       absolute URL. Falls back to copying the link to the clipboard with a

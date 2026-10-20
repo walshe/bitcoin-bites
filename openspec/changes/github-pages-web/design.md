@@ -108,7 +108,7 @@ Guided Bites follows the canonical `order` and resumes at the stored last fact. 
 Bites shuffles, then reshuffles and loops at the end. Navigation is by swipe (pointer
 events), arrow keys, and visible Previous/Next buttons. The current fact ID is stored
 in the URL hash (`/guided/#<id>`) so the browser back button and reloads behave
-sensibly. Each journey card links to the fact's own page.
+sensibly. Each card's title links to the fact's own page.
 
 ### 8. URLs: relative internally, absolute only where required
 Internal links are relative, so the site works under `/bitcoin-bites/`, at a custom

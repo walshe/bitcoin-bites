@@ -90,12 +90,7 @@ export function initJourney(doc, facts, { store, root, share }) {
     const content = doc.createElement("div");
     content.innerHTML = fact.html; // pre-rendered and escaped by the site generator
 
-    const pageLink = doc.createElement("a");
-    pageLink.className = "open-page";
-    pageLink.href = root + fact.path;
-    pageLink.textContent = "Open this bite's page";
-
-    card.replaceChildren(title, content, pageLink);
+    card.replaceChildren(title, content);
     card.classList.remove("enter-next", "enter-prev");
     if (direction) {
       void card.offsetWidth; // restart the entry animation

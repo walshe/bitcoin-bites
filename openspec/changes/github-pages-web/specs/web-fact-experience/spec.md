@@ -30,7 +30,7 @@ The system SHALL present Random Bites as a one-fact-at-a-time journey through ev
 - **THEN** the facts are reshuffled and the journey continues with the first fact of the new order
 
 ### Requirement: Journey navigation by touch, keyboard and buttons
-The system SHALL let the visitor move to the next or previous fact in a journey by horizontal swipe, by the left and right arrow keys, and by visible Previous and Next buttons. Each journey card SHALL link to that fact's own page.
+The system SHALL let the visitor move to the next or previous fact in a journey by horizontal swipe, by the left and right arrow keys, and by visible Previous and Next buttons. Each journey card's title SHALL link to that fact's own page.
 
 #### Scenario: Keyboard navigation
 - **WHEN** the visitor presses the right arrow key in a journey
