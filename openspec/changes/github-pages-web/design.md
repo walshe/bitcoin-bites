@@ -120,10 +120,14 @@ that CI fills from `actions/configure-pages`' `base_url` output, with
 
 ### 9. Offline: generated service worker with a content-hashed cache name
 At build time the generator writes `sw.js` with the full list of files to precache
-and a cache name derived from a hash of the site's contents. Pages are served
-network-first with a cache fallback, so a new deploy shows up as soon as the user is
-online. Static assets are served cache-first. When a new service worker activates, it
-deletes caches with other names. The whole site is well under 1 MB, so precaching
+and a cache name derived from a hash of the site's contents. Every request is
+served network-first with the cache as the offline fallback, so a new deploy shows up
+as soon as the user is online. Assets are network-first too, because pages, JS and
+CSS change together on each deploy, and serving any of them from cache while online
+could pair new HTML with old scripts. Precaching bypasses the browser's HTTP cache
+(`cache: "reload"`), because GitHub Pages sends `max-age=600` and could otherwise
+fill a new cache with the previous deploy's files. When a new service worker
+activates, it deletes caches with other names. The whole site is well under 1 MB, so precaching
 everything is cheap.
 
 ### 10. Share: Web Share API with a copy-link fallback
@@ -194,7 +198,7 @@ link in shared text puts people off. The web page can offer the app instead.
   evicts it after 7 days without a visit for sites that aren't installed). → It holds
   only favorites, progress and streak, never content. Installing the PWA makes it more
   durable. This limitation is documented, not engineered around.
-- **A stale service worker could keep serving an old site.** → Network-first pages,
+- **A stale service worker could keep serving an old site.** → Network-first requests, HTTP-cache-bypassing precache,
   hash-versioned caches, and `skipWaiting`/`clients.claim` when a new worker installs.
 - **The web base URL is now baked into shipped Android builds.** A later custom
   domain doesn't break old shares, because GitHub Pages automatically redirects

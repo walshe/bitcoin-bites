@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { createJourney, shuffle } from "../../main/site/js/journey.js";
+import { createJourney, resumeIdFor, shuffle } from "../../main/site/js/journey.js";
 
 const facts = [
   { id: "c", order: 3 },
@@ -64,4 +64,20 @@ test("cannot go back before the first fact", () => {
   const journey = createJourney(facts, "guided");
   assert.equal(journey.canGoBack, false);
   assert.equal(journey.prev().id, "a");
+});
+
+test("a valid hash wins over stored progress", () => {
+  assert.equal(resumeIdFor(facts, "#b", "c"), "b");
+});
+
+test("an unknown hash keeps stored progress", () => {
+  assert.equal(resumeIdFor(facts, "#removed-fact", "c"), "c");
+});
+
+test("a malformed hash doesn't throw and keeps stored progress", () => {
+  assert.equal(resumeIdFor(facts, "#%E0%A4", "c"), "c");
+});
+
+test("no hash and no progress gives no resume id", () => {
+  assert.equal(resumeIdFor(facts, "", null), null);
 });

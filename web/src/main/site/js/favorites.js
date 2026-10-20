@@ -2,17 +2,22 @@
 // data-fav="<fact id>", so one delegated handler covers pre-rendered lists,
 // fact pages and journey cards alike.
 
+function setPressed(button, favorited) {
+  button.setAttribute("aria-pressed", String(favorited));
+  button.setAttribute("aria-label", favorited ? "Unfavorite" : "Favorite");
+}
+
+/** Updates every heart for [id] - a fact can appear more than once on a page. */
 function syncButtons(doc, id, favorited) {
   for (const button of doc.querySelectorAll("[data-fav]")) {
-    if (button.dataset.fav !== id) continue;
-    button.setAttribute("aria-pressed", String(favorited));
-    button.setAttribute("aria-label", favorited ? "Unfavorite" : "Favorite");
+    if (button.dataset.fav === id) setPressed(button, favorited);
   }
 }
 
 export function initFavoriteButtons(doc, store) {
+  const favorites = new Set(store.favorites());
   for (const button of doc.querySelectorAll("[data-fav]")) {
-    if (button.dataset.fav) syncButtons(doc, button.dataset.fav, store.isFavorite(button.dataset.fav));
+    if (button.dataset.fav) setPressed(button, favorites.has(button.dataset.fav));
   }
   doc.addEventListener("click", (event) => {
     const button = event.target.closest("[data-fav]");

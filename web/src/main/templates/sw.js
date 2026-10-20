@@ -13,7 +13,10 @@ const scopeUrl = (path) => new URL(path, self.registration.scope).href;
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE)
-      .then((cache) => cache.addAll(PRECACHE.map(scopeUrl)))
+      // cache: "reload" skips the browser's HTTP cache - GitHub Pages sends
+      // max-age=600, so a plain fetch here could fill the new cache with the
+      // previous deploy's files.
+      .then((cache) => cache.addAll(PRECACHE.map((path) => new Request(scopeUrl(path), { cache: "reload" }))))
       .then(() => self.skipWaiting()),
   );
 });
@@ -28,12 +31,9 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-// Pages and facts.json change with content, so they come from the network
-// when it's reachable; everything else (CSS, JS, icons) is served from cache.
-function isNetworkFirst(request) {
-  return request.mode === "navigate" || new URL(request.url).pathname.endsWith("/facts.json");
-}
-
+// Everything is network-first with the cache as the offline fallback. Pages,
+// facts.json, JS and CSS change together on each deploy, so serving any of
+// them from cache while online could pair new HTML with old scripts.
 async function networkFirst(request) {
   const cache = await caches.open(CACHE);
   try {
@@ -51,13 +51,8 @@ async function networkFirst(request) {
   }
 }
 
-async function cacheFirst(request) {
-  const cached = await caches.match(request);
-  return cached || fetch(request);
-}
-
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   if (request.method !== "GET" || !request.url.startsWith(self.registration.scope)) return;
-  event.respondWith(isNetworkFirst(request) ? networkFirst(request) : cacheFirst(request));
+  event.respondWith(networkFirst(request));
 });

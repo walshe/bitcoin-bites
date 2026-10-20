@@ -56,6 +56,21 @@ export function createJourney(facts, mode, { resumeId = null, random = Math.rand
   };
 }
 
+/**
+ * Where a journey starts: a fact id in the URL hash (from a reload or a shared
+ * journey link) wins over [storedId], but only if it names a fact that exists -
+ * a mangled or stale hash must not throw or wipe out saved progress.
+ */
+export function resumeIdFor(facts, hash, storedId) {
+  let hashId = "";
+  try {
+    hashId = decodeURIComponent(hash.replace(/^#/, ""));
+  } catch {
+    // malformed percent-encoding - ignore the hash
+  }
+  return facts.some((fact) => fact.id === hashId) ? hashId : storedId;
+}
+
 const SWIPE_DISTANCE = 50;
 
 /** Wires a journey shell page to [facts]. [share] takes `{ title, text, url }`, as share.js's shareFact. */
@@ -75,9 +90,7 @@ export function initJourney(doc, facts, { store, root, share }) {
     return;
   }
 
-  // A fact id in the URL hash (from a reload or a shared journey link) wins over stored progress.
-  const hashId = decodeURIComponent(location.hash.slice(1));
-  const journey = createJourney(facts, mode, { resumeId: hashId || store.progress(mode) });
+  const journey = createJourney(facts, mode, { resumeId: resumeIdFor(facts, location.hash, store.progress(mode)) });
 
   function render(direction) {
     const fact = journey.current;

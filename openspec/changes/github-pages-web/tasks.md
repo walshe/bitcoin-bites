@@ -93,8 +93,8 @@
 - [x] 6.1 Generate `sw.js` from a template, with the full precache list and a cache
       name taken from a hash of the site's contents
 - [x] 6.2 Service worker behavior: precache on install, `skipWaiting` and
-      `clients.claim`, delete old caches on activate, network-first for HTML,
-      cache-first for assets, and serve `404.html` offline for unknown pages
+      `clients.claim`, delete old caches on activate, network-first for every
+      request (precached with `cache: "reload"`), and serve `404.html` offline for unknown pages
 - [x] 6.3 Register the service worker from the shared layout script, with a
       relative scope
 

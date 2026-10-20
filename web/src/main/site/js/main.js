@@ -76,8 +76,15 @@ initFavoriteButtons(doc, store);
 initShareButtons();
 initPage().catch((error) => {
   console.error(error);
+  // Journeys and Favorites both build their content from facts.json.
+  const message = `Couldn't load the bites. <a href="${root}facts/">Browse all bites</a> instead.`;
   const card = doc.querySelector("[data-journey-card]");
-  if (card) card.innerHTML = `<p class="empty">Couldn't load the bites. <a href="${root}facts/">Browse all bites</a> instead.</p>`;
+  if (card) card.innerHTML = `<p class="empty">${message}</p>`;
+  const favoritesEmpty = doc.querySelector("[data-favorites-empty]");
+  if (favoritesEmpty) {
+    favoritesEmpty.innerHTML = message;
+    favoritesEmpty.hidden = false;
+  }
 });
 
 if ("serviceWorker" in navigator) {
