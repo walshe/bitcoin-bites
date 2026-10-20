@@ -24,6 +24,7 @@ bitcoin-mobile-app/
 ├── taxonomy/           # The canonical Category enum (KMP, shared with iOS)
 ├── shared/             # Cross-platform Kotlin core (KMP, shared with iOS)
 ├── androidApp/         # The Android app itself (Compose UI, not reused by iOS)
+├── web/                # Build-time static site generator for GitHub Pages
 ├── openspec/           # Change proposals, design decisions, specs
 ├── bitcoin-bites-*-assets/  # Exported app-icon artwork (design history)
 └── gradle*, settings.gradle.kts, build.gradle.kts  # Gradle wiring
@@ -106,6 +107,20 @@ Android notification plumbing (`notifications/`). This is Android-only by
 design — **iOS will have its own separate `iosApp/` module** with SwiftUI
 screens built against the same `shared` core, not a port of this code.
 
+#### `web/`
+
+A JVM-only Gradle module that turns the same `content/facts/` into a static
+website for GitHub Pages. It runs `ContentCompiler` in-process, so content
+that breaks the app build breaks the site build too. It writes one
+pre-rendered page per fact (`facts/<id>/`), plus All Bites, home, Guided and
+Random Bites, Favorites and a 404 page, into `web/build/site/`. The
+interactive parts are small vanilla ES modules in `web/src/main/site/js/`
+with no bundler: journeys, favorites, streak, filter and share. Per-visitor
+state lives in the browser's `localStorage`, and a generated service worker
+makes the site installable and usable offline. See
+[`openspec/changes/github-pages-web/`](openspec/changes/github-pages-web/)
+for the design.
+
 #### `openspec/`
 
 Process artifacts, not app code: change proposals, the running `design.md`
@@ -129,6 +144,47 @@ consumes directly — the app's real icon resources live under
 
 Compiles and validates all fact content, runs the shared-core test suite,
 and assembles the debug Android APK.
+
+## Web (GitHub Pages)
+
+The site is live at <https://walshe.github.io/bitcoin-bites/>.
+`.github/workflows/pages.yml` rebuilds and deploys it on every push to
+`main`. Nothing it generates is committed.
+
+### Building and previewing locally
+
+```
+./gradlew :web:test :web:buildSite
+node --test "web/src/test/js/*.test.js"
+```
+
+The site is served from a sub-path (`/bitcoin-bites/`) in production and
+all internal links are relative, so preview it under that same sub-path:
+
+```
+mkdir -p /tmp/site-preview && ln -sfn "$PWD/web/build/site" /tmp/site-preview/bitcoin-bites
+python3 -m http.server 8000 --directory /tmp/site-preview
+# open http://localhost:8000/bitcoin-bites/
+```
+
+The service worker caches aggressively. After rebuilding, reload twice, or
+clear site data in DevTools → Application.
+
+Two Gradle properties control the absolute URLs:
+
+| Property | Default | Used for |
+|---|---|---|
+| `siteBaseUrl` | `https://walshe.github.io/bitcoin-bites/` | Canonical, Open Graph and sitemap URLs (CI passes the URL Pages reports) |
+| `appDownloadUrl` | `https://github.com/walshe/bitcoin-bites/releases/latest/download/bitcoin-bites.apk` | The site's "Get the Android app" link. Switch it to the Play Store listing at launch |
+
+### One-time repository setup
+
+1. The repository must be **public**. Free-plan GitHub Pages only works for
+   public repos.
+2. Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+
+Fact IDs are now permanent URLs. Shared links from the app point at
+`facts/<id>/`, so never rename or delete a fact ID once it has shipped.
 
 ## Play Store preparation and deployment
 

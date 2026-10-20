@@ -46,11 +46,14 @@ jobs:
       - name: Build release APK
         run: ./gradlew :androidApp:assembleRelease
 
-      - name: Rename APK
+      - name: Collect APKs
         run: |
           mkdir -p release-artifacts
           apk_path=$(find androidApp/build/outputs/apk/release -name "*.apk" | head -n 1)
           cp "$apk_path" "release-artifacts/bitcoin-bites-${{ github.ref_name }}.apk"
+          # Fixed-name copy so releases/latest/download/bitcoin-bites.apk always
+          # points at the newest build - the web site's "Get the app" link uses it.
+          cp "$apk_path" "release-artifacts/bitcoin-bites.apk"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

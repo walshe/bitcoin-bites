@@ -147,11 +147,18 @@ private val BOLD_MARKER = Regex("\\*\\*(.+?)\\*\\*")
 
 private fun String.stripBoldMarkdown(): String = BOLD_MARKER.replace(this) { it.groupValues[1] }
 
-private const val PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=dev.emmett.bitcoinfacts.android"
+/**
+ * The static web site (web/ module, GitHub Pages). Every fact has a page at
+ * `facts/<id>/`, so a shared link opens the fact itself for any recipient -
+ * unlike the Play Store URL, which only works for testers until launch. Fact
+ * IDs are therefore permanent URLs once shipped.
+ */
+private const val WEB_BASE_URL = "https://walshe.github.io/bitcoin-bites/"
 
 /** Also used by [JourneyScreen], which shares whichever fact is on screen. */
 internal fun shareFact(context: android.content.Context, fact: Fact) {
-    val shareText = "${fact.title}\n\n${fact.body.stripBoldMarkdown()}\n\n— Shared from Bitcoin Bites\n$PLAY_STORE_URL"
+    val factUrl = "${WEB_BASE_URL}facts/${fact.id}/"
+    val shareText = "${fact.title}\n\n${fact.body.stripBoldMarkdown()}\n\n— Shared from Bitcoin Bites\n$factUrl"
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, shareText)
